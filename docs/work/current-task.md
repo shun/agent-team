@@ -62,7 +62,7 @@ Q3 / Q4 の判断により、以下を対象範囲に追加する。
 
 ## 6. 完了条件
 
-- [ ] docs/agent/safety.md が人間承認済みで存在する
+- [x] docs/agent/safety.md が人間承認済みで存在する(2026-07-05 承認)
 - [ ] docs/agent/workflow.md(人間 ⇄ Gen の最小フロー)が人間承認済みで存在する
 - [ ] .ai/board/growth-log.md に、成長ループ1周分以上の記録(日時 / 提案 / 試した結果 / 人間の判断)がある
 - [ ] Gen の定義(gen.md / team.md の Gen 欄)が成長ループを経て1回以上改善されている

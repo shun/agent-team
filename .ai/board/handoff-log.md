@@ -14,6 +14,7 @@
   - **構造決定: Gen はメイン会話そのもの。サブエージェントとして起動しない**(今日サブエージェントで動かしたのは gen.md 未読み込みによる暫定措置だった)
   - `.claude/agents/gen.md` の削除を承認(ペルソナ正本は docs/agent/team.md に集約。.claude/agents/ は Gen 以外の起動用アダプタ)
   - **safety.md を承認 → 確定**(ADR 条項含む。セクション2の削除ルールの厳しさも現状のまま採用)
+  - **進捗管理を current-task.md に一本化**(案A採用)。roadmap.md はチェックボックスをやめ、計画+各 Stage の状態行のみ。状態行は Stage 節目に人間承認で更新。workflow.md 初版に明文化すること
 - **今回やったこと**:
   - AGENTS.md に「メインエージェント」節を追加(メイン会話 = Gen / team.md と safety.md の読み込みを MUST 化)
   - docs/agent/team.md の Gen 定義に「動作形態」を追加
@@ -26,6 +27,7 @@
   4. memo の docs 移行は各ステージで少しずつ+凍結コピー(Q4)
   5. handoff-log(セッション記録)と growth-log(定義変更)の使い分け(Q3)
   6. 「設計判断は ADR を残す」ルール自体
+  7. 進捗管理の一本化(正は current-task.md、roadmap は計画+状態行のみ)
 - **残課題**: workflow.md 初版ドラフト(ADR 運用手順を含む)/ growth-log 作成と成長ループ1周目 / 次メンバー提案(ゼロベース)/ ADR 候補のドラフト化対象の選択(人間)
 - **次に見るべきもの**: この一つ下のエントリの残課題 / docs/work/current-task.md 7節
 
