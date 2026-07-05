@@ -6,6 +6,24 @@
 
 ---
 
+## 2026-07-05(Stage 1 続き)— workflow.md ドラフト、growth-log 運用開始、ループ1周目起票
+
+- **担当**: Gen(玄・メイン会話)
+- **参照した成果物**: handoff-log 先頭エントリ / AGENTS.md / docs/agent/team.md / docs/agent/safety.md / docs/work/current-task.md / docs/roadmap.md / original-memo.md セクション16
+- **判断したこと**(Gen の起案。確定はすべて人間承認待ち):
+  - workflow.md の対象範囲を「人間 ⇄ Gen の最小フロー」に限定(5人体制で memo セクション16 のフローに更新、roadmap Stage 4 どおり)
+  - ADR ドラフトの置き場を docs/work/adr-drafts/ とし、昇格は docs/decisions/ への新規作成方式とする(設計判断のため ADR 候補を作成: docs/work/adr-drafts/2026-07-05-adr-draft-location.md)
+  - 成長ループ1周目の練習台を「Gen 定義への記録運用(handoff-log の読み書き)の明文化」とする
+- **今回やったこと**:
+  - docs/agent/workflow.md 初版ドラフトを作成(**人間の承認待ち**。書き込み権限区分 / 正本ドラフトの出し方 / 進捗一本化 / 記録の使い分け / ADR 運用手順を含む)
+  - .ai/board/growth-log.md を作成し運用開始。ループ1周目(Gen 定義改善)を「提案・試した結果」まで記入、人間の判断待ち
+  - docs/work/adr-drafts/ を新設し ADR 候補1件を作成
+  - current-task.md を更新(6節の進捗注記、7節の判断依頼を差し替え)
+  - (同セッション追記)人間指摘により VCS 禁止の主語を「Gen」から「全エージェント」に修正(workflow.md 2節 / current-task.md 5節)
+  - (同セッション追記)人間提案の作業原則5項を整理: 「なぜを残す」「仮説から調査」は workflow.md 7節に反映(承認待ち)。TDD・テスト分析の3項は時期尚早のため docs/work/pending-rules.md に条件付き保留(実装テーマ着手 or Toki 加入検討時に再提案)。growth-log に記録
+- **残課題**: workflow.md ドラフトの人間承認 / growth-log 形式の確認とループ1周目の人間判断(採用なら team.md へ反映)/ 次メンバー提案(ゼロベース。ループ1周目の判断後に着手予定)/ ADR 候補一覧からのドラフト化対象の選択(人間)/ jj コミットは人間にお願いする
+- **次に見るべきもの**: docs/work/current-task.md 7節(判断依頼4件)/ docs/agent/workflow.md(承認対象)/ .ai/board/growth-log.md(ループ1周目)
+
 ## 2026-07-05(構造決定・承認)— メイン会話 = Gen、safety.md 確定
 
 - **担当**: セッションコーディネータ(Gen 構造決定前のメイン会話。次セッションからはメイン会話が Gen)
