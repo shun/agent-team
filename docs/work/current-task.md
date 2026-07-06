@@ -1,7 +1,7 @@
 # current-task: Rin(凛・リスク番人)を迎える(Stage 2)
 
-- 作成: 2026-07-05 / 作成者: Gen(玄)/ 最終更新: 2026-07-05(Rin 定義承認 → team.md 反映・アダプタ作成完了)
-- 状態: **進行中**(2026-07-06。Rin 加入・試運転完了、risk-review の P0/P1・mermaid 図・jj 読み取り緩和まで反映済み。docs/work 整理完了 [cleanup-plan.md](cleanup-plan.md): ADR 12件昇格(ADR-0002〜0013)・ドラフト4件削除・参照修正。持ち越し: Stage 2 合否の確定 / risk-review の P2 7件 / risk-review クラスタ3件の据え置き整理)
+- 作成: 2026-07-05 / 作成者: Gen(玄)/ 最終更新: 2026-07-07(Stage 2 完了)
+- 状態: **完了**(2026-07-07 人間判断。振り返り・合否判定は [stage2-retrospective.md](stage2-retrospective.md)(Rin レビュー2周済み)。アダプタ起動確認(P1-5)のみ未達のまま切り出し — 解決の実質期限 = Stage 3 完了前、roadmap Stage 3 の前提行に固定済み。**Stage 3 の current-task 作成時は「前提・持ち越し」節に本課題と、未判断の P2 7件・クラスタ整理(retrospective 10・11節)を記載すること**)
 - 参照: [roadmap.md](../roadmap.md) Stage 2 / [ADR-0009](../decisions/ADR-0009-second-member-rin.md)(2人目=Rin。旧 next-member-proposal を昇格)/ [team.md](../agent/team.md) / [original-memo.md](../notes/original-memo.md)(凍結コピー)セクション11
 - 前タスク: Stage 1「チーム土台の整備」は 2026-07-05 完了(記録は handoff-log と jj 履歴を参照)
 
@@ -54,10 +54,10 @@ roadmap Stage 2 + next-member-proposal.md 5節の手順。
 - [x] Rin の定義が人間承認を経て team.md に追記されている(2026-07-05)
 - [x] .claude/agents/rin.md(薄いアダプタ)が人間承認を経て存在する(2026-07-05)
 - [x] 試運転: Rin が docs/work/risk-review.md に土台一式へのレビューを出している(2026-07-05)
-- [ ] risk-review.md に**一般論ではない具体的な反対意見**が含まれている(人間が判定。※Rin 自身は P2-6 で「本レビュー単体での合否確定は利益相反。次の実対象への2回目レビューで確定を」と提案している)
+- [x] risk-review.md に**一般論ではない具体的な反対意見**が含まれている(2026-07-07 人間判定: 充足。初回レビュー + 実対象レビュー3件の反復を判定材料に — P2-6 の確定条件と整合。詳細は stage2-retrospective.md 3・5・7節)
 - [x] Rin の指摘への対応(採用 / 却下 / 保留)が人間の判断で仕分けされ、採用分が反映されている(2026-07-05 P0/P1 全7件採用・正本反映済み。P2 7件は未判断だが「急がない」扱いを人間が明示済み)
-- [ ] (P1-5 採用により追加)次セッションで `rin` アダプタ経由の起動が確認できている
-- [ ] 振り返りと Rin 定義の見直しが growth-log に記録されている
+- [ ] (P1-5 採用により追加)次セッションで `rin` アダプタ経由の起動が確認できている → **未達のまま切り出し**(2026-07-07 人間判断・案1。2セッション連続で失敗、原因は実行環境側と推定。診断と確認手順は stage2-retrospective.md 8節。解決の実質期限 = Stage 3 完了前 — roadmap Stage 3 前提行)
+- [x] 振り返りと Rin 定義の見直しが growth-log に記録されている(2026-07-07。定義の大きな見直しは不要と判断 — stage2-retrospective.md 6節)
 
 ## 7. 人間が求めている判断(いま判断してほしいこと)
 

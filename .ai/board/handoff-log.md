@@ -6,6 +6,29 @@
 
 ---
 
+## 2026-07-07(Stage 2 クローズ)— 人間が「完了」判断(案1)。roadmap・current-task・growth-log へ反映済み
+
+- **担当**: Gen(玄)
+- **参照した成果物**: stage2-retrospective.md / risk-review-stage2-close.md(差分再レビュー: 初回8件全解消・新規 P2×2 は即修正)
+- **判断したこと**(human): **「Stage 2 完了」(案1 = 条件分離)**。許容判断 F = 飲む(実質期限 = Stage 3 完了前)/ G = 確認手順の完全実施なしで閉じる / H = 不要 / I = 歯止め句採用。判断の記録は risk-review-stage2-close.md 末尾
+- **やったこと**(Gen): 反映直前の rin 実起動 smoke test(**失敗** — 案1 適用の前提事実)/ roadmap 反映3箇所(Stage 2 状態行・手順行注記・Stage 3 前提行)/ current-task 完了化 / growth-log 記録 / 判断記録の追記 / retrospective・review の状態行更新
+- **残課題**: **本セッション分の jj コミット(human)** / アダプタ起動経路の解決(実質期限 = Stage 3 完了前。確認手順は stage2-retrospective.md 8節)/ P2 7件の仕分け(推奨案あり・急がない)/ クラスタ整理(縮小版: 削除2件+転記+注記)
+- **次に見るべきもの**: Stage 3 着手時 → docs/roadmap.md Stage 3(前提行)と stage2-retrospective.md 10・11節(持ち越し)。current-task 新規作成時は「前提・持ち越し」節を必ず置く
+
+## 2026-07-07(Stage 2 クローズ準備)— 振り返り+完了判定パッケージ作成(Rin 2周レビュー済み)。rin アダプタ起動は再度失敗、人間の確認手順待ち
+
+- **担当**: Gen(玄)+ Rin(凛・インライン起動、同一サブエージェント継続で2周)
+- **参照した成果物**: stage2-retrospective.md(今回作成。振り返り+合否選択肢+roadmap 変更ドラフト+P2 仕分け案)/ risk-review-stage2-close.md(Rin のレビュー+差分再レビュー)/ risk-review.md / current-task.md / roadmap.md
+- **判断したこと**(Gen の提案。人間の判断はまだ):
+  - Stage 2 の合否は**案3(確認先行)を推奨**: 人間が確認手順1〜3(`/agents` → 再起動 → `git rev-parse`)を実施 → rin 実起動1回成功なら条件全充足で完了。だめなら案1(条件分離・実質期限 = Stage 3 完了前)/案2(継続)を判断
+  - risk-review クラスタの整理は縮小: **risk-review.md は残置**(正本 ADR-0010〜0012 + roadmap:81 から参照あり — Rin が grep 実証)、削除提案は request + base-fix の2件のみ。保留 P2 は pending-rules.md へ転記
+- **今回やったこと**:
+  - **rin アダプタ経由起動を検証 → 再度失敗**(`Agent type 'rin' not found`)。前回の「同一セッション作成が原因」仮説は反証。診断の結果、ファイル形式は正常で原因は実行環境側の読み込みと推定(詳細と人間向け確認手順は stage2-retrospective.md 8節)
+  - 振り返りドラフト作成 → **Rin レビュー1周目(P0:0 / P1:4 / P2:4)→ Gen 全件修正(反論なし)→ 差分再レビュー(8件全解消・新規 P2:2)→ 即修正**。最終仕分け: 修正済み10 / 見解相違0 / 許容判断待ち3(F・G・I)
+  - Rin の主要な捕捉: 削除前提「dangling なし」が既に偽 / 「環境起因」の断定は未確認 / 案1 の比較が非対称(Stage 3 で同ゲート再出現)/ 保留 P2 の記録喪失 / なりすまし事象が振り返りから欠落
+- **残課題**: **人間の判断5件(stage2-retrospective.md 12節)**: 確認手順1〜3の実施(数分)→ 合否(案3/1/2 + 許容判断 F・G・I)→ 承認後に Gen が roadmap 反映 + growth-log 記録 / (急がない)P2 7件の仕分け / クラスタ整理。**本セッション分の jj コミットも人間に**(新規2ファイル + handoff-log)
+- **次に見るべきもの**: docs/work/stage2-retrospective.md(特に 7・8・12節)/ docs/work/risk-review-stage2-close.md
+
 ## 2026-07-06(整理)— docs/work 整理: ADR12件昇格・ドラフト4件削除・参照修正(Rin 2周レビュー)
 
 - **担当**: Gen(玄)+ Rin(凛)
