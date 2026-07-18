@@ -6,6 +6,32 @@
 
 ---
 
+## 2026-07-18（Stage 3開始前 fresh session 2回目 Rinスモーク・第2試行）— 仕様事前固定後に成功
+
+- **担当**: Gen(玄) + Rin(凛・Codex custom agent)
+- **人間の判断**: 第1試行P1-1/P1-2の説明後、「対応してください」と指示。両指摘を採用し、許容ではなく緩和実施を選択
+- **実行ID**: `rin:/root/rin_smoke_stage3_second_retry_20260718t1858040900`（`fork_turns=none`、追加再試行なし）
+- **実行前固定**: retry requestでmanifest仕様1〜8・比較規則・planned実行IDを固定。preflight SHA-256 `45356bf6...acfb`、fixed snapshot ID `ceaf9583...2beb`を起動promptへ結合
+- **Rin結果**: 49行。第1試行P1-1/P1-2をともに充足と再判定。再試行はP0/P1なし、postflight未確認のみP2×1
+- **postflight**: protected manifestは前後`a1637ce1...957e`、5レビュー対象は前後`12b75282...4a4d`、preflightは前後`45356bf6...acfb`で完全一致。書き込みallowlistは結果1件（SHA-256 `03fa44a6...ea19`）の新規作成だけ
+- **判定**: P2のpostflight確認も完了し、Stage 3開始前のfresh session 2回目機能スモークは成功。current-task完了条件をチェック済み
+- **成果物**: `docs/work/rin-smoke-stage3-second-retry-request.md` / `rin-smoke-stage3-second-retry-preflight.md` / `rin-smoke-stage3-second-retry-result.md` / `rin-smoke-stage3-second-retry-evidence.md`
+- **残課題**: Stage 3を実際に開始するかは人間の判断。Stage 3要件整理後、コード・外部連携・高権限操作の前に技術的強制の要否を再判断する
+- **次に見るべきもの**: `docs/work/rin-smoke-stage3-second-retry-evidence.md` 6節 / `docs/work/current-task.md` 7・11節
+
+## 2026-07-18（Stage 3開始前 fresh session 2回目 Rinスモーク・第1試行）— 機能動作成功、証跡仕様の事前固定不足でゲート不採用
+
+- **担当**: Gen(玄) + Rin(凛・Codex custom agent)
+- **実行ID**: `rin:/root/rin_smoke_stage3_second_20260718t1822450900`（`fork_turns=none`、試行1回、再試行なし）
+- **参照した成果物**: `docs/work/current-task.md` / `docs/decisions/ADR-0014-tool-adapter-rollout-order.md` / `docs/work/rin-smoke-stage3-second-request.md`
+- **作成した成果物**: `docs/work/rin-smoke-stage3-second-result.md`（Rin、49行）/ `docs/work/rin-smoke-stage3-second-evidence.md`（Gen、前後manifest/hash・比較仕様・仕分け）
+- **試した結果**: 名前付き`rin`をfresh contextで起動し、正本参照・指定成果物返却に成功。保護領域23ファイルのmanifest hashは前後とも`afed002a...9569`で完全一致。Rinの書き込みはallowlistの結果ファイル1件（SHA-256 `9ed770d4...1586`）の新規作成のみ
+- **Rin指摘**: P0:0 / P1:2 / P2:1。P1-1は固定版と実行証跡の結び付き、P1-2はmanifest仕様と比較規則、P2-1は読み取りallowlist非逸脱をhashで立証できない残留リスク
+- **Gen再評価**: 実行後に仕様を文書化したため、P1-2の「比較規則を事前固定」を満たしていなかった。当初の「P1×2修正済み候補」を撤回。P1-1もRin未確認の対応案として扱う
+- **判定**: 本試行は機能動作の観測記録として残すが、Stage 3開始ゲートには不採用
+- **残課題**: manifest仕様・固定版識別子・許容差分を実行前の依頼書とpreflight証跡に固定し、新しいfresh Rin sessionで再試行する
+- **次に見るべきもの**: `docs/work/rin-smoke-stage3-second-evidence.md` 5節 / 再試行のpreflight・result・evidence
+
 ## 2026-07-18(Codex 基準委譲ループ)— Rin機能スモーク成功、6判断承認・正本反映・ADR-0014昇格済み
 
 - **担当**: Gen(玄)+ Rin(凛・Codex カスタムagent)

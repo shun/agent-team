@@ -61,7 +61,7 @@ Codex を最初の基準実行環境とし、**Gen が調査・レビューを�
 - [x] 正本変更案が `docs/work/` にドラフトされ、Rin のレビューと差分再レビューを経ている(差分再レビューの新規P1×2は緩和策どおり反映。原則1周のため再々レビューは行わず人間へ提示)
 - [x] 人間が正本反映の採用 / 却下 / 保留を判断している(2026-07-18、10節の6項目をすべて採用)
 - [x] 承認分が正本・Codexアダプタへ反映され、ADR-0014へ正式昇格している
-- [ ] Stage 3 開始前に、版を固定した fresh session で Rin の機能スモーク2回目が成功している
+- [x] Stage 3 開始前に、版を固定した fresh session で Rin の機能スモーク2回目が成功している（2026-07-18。第1試行は証跡仕様の事前固定不足で不採用。仕様固定後のfresh再試行でRinのP0/P1なし、前後比較も全条件一致）
 
 ## 8. Codex Rin スモークテスト結果
 
@@ -100,3 +100,33 @@ Rin のスモークテストと正本変更ドラフトのレビュー後、以�
 ### 人間の判断（2026-07-18）
 
 上記6項目をすべて採用。正本・Codexアダプタへの反映と ADR-0014 への昇格を承認した。Stage 3 開始前の残作業は、**版を固定した fresh session で Rin の機能スモーク2回目を成功させること**。新規ロール自身の名前付き起動確認は引き続き必須とする。
+
+## 11. fresh session 2回目スモーク（2026-07-18）
+
+- 実行ID: `rin:/root/rin_smoke_stage3_second_20260718t1822450900`
+- fresh条件: `fork_turns=none` の名前付き custom agent `rin`
+- 試行: 1回で成果物返却。再試行なし
+- 依頼: [rin-smoke-stage3-second-request.md](rin-smoke-stage3-second-request.md)
+- Rin成果物: [rin-smoke-stage3-second-result.md](rin-smoke-stage3-second-result.md)（49行、P0:0 / P1:2 / P2:1）
+- 機械証跡: [rin-smoke-stage3-second-evidence.md](rin-smoke-stage3-second-evidence.md)
+- 前後比較: 保護領域manifest hashは `afed002a...9569` で完全一致。書き込みallowlistは結果ファイル1件の`ABSENT`からSHA-256 `9ed770d4...1586`への新規作成だけ
+- Gen再評価: P1-1は事後証跡による対応案まで。P1-2は仕様を文書化したのが実行後であり、Rinが求めた「事前固定」を満たさない。当初の「両方とも緩和条件を満たした」という評価を撤回
+- 判定: 本試行は機能動作の観測記録として残すが、Stage 3開始ゲートには不採用。manifest仕様を実行前に固定したfresh sessionで再試行する
+
+### 第2試行（仕様事前固定後・成功）
+
+- 人間の判断: 第1試行P1-1/P1-2の説明を受けて「対応してください」と指示。両指摘を採用し、緩和を実施
+- 実行ID: `rin:/root/rin_smoke_stage3_second_retry_20260718t1858040900`
+- fresh条件: `fork_turns=none` の名前付き custom agent `rin`
+- 事前仕様: [rin-smoke-stage3-second-retry-request.md](rin-smoke-stage3-second-retry-request.md)
+- before証跡: [rin-smoke-stage3-second-retry-preflight.md](rin-smoke-stage3-second-retry-preflight.md)
+- Rin成果物: [rin-smoke-stage3-second-retry-result.md](rin-smoke-stage3-second-retry-result.md)（49行、P0/P1なし、P2×1）
+- postflight証跡: [rin-smoke-stage3-second-retry-evidence.md](rin-smoke-stage3-second-retry-evidence.md)
+- fixed snapshot ID: `ceaf95838e2d194820a66d668adc9ffdd2fc19021b3d644b8b1548901a982beb`
+- protected manifest: 前後 `a1637ce1...957e` で完全一致
+- 5レビュー対象manifest: 前後 `12b75282...4a4d` で完全一致
+- preflight SHA-256: 前後 `45356bf6...acfb` で完全一致
+- 書き込みallowlist: 結果1件の不在からSHA-256 `03fa44a6...ea19`への新規作成だけ
+- Rin再判定: 第1試行P1-1/P1-2はともに充足。再試行自体はP0/P1なし
+- P2-1 postflight未確認: Genが同一仕様で比較し、全成功条件一致により解消
+- 最終評価: **Stage 3開始前のfresh session 2回目機能スモーク成功**
