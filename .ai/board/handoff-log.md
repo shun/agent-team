@@ -6,6 +6,57 @@
 
 ---
 
+## 2026-07-18（Stage 3 Shino名前付き起動・fresh-session再試行）— 起動・試運転成功、Rinレビュー後の人間判断待ち
+
+- **担当**: Gen(玄) + Shino(篠・Codex custom agent `/root/shino_stage3_trial_20260718t2011350900`) + Rin(凛・Codex custom agent `/root/rin_stage3_shino_trial_review_20260718`)
+- **Shino再試行**: `agent_type: shino` / `fork_turns: none`をAPIが認識し、task作成・完了。固定入力から`requirements.md` 56行 / `open-questions.md` 38行を新規作成。第1dispatch後に許可された再試行1回で、追加再試行なし
+- **postflight**: 3バインディング値一致。protected regular file・symlink / 4固定入力 / preflightは前後完全一致。write allowlist manifestは指定2件の不在→regular file化。行数上限内
+- **証跡限界**: repo全体のbefore/after manifestとread監査はない。allowlist外書き込み非逸脱・解答非開示はShino自己申告、platform応答はGenの会話内観測で署名付き監査ではない。技術的権限制御の成功とは扱わない
+- **内容評価**: 3軸を分離し、指示遵守と権限制御、対応と解消、独立確認、人間判断用情報を抽出。非開示だった実対応の主要論点と整合。REQ-09の明示/仮説混在、回答済みQ-05、現在ゲート到達済みQ-08はGen統合で補正し、blind一次成果物は改変していない
+- **Rin初回レビュー**: P0:0 / P1:3 / P2:3。Genが過大な証跡主張を限定し、current-taskを同期、状態差を統合記録へ反映
+- **Rin差分再レビュー**: 新規P0/P1なし。P1-1・P2全件は解消、P1-2はinstruction-based残留リスクの人間許容判断待ち。P1-3はcurrent-task §2の古い状態行1件だけが残り、再レビュー後に指摘どおり機械修正。原則1周のため再々レビューなし
+- **人間判断待ち**: (1) 条件付き機能証跡を名前付きfresh-context試運転として採用するか (2) blind成果物をGen補正付きでShino能力確認へ採用するか (3) 技術的権限制御・read非逸脱・repo全体write非逸脱を未検証として維持し、コード・外部連携・高権限操作前の再判断ゲートを残すか
+- **人間判断（追記）**: 「ok。とりあえずこれで行ってみよう」として上記3点を条件付き採用。P1-2条件付き許容、P1-3事後同期も採用としてrisk reviewへ記録
+- **次工程（追記）**: `stage3-shino-retrospective.md`を作成。Gen推奨は案A（Shino定義・adapter維持、正式テンプレートは次の実テーマまで保留、Stage 3条件付き完了）。Rinレビュー後にクローズ判断を人間へ戻す
+- **振り返りRinレビュー（追記）**: 初回P0:0 / P1:5 / P2:1。Genが全件採用し、再判断ゲートの責任者・停止点・記録先、growth-log記録、roadmap限定文言、対称比較、テンプレート再確認トリガー、Gen補正込み完了表現を修正。差分再レビューで全件解消、見解相違・個別許容待ち・新規P0/P1なし
+- **最終判断待ち（追記）**: 修正版案A + クローズ後運用条件5点 + roadmap「完了（条件付き）」+ growth-log記録を一体で採用するか。正本・growth-logへの反映は未実施
+- **正本・VCS**: 本セッションでは正本変更なし。許可された`jj st`のみ実行し、VCS変更操作は未実施
+- **次に見るべきもの**: `docs/work/current-task.md` 8・11節 / `shino-stage3-trial-review-response.md` / `risk-review-stage3-shino-trial.md` 9節 / `shino-stage3-trial-retry-evidence.md`
+
+## 2026-07-18（Stage 3 Shino名前付き起動・第1dispatch）— 現セッション未認識、agent実行前に停止
+
+- **担当**: Gen(玄)
+- **準備**: 解答非開示の固定入力`shino-stage3-trial-input.md`、依頼`shino-stage3-trial-request.md`、preflight`shino-stage3-trial-preflight.md`を作成。planned実行ID / preflight SHA-256 / fixed snapshot IDを起動promptへ結合
+- **起動結果**: `agent_type: "shino"` / `fork_turns: "none"`でdispatchしたが、APIが`unknown agent_type 'shino'`を返した。subagent taskは作成されず、Shinoは実行されていない
+- **変更確認**: protected / 4読み取り対象 / preflight / write-beforeの全hashがdispatch前後で一致。`requirements.md` / `open-questions.md`は未作成。default agent・インライン代行は未実施
+- **判定**: 現会話セッションのcustom-agent一覧が起動時固定で、新規adapterを動的認識しない。adapter自体はTOML構文検証済み。名前付き起動ゲートは未充足
+- **再試行**: fresh Codex sessionで原則1回。再度未認識または成果物未作成なら、無断代行せず人間へ保留 / Gen限定代行 / 別環境再試行を戻す
+- **成果物**: `docs/work/shino-stage3-trial-input.md` / `shino-stage3-trial-request.md` / `shino-stage3-trial-preflight.md` / `shino-stage3-trial-attempt-evidence.md`
+- **次に見るべきもの**: `docs/work/current-task.md` 10節 / `docs/work/shino-stage3-trial-attempt-evidence.md` / `.codex/agents/shino.toml`
+
+## 2026-07-18（Stage 3最初の人間判断反映）— 1A〜5A採用、Shino正本・Codex adapter反映済み
+
+- **担当**: Gen(玄)
+- **人間の判断**: 1A〜5Aを採用。1Aは「3軸で記録するが、確認は重要度に応じて即時 / まとめて / 保留可能へ分ける」。2AはShinoが成功結果候補までを担い、Tokiなど他メンバーと成果物で協力。3Aは過去P1-2を解答非開示で試す。4AはStage 3進行中化。5Aはteam.mdと薄いCodex adapterの反映
+- **P1明示判断**: P1-1 / P1-5はいずれもGenの最終修正案を「修正して採用」。見解相違・許容扱いなし。risk-review末尾へ記録済み
+- **正本反映**: `docs/agent/team.md`へShino節を追加し未加入表から削除。`docs/roadmap.md` Stage 3を進行中へ更新。`.codex/agents/shino.toml`を新規作成。growth-logへ成長ループ判断を記録
+- **検証**: Python標準`tomllib`で`shino.toml`の構文・name・developer_instructionsを確認。`rg`でteam/roadmap/adapterの反映箇所を確認。`jj status`で今回の許可範囲外の変更がないことを確認
+- **未実施**: 現セッションには新規custom agent種別が動的追加されないため、名前付きShino実起動と試運転は未実施。VCS変更操作も未実施
+- **次のゲート**: fresh sessionで名前付き`shino`を起動し、必須正本参照・指定成果物のみの書き込み・実行前後証跡を確認する。成功後、過去P1-2の解答非開示入力で`requirements.md` / `open-questions.md`を作成する
+- **次に見るべきもの**: `docs/work/current-task.md` 4・8・9節 / `.codex/agents/shino.toml` / `docs/agent/team.md` Shino節 / `docs/work/shino-definition-draft.md` D節
+
+## 2026-07-18（Stage 3 Shino開始・最初の人間判断点）— 定義ドラフトとRin 2周レビュー完了
+
+- **担当**: Gen(玄) + Rin(凛・Codex custom agent `/root/rin_stage3_shino_definition_review`)
+- **開始前提**: `team.md` / `safety.md` / `roadmap.md` Stage 3 / `workflow.md` / 直近handoffを読み、Codex Rin の版固定fresh-sessionスモーク成功を確認。作業開始時の `jj status` はclean
+- **作成・更新した成果物**: `docs/work/current-task.md` / `shino-definition-draft.md` / `rin-review-stage3-shino-definition-request.md` / `risk-review-stage3-shino-definition.md` / `shino-definition-review-response.md`
+- **試運転テーマ評価**: 「レビュー指摘の対応・独立検証・人間判断ループの標準化」はStage 3に適する。ただし初回は過去の実在P1-2 1件に限定し、指摘本文・対象記述・当時の依頼目的だけをShinoへ渡す。Gen対応・修正後成果物・人間判断記録は評価時まで非開示
+- **Rin初回レビュー**: P0:0 / P1:4 / P2:3。Genが全件を修正案へ反映
+- **Rin差分再レビュー（原則1周）**: P1-2〜P1-4、P2-1〜P2-3は解消。P1-1一部未解消、新規P1-5。GenはP1-1を3軸状態（情報区分 / 人間判断 / 事実確認）で修正し、P1-5を解答非開示ケースへ変更。再々レビューせず人間の明示判断へ戻した
+- **正本・adapter**: 人間判断前のため未変更。VCS変更操作は未実施。`jj status`で変更が許可された`docs/work/`と本handoff追記だけであることを確認
+- **人間判断待ち**: (1)Shino定義（P1-1対応込み） (2)縮小・解答非開示の試運転（P1-5対応込み） (3)Shino/Toki責務境界 (4)roadmap Stage 3状態行の進行中化 (5)採用時のteam.md反映・Codex adapter作成への進行
+- **次に見るべきもの**: `docs/work/current-task.md` 9節 / `docs/work/shino-definition-draft.md` / `docs/work/risk-review-stage3-shino-definition.md` 差分再レビュー節 / `docs/work/shino-definition-review-response.md`
+
 ## 2026-07-18（Stage 3開始前 fresh session 2回目 Rinスモーク・第2試行）— 仕様事前固定後に成功
 
 - **担当**: Gen(玄) + Rin(凛・Codex custom agent)

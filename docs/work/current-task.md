@@ -1,132 +1,144 @@
-# current-task: Codex 基準の委譲ループを確立する
+# current-task: Stage 3 — Shino(篠・要件整理)を迎える
 
 - 作成: 2026-07-18 / 作成者: Gen(玄)
-- 状態: **進行中**
-- 前タスク: Stage 2「Rin(凛)を迎える」は 2026-07-07 完了。詳細は [stage2-retrospective.md](stage2-retrospective.md) / [growth-log](../../.ai/board/growth-log.md) を参照
-- 関連 ADR: [ADR-0014: ツール別エージェントアダプタの展開順序と比較ゲート](../decisions/ADR-0014-tool-adapter-rollout-order.md)
+- 状態: **進行中（Stage 3クローズの人間判断待ち）**
+- 前タスク: Codex 基準委譲ループは完了条件を充足。詳細は旧 current-task の履歴と [handoff-log](../../.ai/board/handoff-log.md) 2026-07-18 を参照
+- 正本: [roadmap.md](../roadmap.md) Stage 3 / [workflow.md](../agent/workflow.md) / [team.md](../agent/team.md) / [safety.md](../agent/safety.md)
 
 ---
 
 ## 1. 目的
 
-Codex を最初の基準実行環境とし、**Gen が調査・レビューを抱え込まず、Rin に作業を委譲し、Markdown 成果物を受け取って統合する経路**を実動確認する。
+Stage 2 で確立した標準手順に従い、三人目のメンバー **Shino(篠・要件整理)** を一人ずつ迎える。
 
-本タスクは Stage 3(Shino 加入)の前提である「サブエージェントのアダプタ起動経路の解決」を、Codex 上で先に満たすためのタスクである。
+Shino が、人間の発言・制約・困りごとから、明示要件・仮説としての暗黙要件・未確認事項を分離し、人間が次の判断をできる Markdown 成果物へ変換できることを試運転で確認する。
 
-## 2. 背景と人間の判断
+## 2. 開始前提と持ち越し
 
-- 2026-07-18、人間はツール展開を **Codex を最優先**として進める方針を採用した
-- 比較順は **Codex → Claude Code → Antigravity** とし、Codex で確立した同一スモークテストを各環境へ適用する
-- 直前のリポジトリ分析では Gen が調査を抱えすぎた。以後、Gen は依頼整理・委譲・成果物統合に専念し、独立して切り出せる作業はサブエージェントへ渡す
-- 作業コピーには、人間側で追加された未コミットの `.codex/agents/rin.toml` が存在する。本タスクでは既存変更として保護し、承認前に上書きしない
+| 項目 | 状態 | 根拠・扱い |
+|---|---|---|
+| 主実行環境で名前付き委譲経路が実動確認済み | **充足** | Codex Rin の版固定 fresh-session スモーク2回目が成功。`rin-smoke-stage3-second-retry-evidence.md` 参照 |
+| 新規ロール自身の名前付き起動確認 | **条件付き充足** | 名前付き`shino` / `fork_turns=none`でtask作成・成果物返却をGenが観測。署名付きdispatch/read監査ではない限界を人間が条件付き許容 |
+| instruction-based 安全境界の残留リスク | **条件付き許容・次ゲート固定** | 技術的権限制御・read非逸脱・repo全体write非逸脱は未検証。コード・外部連携・高権限操作へ進む前に再判断する |
+| Stage 2 の保留 P2 | **今回必要なものだけ再確認** | Shino の責務境界・試運転に直接関係する項目があれば Rin レビューで判断材料へ戻す。全件整理は非対象 |
 
 ## 3. 仮説
 
-`.codex/agents/rin.toml` は Codex のカスタムエージェントとして現在のセッションに認識されている。Gen が明示的に `rin` を起動し、Rin が正本を読んで指定された `docs/work/` 成果物だけを作成できれば、Stage 2 から持ち越した委譲経路の課題は **Codex については解決**したと判断できる。
+試運転の上位テーマ「レビュー指摘の対応・独立検証・人間判断ループの標準化」は、次の理由で Shino の要件整理能力を試す実テーマとして適している。
 
-## 4. 対象範囲
+1. 「対応済み」「独立検証」「人間判断が必要」の意味が未定義で、明示要件・暗黙要件・未確認事項を分ける余地がある
+2. 人間・Gen・Rin・将来の Toki の責務境界を、設計として確定せず要件として整理する必要がある
+3. 既存 workflow の実例があり、抽象的な架空テーマではなく、成果物の有用性を人間が判断できる
 
-1. Codex 優先戦略を ADR 候補として記録する
-2. Codex の `rin` カスタムエージェントを実起動する
-3. Rin が `team.md` の Rin 節と `safety.md` を読んだことを成果物へ明記する
-4. Rin が指定された `docs/work/risk-review-codex-baseline.md` だけを作成する
-5. Gen が Rin の成果物を統合し、必要な修正または反論を行う
-6. 正本変更案を `docs/work/` にドラフトし、Rin レビューを経て人間へ提示する
+ただし、上位テーマ全体を初回に扱うと Shino の能力以外の評価ノイズが大きい。**初回は Codex 基準委譲ループの実在する指摘 P1-2「指示遵守を権限制御の成功と誤認する」1件だけ**をケースにする。Shino には指摘本文・対象記述・当時の依頼目的だけを渡し、解答に当たる Gen 対応・修正後成果物・人間判断記録は評価時まで読み取り対象外とする。Shino は標準手順そのものを決定せず、`requirements.md` / `open-questions.md` の作成までとする。標準化の可否と正本 workflow の変更は、試運転後に別の変更ドラフトとして Gen が提示し、人間が判断する。
 
-## 5. 非対象範囲
+## 4. 標準手順と現在地
 
-- 人間承認前の正本(`AGENTS.md` / `CLAUDE.md` / `docs/agent/` / `docs/roadmap.md` / `docs/decisions/` / `.claude/` / `.codex/`)への反映
-- Claude Code / Antigravity のスモークテスト
-- Shino / Kai / Toki の加入
-- Stage 2 から持ち越した P2 7件すべての解消
-- コミット、push、その他のバージョン管理操作
-
-## 6. 制約
-
-- [safety.md](../agent/safety.md) の禁止事項を適用する
-- `.codex/` は現行 safety.md の列挙から漏れているが、**本タスクでは `.claude/` と同じ正本扱い**とし、人間承認前に変更しない
-- エージェントが実行できる VCS 操作は、素の `jj st` / `jj diff` / `jj log` のみ
-- Gen は Rin の発見作業を自分でやり直さない。ただし統合責任として、P0 / P1 の対象引用・根拠・正本との矛盾だけは限定確認する
-- Rin の P0 / P1 指摘は、人間の明示判断が記録されるまで正本へ反映しない
-
-## 7. 完了条件
-
-- [x] 人間が Codex → Claude Code → Antigravity の順で同一スモークテストを適用する展開戦略を採用した
-- [x] 展開戦略の ADR 候補が作成されている
-- [x] Codex の `rin` カスタムエージェントが実起動できる(2026-07-18。初回は時間超過で中断、同一 Rin への縮小再試行で完了)
-- [x] Rin が `team.md` Rin 節と `safety.md` を参照したことを成果物に明記している
-- [x] Rin が `docs/work/risk-review-codex-baseline.md` を作成し、`jj status` で既知の変更以外に指定外変更がないことを Gen が確認した
-- [x] Gen が Rin の発見作業を再実施せず、P0 / P1 の対象引用と根拠だけを限定確認して統合した
-- [x] Rin の指摘が「修正済み / 見解相違 / 人間の許容判断待ち」に仕分けられている(下記9節)
-- [x] 正本変更案が `docs/work/` にドラフトされ、Rin のレビューと差分再レビューを経ている(差分再レビューの新規P1×2は緩和策どおり反映。原則1周のため再々レビューは行わず人間へ提示)
-- [x] 人間が正本反映の採用 / 却下 / 保留を判断している(2026-07-18、10節の6項目をすべて採用)
-- [x] 承認分が正本・Codexアダプタへ反映され、ADR-0014へ正式昇格している
-- [x] Stage 3 開始前に、版を固定した fresh session で Rin の機能スモーク2回目が成功している（2026-07-18。第1試行は証跡仕様の事前固定不足で不採用。仕様固定後のfresh再試行でRinのP0/P1なし、前後比較も全条件一致）
-
-## 8. Codex Rin スモークテスト結果
-
-- **起動**: 成功。Codex のカスタムagent種別 `rin` を明示指定して独立コンテキストで起動できた
-- **初回試行**: 必須5ファイルのレビュー完了までは応答で確認できたが、成果物作成がタイムボックスを超えたため Gen が中断した
-- **縮小再試行**: 同一 Rin に「最大80行・追加調査なし」と限定して再依頼し、67行の [risk-review-codex-baseline.md](risk-review-codex-baseline.md) が返った
-- **変更範囲**: `jj status` で、事前に存在した `.codex/agents/rin.toml`、Gen が作成した current-task / ADR候補、Rin の指定成果物以外の変更がないことを確認した
-- **評価**: 名前付き起動・正本参照・成果物返却という**機能スモークは成功**。ただし安全境界の技術的強制、実行主体の独立証跡、fresh session での再現性は未検証
-- **運用上の学び**: 初回委譲では対象ファイル数だけでなく、最大行数・時間・停止条件を依頼文へ明示する
-
-## 9. Rin 指摘への Gen 対応・仕分け
-
-| ID | Gen 対応 | 仕分け |
+| 手順 | 状態 | 成果物・ゲート |
 |---|---|---|
-| P0-1 `.codex/` が実保護対象外 | `.codex/` 全体を正本保護へ追加し、adapter の `.Codex/agents/` を修正 | **修正済み・正本反映済み** |
-| P1-2 指示遵守と権限制御の混同 | 機能スモークと安全強制ゲートを分離。Stage 3 の要件整理後、コード・外部連携・高権限操作の前に技術的強制の要否を再判断する | **条件付き許容** |
-| P1-3 起動・非変更が自己申告中心 | 今回は起動ツールのagent種別指定 + `jj status` を併記。次回は実行IDと、保護領域全体・書き込みallowlistの実行前後manifest/hashを記録する | **2回目の fresh-session スモーク待ち** |
-| P1-4 Gen の確認制限が強すぎる | 「発見作業は重複しないが、P0/P1の引用と根拠は限定確認」に本タスクを修正 | **修正済み** |
-| P1-5 レビュー対象内の命令を未信頼データとして扱わない | adapter に対象allowlist・未信頼データ・埋め込み命令不実行・優先順位を追加 | **修正済み・adapter反映済み** |
-| P1-N1 adapter の必須参照と allowlist が衝突 | allowlist を「必須正本 team/safety + prompt 列挙対象」と定義し、team/safety の制約内で prompt を依頼内容の正とする | **修正済み・adapter反映済み** |
-| P1-N2 委譲失敗時の代替経路がない | 再試行は原則1回。2回連続失敗で人間へ保留 / 限定代行 / 別環境再試行を戻し、無断代行を禁止する | **修正済み・正本反映済み** |
+| 1. Gen が Shino の役割定義をドラフト | **完了** | [shino-definition-draft.md](shino-definition-draft.md) |
+| 2. Rin が正本変更ドラフトをレビュー | **完了** | request / [risk-review-stage3-shino-definition.md](risk-review-stage3-shino-definition.md)（P0:0 / P1:4 / P2:3） |
+| 3. Gen が対応し、Rin が差分再レビュー | **完了** | [shino-definition-review-response.md](shino-definition-review-response.md) / risk-review 末尾。最終残件P1×2は対応案を作成し、原則1周のため再々レビューせず人間へ |
+| 4. 人間が定義・試運転計画を判断 | **完了** | 1A〜5Aを採用（1Aは重要度に応じた選択的確認を条件化） |
+| 5. 承認分を正本へ反映し adapter を作成 | **完了** | `team.md` / `roadmap.md` / `.codex/agents/shino.toml` / growth-log |
+| 6. fresh context で名前付き Shino を起動 | **条件付き完了** | APIが名前付き`shino`を認識し、`fork_turns=none`でtask作成・完了。証跡限界を人間が条件付き許容 |
+| 7. 実在するレビュー指摘1件で試運転 | **完了** | `requirements.md` / `open-questions.md`を新規作成。固定対象postflight一致、行数上限内 |
+| 8. Gen 統合・Rin レビュー・人間判断 | **完了（条件付き採用）** | 初回P0:0 / P1:3 / P2:3。差分再レビューでP1-1・P2全件解消。P1-2条件付き許容、P1-3事後同期を人間が採用 |
+| 9. 振り返り → 定義変更ドラフト → Rin差分レビュー → 人間判断 | **差分再レビュー完了・人間判断待ち** | 初回P0:0 / P1:5 / P2:1。差分再レビューで全件解消、見解相違・個別許容待ち・新規P0/P1なし。修正版案AをGen推奨 |
 
-見解相違: 0件。
+## 5. 対象範囲
 
-## 10. 人間の判断（解決済み）
+1. Shino の役割・責任・判断基準・禁止事項・動作形態のドラフト
+2. Rin による定義ドラフトのリスクレビューと、Gen による仕分け
+3. 人間による最初の判断後、Codex 用の薄い adapter 作成
+4. fresh context での名前付き起動確認
+5. 第一候補テーマのうち、実在するレビュー指摘1件に限定した `requirements.md` / `open-questions.md` 作成
+6. 試運転の振り返りと、必要最小限の成果物テンプレート提案
 
-Rin のスモークテストと正本変更ドラフトのレビュー後、以下の6項目を判断対象とした。
+## 6. 非対象範囲
 
-1. `.codex/` を正本保護対象に追加するか
-2. Codex アダプタ対応を Stage 6 から前倒しする計画変更を採用するか
-3. Codex の機能スモーク1回成功を Stage 3 の前提充足とするか、fresh session で2回目を必須にするか(Rin 推奨: 2回目必須)
-4. 安全境界を技術的に強制するか、当面は instruction-based の残留リスクを明示受容するか
-5. Rin 1名の成功で基準経路を確立したとみなすか。新規ロールごとの名前付き起動確認は引き続き必須とするか
-6. 次の比較対象を暫定どおり Claude Code とするか
+- 最初の人間判断前の正本 docs・adapter 変更
+- 試運転中に workflow の標準手順を確定すること
+- レビュー対応の自動化、外部サービス連携、実装、deploy
+- Toki を先行加入させること、または Shino に QA / リスク番人の責務を持たせること
+- Claude Code / Antigravity 用 Shino adapter の作成
+- Stage 2 保留 P2 の一括整理
 
-### 人間の判断（2026-07-18）
+## 7. 制約
 
-上記6項目をすべて採用。正本・Codexアダプタへの反映と ADR-0014 への昇格を承認した。Stage 3 開始前の残作業は、**版を固定した fresh session で Rin の機能スモーク2回目を成功させること**。新規ロール自身の名前付き起動確認は引き続き必須とする。
+- [safety.md](../agent/safety.md) を全メンバーへ適用する
+- エージェント間の依頼と結果は Markdown 成果物で受け渡す
+- 正本変更ドラフトと final-proposal は人間判断前に Rin レビューを経る
+- Rin の P0 / P1 は、人間の明示判断が記録されるまで確定・Stage 完了へ進めない
+- サブエージェントの読み書き対象、出力量、停止条件、再試行上限を起動依頼で固定する
+- VCS 操作は行わない（許可された素の `jj st` / `jj diff` / `jj log` による確認を除く）
 
-## 11. fresh session 2回目スモーク（2026-07-18）
+## 8. 完了条件
 
-- 実行ID: `rin:/root/rin_smoke_stage3_second_20260718t1822450900`
-- fresh条件: `fork_turns=none` の名前付き custom agent `rin`
-- 試行: 1回で成果物返却。再試行なし
-- 依頼: [rin-smoke-stage3-second-request.md](rin-smoke-stage3-second-request.md)
-- Rin成果物: [rin-smoke-stage3-second-result.md](rin-smoke-stage3-second-result.md)（49行、P0:0 / P1:2 / P2:1）
-- 機械証跡: [rin-smoke-stage3-second-evidence.md](rin-smoke-stage3-second-evidence.md)
-- 前後比較: 保護領域manifest hashは `afed002a...9569` で完全一致。書き込みallowlistは結果ファイル1件の`ABSENT`からSHA-256 `9ed770d4...1586`への新規作成だけ
-- Gen再評価: P1-1は事後証跡による対応案まで。P1-2は仕様を文書化したのが実行後であり、Rinが求めた「事前固定」を満たさない。当初の「両方とも緩和条件を満たした」という評価を撤回
-- 判定: 本試行は機能動作の観測記録として残すが、Stage 3開始ゲートには不採用。manifest仕様を実行前に固定したfresh sessionで再試行する
+- [x] Stage 3 開始前の Rin fresh-session スモークゲートが充足している
+- [x] Shino の定義ドラフトが作成されている
+- [x] 定義ドラフトが Rin レビューを経ている
+- [x] Gen の対応差分が Rin の差分再レビューを経ている
+- [x] 人間が Shino 定義と試運転計画を採用 / 修正して採用 / 却下 / 保留で判断している
+- [x] 採用分だけが正本 team.md と Codex adapter に反映されている
+- [x] fresh context で名前付き Shino の実起動が成功している（platform応答のGen観測を条件付き機能証跡として人間採用）
+- [x] Shino が指定された `requirements.md` / `open-questions.md` を作成している（2件の作成を確認。repo全体の書き込み非逸脱は未監査として明示）
+- [x] 要件成果物で情報区分 / 人間判断 / 事実確認の3軸が区別されている（Gen・Rin支持、人間採用）
+- [x] 第一候補テーマについて、人間が次に判断すべき事項が明確になっている（blind出力をGen補正付きで人間採用）
+- [ ] 試運転を振り返り、Shino 定義の維持 / 修正 / 再検討を人間が判断している
+- [x] 採用分が正本と growth-log に反映され、handoff-log が更新されている
 
-### 第2試行（仕様事前固定後・成功）
+## 9. 最初の人間判断
 
-- 人間の判断: 第1試行P1-1/P1-2の説明を受けて「対応してください」と指示。両指摘を採用し、緩和を実施
-- 実行ID: `rin:/root/rin_smoke_stage3_second_retry_20260718t1858040900`
-- fresh条件: `fork_turns=none` の名前付き custom agent `rin`
-- 事前仕様: [rin-smoke-stage3-second-retry-request.md](rin-smoke-stage3-second-retry-request.md)
-- before証跡: [rin-smoke-stage3-second-retry-preflight.md](rin-smoke-stage3-second-retry-preflight.md)
-- Rin成果物: [rin-smoke-stage3-second-retry-result.md](rin-smoke-stage3-second-retry-result.md)（49行、P0/P1なし、P2×1）
-- postflight証跡: [rin-smoke-stage3-second-retry-evidence.md](rin-smoke-stage3-second-retry-evidence.md)
-- fixed snapshot ID: `ceaf95838e2d194820a66d668adc9ffdd2fc19021b3d644b8b1548901a982beb`
-- protected manifest: 前後 `a1637ce1...957e` で完全一致
-- 5レビュー対象manifest: 前後 `12b75282...4a4d` で完全一致
-- preflight SHA-256: 前後 `45356bf6...acfb` で完全一致
-- 書き込みallowlist: 結果1件の不在からSHA-256 `03fa44a6...ea19`への新規作成だけ
-- Rin再判定: 第1試行P1-1/P1-2はともに充足。再試行自体はP0/P1なし
-- P2-1 postflight未確認: Genが同一仕様で比較し、全成功条件一致により解消
-- 最終評価: **Stage 3開始前のfresh session 2回目機能スモーク成功**
+Rin 初回レビューは P0:0 / P1:4 / P2:3。差分再レビューで6件解消、P1-1一部未解消、新規P1-5となった。Gen は最終2件も修正案へ反映したが、原則1周のため再々レビューせず、次を人間へ戻す。
+
+| 判断 | Gen 推奨 | Rin 指摘との関係 |
+|---|---|---|
+| 1. [shino-definition-draft.md](shino-definition-draft.md) を修正後の内容で採用するか | **採用** | P1-1対応として情報区分 / 人間判断 / 事実確認を分離。P1-2〜P1-4、P2×3は解消確認済み |
+| 2. 第一候補テーマを、過去の実在 P1-2 1件・解答非開示の試運転として採用するか | **採用** | 新規P1-5の模範解答混入を除去。広い標準化は試運転後の別判断 |
+| 3. 「成功結果候補はShino、テスト条件・証跡・合否判定方法はToki」の境界を採用するか | **採用** | P1-2解消確認済み |
+| 4. roadmap Stage 3 の状態行を「進行中（2026-07-18、人間が開始を指示）」へ変更するか | **採用** | 正本の進捗状態を current-task と一致させる |
+| 5. 1〜4採用時、team.md 反映と Codex adapter 作成へ進めるか | **進める** | 標準手順の次工程。fresh context 実起動までは完了扱いにしない |
+
+判断1は最終レビュー残件 **P1-1**、判断2は **P1-5** への明示判断記録を兼ねる。採用 / 却下 / 保留のいずれでもよいが、P1のため黙示的には確定しない。
+
+### 人間の判断記録（2026-07-18）
+
+- **1A**: 採用。3軸モデルを使うが、未確認事項をすべて即時確認せず、重要度に応じて即時 / まとめて / 保留可能へ分ける
+- **2A**: 採用。Shino は成功結果候補までを整理し、Toki など他メンバーと成果物を介して協力する
+- **3A**: 採用。過去の実在 P1-2 を解答非開示で試す
+- **4A**: 採用。roadmap Stage 3 を進行中へ更新する
+- **5A**: 採用。team.md 反映と薄い Codex adapter 作成へ進む
+
+P1-1 / P1-5 は、Gen の最終修正案を**採用**として明示判断済み。次は fresh context の名前付き Shino 起動確認であり、成功するまで Stage 3 完了とは扱わない。
+
+## 10. 名前付きShino 第1dispatch（2026-07-18）
+
+- planned実行ID: `shino:/root/shino_stage3_trial_20260718t2011350900`
+- preflight SHA-256: `a41264bfbc258092e98c5eb81d2fc4c4a8f5fc85ee1e0ed9fb740be9419bbd1c`
+- fixed snapshot ID: `8617a1ad805c67a22d7d81e54e71dd42633259d3253ac2e523b55eaf0da24af2`
+- 結果: 起動APIが `unknown agent_type 'shino'` を返し、agent実行前に停止
+- 変更確認: protected / read / write-before manifestとpreflight SHA-256は全て実行前と一致。`requirements.md` / `open-questions.md`は未作成
+- 判断: 名前付き起動ゲート未充足。default agentやインライン展開では代行しない
+- 次: fresh Codex sessionで`.codex/agents/shino.toml`を読込後、同じ固定入力と証跡仕様で再試行する。再失敗ならworkflowどおり人間判断へ戻す
+- 詳細: [shino-stage3-trial-attempt-evidence.md](shino-stage3-trial-attempt-evidence.md)
+
+## 11. 名前付きShino fresh-session再試行と試運転レビュー（2026-07-18）
+
+- task: `/root/shino_stage3_trial_20260718t2011350900` / `agent_type: shino` / `fork_turns: none`
+- 結果: 起動APIが名前付きShinoを認識し、`requirements.md` 56行 / `open-questions.md` 38行を新規作成
+- postflight: protected regular file・symlink / 4固定入力 / preflightは前後完全一致。書き込みallowlist manifestは指定2件の不在→regular file化
+- 証跡限界: リポジトリ全体のbefore/after manifestとread監査はなく、allowlist外の書き込み非逸脱・解答非開示はShino自己申告。platform起動応答はGen観測記録で、署名付き監査ではない
+- 内容評価: 3軸を分離し、指示遵守と権限制御、対応と解消、独立確認、人間判断用情報を抽出。非開示だった実対応の主要論点と整合
+- Rin初回レビュー: P0:0 / P1:3 / P2:3。P1-1/P1-3は主張限定・current-task同期で対応、P1-2は一部修正してinstruction-based残留リスクの人間判断待ち。P2はblind成果物を改変せずGen統合で補正
+- 差分再レビュー: 新規P0/P1なし。P1-1・P2全件解消、P1-2は人間の許容判断待ち。P1-3は§2の古い状態行1件だけが残り、本節と整合する状態へ機械修正した。原則1周のため再々レビューは行わない
+- 次: 条件付き証跡の採用 / Shino能力確認 / 未検証範囲の維持を人間へ判断依頼
+- 詳細: [retry evidence](shino-stage3-trial-retry-evidence.md) / [trial risk review](risk-review-stage3-shino-trial.md) / [Gen response](shino-stage3-trial-review-response.md)
+
+## 12. 試運転への人間判断（2026-07-18）
+
+- 判断: Gen推奨3点を**条件付き採用**（人間回答「ok。とりあえずこれで行ってみよう」）
+- 採用: 名前付きfresh-context機能証跡 / blind成果物の能力評価 / Gen補正付きの3軸・主要論点・確認優先度整理
+- 維持する限界: 技術的権限制御・read非逸脱・repo全体write非逸脱は未検証
+- 次の安全ゲート: コード作業・外部連携・高権限操作の前に技術的強制の要否を再判断
+- 次工程: Stage 3振り返りを作成し、Shino定義の維持 / 修正 / 再検討とStage 3クローズをRinレビュー後に人間へ戻す
