@@ -6,6 +6,14 @@
 
 ---
 
+## 2026-07-18 — Codex を基準実行環境とする委譲フローを正本化【採用・反映済み】
+
+- **提案**: Codex を最初の基準実行環境とし、Gen が独立作業を名前付きサブエージェントへ委譲して Markdown 成果物を統合する。Claude Code / Antigravity は同一スモークテストで比較する
+- **試した結果**: Codex カスタムagent `rin` の実起動に成功。初回は成果物作成が時間超過し、最大80行・追加調査なしの縮小再試行で完了。Rin 初回レビュー P0:1/P1:4 → Gen 全件対応 → 差分再レビューで既存2件解消・P1-2許容判断待ち・不足2件+新規P1×2 → 緩和策を正本変更案へ反映
+- **人間の判断**: 6項目をすべて採用。(1)正本・Codex adapter変更 (2)fresh session 2回目をStage 3前に必須 (3)Stage 3要件整理まではinstruction-based残留リスクを条件付き許容 (4)新規ロールごとの名前付き起動確認維持 (5)次の比較環境はClaude Code (6)ADR正式昇格
+- **反映先**: AGENTS.md / docs/agent/safety.md / workflow.md / team.md / docs/roadmap.md / `.codex/agents/rin.toml` / ADR-0014 / docs/work/current-task.md
+- **残るゲート**: Stage 3開始前に、版固定したfresh sessionでRin機能スモーク2回目を成功させる。実行IDと保護領域全体・書き込みallowlistの前後manifest/hashを記録する。Stage 3要件整理後、コード・外部連携・高権限操作の前に技術的強制の要否を再判断する
+
 ## 2026-07-07 — Stage 2(Rin 加入)完了。振り返りと合否判定【採用・反映済み】
 
 - **提案**(Gen が stage2-retrospective.md にドラフト化 → Rin レビュー2周): Stage 2 を「完了」と判定する。判定基準は件数でなく「指摘が対象特定可能で、人間が採用/却下を判断できたか」(P1-6 で人間承認済みの基準)。判定材料は初回 risk-review(P0:1/P1:6/P2:7、全件対象特定)+ 実対象レビュー3件の反復(jj 緩和2周 / mermaid 図2周 / cleanup-plan)— Rin 自身が P2-6 で出した確定条件「次の実対象への2回目レビューで確定」と整合

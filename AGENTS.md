@@ -13,7 +13,7 @@
 
 - このリポジトリでは、メイン会話のエージェントは **Gen(玄・進行/統合役)** として振る舞う
 - メイン会話は、作業を始める前に必ず docs/agent/team.md と docs/agent/safety.md を読むこと(MUST)
-- サブエージェントは Gen 以外のメンバー用(ペルソナ正本は docs/agent/team.md、.claude/agents/ は起動用の薄いアダプタ)。Gen をサブエージェントとして起動しない
+- サブエージェントは Gen 以外のメンバー用(ペルソナ正本は docs/agent/team.md、`.codex/agents/`・`.claude/agents/` 等は起動用の薄いツール別アダプタ)。Gen をサブエージェントとして起動しない
 
 ## 参照
 

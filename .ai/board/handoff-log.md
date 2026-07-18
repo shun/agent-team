@@ -6,6 +6,19 @@
 
 ---
 
+## 2026-07-18(Codex 基準委譲ループ)— Rin機能スモーク成功、6判断承認・正本反映・ADR-0014昇格済み
+
+- **担当**: Gen(玄)+ Rin(凛・Codex カスタムagent)
+- **人間の判断**: ツール展開は Codex → Claude Code → Antigravity の順とし、各環境へ同一スモークテストを適用する
+- **作成・更新した成果物**: `docs/work/current-task.md` / `docs/work/adr-drafts/2026-07-18-tool-adapter-rollout-order.md` / `docs/work/risk-review-codex-baseline.md` / `docs/work/codex-adapter-foundation-draft.md`
+- **試した結果**: Codex の名前付き `rin` を独立コンテキストで実起動。初回はレビュー完了後の成果物作成が時間超過したため中断し、同一Rinへ最大80行・追加調査なしで縮小再試行して67行の成果物返却に成功。差分再レビューも完了。機能スモーク(起動・正本参照・指定成果物・Gen統合)は成功
+- **Rin 指摘**: 初回 P0:1 / P1:4。Gen が全件を変更ドラフトへ反映。差分再レビューで既存2件解消、P1-2は許容判断待ち、P1-3/P1-5の不足と新規P1×2を検出。緩和策(保護領域manifest/hash・必須正本+追加対象allowlist・再試行上限1回)を反映し、原則1周のため再々レビューは行わず人間へ提示
+- **承認前に変更しなかったもの**: 正本 docs / `.codex/agents/rin.toml`。承認後に採用分だけを反映した。VCS変更操作は未実施
+- **人間の判断(2026-07-18)**: 6項目をすべて採用。正本・Codex adapter変更 / fresh session 2回目をStage 3前に必須 / Stage 3要件整理まではinstruction-based残留リスクを条件付き許容 / 新規ロールごとの起動確認維持 / 次はClaude Code / ADR正式昇格
+- **反映済み**: AGENTS.md / safety.md / workflow.md / team.md / roadmap.md / `.codex/agents/rin.toml` / growth-log / ADR-0014 / current-task / risk-review判断記録
+- **残課題**: Stage 3開始前に、版固定したfresh sessionでRin機能スモーク2回目を成功させる。実行IDと保護領域全体・書き込みallowlistの前後manifest/hashを記録する。Stage 3要件整理後、コード・外部連携・高権限操作の前に技術的強制の要否を再判断する
+- **次に見るべきもの**: `docs/work/current-task.md` 7・10節 / `docs/decisions/ADR-0014-tool-adapter-rollout-order.md` / `docs/work/risk-review-codex-baseline.md` 人間の判断記録
+
 ## 2026-07-07(Stage 2 クローズ)— 人間が「完了」判断(案1)。roadmap・current-task・growth-log へ反映済み
 
 - **担当**: Gen(玄)
