@@ -6,6 +6,19 @@
 
 ---
 
+## 2026-07-19（Stage 3 Shinoクローズ）— 修正版案A採用、条件付き完了、一時成果物を未コミット削除
+
+- **担当**: Gen(玄) + 人間
+- **人間の判断**: 修正版案Aを採用。Shino定義とCodex adapterは現状維持し、Stage 3を「完了（条件付き）」とする。テンプレート先行案B・追加試運転案C・定義への即時細則追加は保留
+- **完了根拠**: 名前付きShinoのfresh-context起動、指定2成果物、3軸分離、主要論点抽出、確認優先度整理を条件付き機能証跡として採用。Rinの試運転・振り返りレビューは各1周の差分再レビューで対象指摘が解消し、新規P0/P1なし
+- **残留リスク**: blind性・read非逸脱・repo全体write非逸脱・技術的権限制御は未検証
+- **次の安全ゲート**: Genはコード作業・外部連携・高権限操作を含む依頼の受入れ・担当割当前に停止し、技術的強制の要否を人間へ戻す。明示判断を次の`current-task.md`へ記録するまで対象作業を開始しない
+- **テンプレート再確認**: 次のShino実テーマの人間判断前レビューで、全要件行の情報区分混在をGenが確認する。1件でも再発したら、最小テンプレートまたは定義変更案を候補化する
+- **恒久反映**: `docs/roadmap.md` / `.ai/board/growth-log.md` / `docs/work/current-task.md`。`docs/agent/team.md`と`.codex/agents/shino.toml`は変更なし
+- **整理**: Stage 3の依頼・入力・証跡・成果物・レビュー・対応・振り返り計18件は、判断と根拠を恒久記録へ集約後、コミットせず削除。過去エントリ内のファイル名は当時の作業記録として残す
+- **VCS**: 人間がShino追加コミット`4e2382a4`を作成済み。本クローズ反映のコミットは人間が別途実施する
+- **次に見るべきもの**: `docs/work/current-task.md` / `.ai/board/growth-log.md`本エントリ / `docs/roadmap.md` Stage 3
+
 ## 2026-07-18（Stage 3 Shino名前付き起動・fresh-session再試行）— 起動・試運転成功、Rinレビュー後の人間判断待ち
 
 - **担当**: Gen(玄) + Shino(篠・Codex custom agent `/root/shino_stage3_trial_20260718t2011350900`) + Rin(凛・Codex custom agent `/root/rin_stage3_shino_trial_review_20260718`)
@@ -21,7 +34,7 @@
 - **振り返りRinレビュー（追記）**: 初回P0:0 / P1:5 / P2:1。Genが全件採用し、再判断ゲートの責任者・停止点・記録先、growth-log記録、roadmap限定文言、対称比較、テンプレート再確認トリガー、Gen補正込み完了表現を修正。差分再レビューで全件解消、見解相違・個別許容待ち・新規P0/P1なし
 - **最終判断待ち（追記）**: 修正版案A + クローズ後運用条件5点 + roadmap「完了（条件付き）」+ growth-log記録を一体で採用するか。正本・growth-logへの反映は未実施
 - **正本・VCS**: 本セッションでは正本変更なし。許可された`jj st`のみ実行し、VCS変更操作は未実施
-- **次に見るべきもの**: `docs/work/current-task.md` 8・11節 / `shino-stage3-trial-review-response.md` / `risk-review-stage3-shino-trial.md` 9節 / `shino-stage3-trial-retry-evidence.md`
+- **後続**: 2026-07-19のクローズ判断で修正版案Aを採用。一時成果物は恒久記録へ集約後、未コミットのまま削除
 
 ## 2026-07-18（Stage 3 Shino名前付き起動・第1dispatch）— 現セッション未認識、agent実行前に停止
 
