@@ -1,133 +1,89 @@
-# current-task: Stage 4 — Kai加入・試運転と技術的強制テーマ
+# current-task: Stage 5 — フルサイクル検証
 
-- 作成: 2026-07-19 / 作成者: Gen(玄)
-- 状態: **進行中（Kai成果物整理完了、技術方式は保留、Toki未承認）**
-- 正本: [roadmap.md](../roadmap.md) Stage 4 / [ADR-0015](../decisions/ADR-0015-kai-conditional-participation.md) / [workflow.md](../agent/workflow.md) / [team.md](../agent/team.md) / [safety.md](../agent/safety.md)
-- 人間承認の範囲: Kai参加、既存安全境界内の設計成果物作成、ADR-0015の正式追加、Stage 4の進行中化。コード実装、PoC、設定変更、外部連携、高権限・本番操作、技術方式の採用、Toki加入は未承認
+- 更新: 2026-07-20 / 更新者: Gen（玄）
+- 状態: **未着手**
+- 直前の完了: Stage 4 **完了（条件付き）**
+- 次の判断者: 人間
 
----
+本書は現在地と次の開始ゲートだけを保持する。Stage 4の判断理由は正本ADR、
+成長記録、handoff、残した一次証跡へ集約済みであり、完了済みの逐次経過はここで
+重複管理しない。
 
-## 1〜12. Kai定義・起動準備（完了要約）
+## 1. 現在地
 
-Stage 4は一度に一人を迎える方針でKaiから開始した。Shinoが
-[技術的強制テーマの入力](stage4-technical-enforcement-input.md)を
-[要件](requirements.md)と[未確認事項](open-questions.md)へ整理し、GenがKaiの
-役割・試運転境界・人間判断材料へ統合した。初期フェーズとオンボーディングの
-入出力、制約、判断経緯は次へ集約済みである。
+Stage 4ではKaiとTokiが加入し、5人構成と標準workflowを正本化した。Stage 5の
+実テーマ、入出力、実装範囲はまだ決めておらず、フルサイクル検証は開始していない。
 
-- Shino実行契約: [shino-stage4-request.md](shino-stage4-request.md)
-- Kai定義・起動境界への反対意見と対応: [risk-review-stage4-kai-onboarding.md](risk-review-stage4-kai-onboarding.md)
-- 最終Kai定義: [team.md](../agent/team.md)
-- 最終adapter: [.codex/agents/kai.toml](../../.codex/agents/kai.toml)
-- 承認・実行済みのKai試運転契約: [kai-stage4-trial-request.md](kai-stage4-trial-request.md)
+現在の正本は次のとおりである。
 
-人間は2026-07-19に、Kai定義の正本反映、adapter作成、試運転依頼確定、
-`agent_type: kai` / `fork_turns: none`での名前付き起動を承認した。技術方式、
-実現可能性検証、PoC、実装、外部連携、高権限操作、Tokiは承認していない。
-同一セッションでの未認識とfresh sessionでの成功は13・14節、Kai参加判断と
-正本昇格は17・18節を正とする。
+- [チーム定義](../agent/team.md)
+- [安全境界](../agent/safety.md)
+- [標準workflow](../agent/workflow.md)
+- [ロードマップ](../roadmap.md)
+- [Kai参加判断](../decisions/ADR-0015-kai-conditional-participation.md)
+- [Toki参加判断](../decisions/ADR-0016-toki-test-analysis-participation.md)
+- [Toki出力量方針](../decisions/ADR-0017-toki-trial-output-size-policy.md)
+- [5人標準workflow](../decisions/ADR-0018-five-member-standard-workflow.md)
+- [テスト分析先行TDD](../decisions/ADR-0019-test-analysis-first-tdd.md)
 
-## 13. 名前付きKai初回起動結果
+## 2. Stage 4の確定結果
 
-| 項目 | 結果 |
-|---|---|
-| 起動条件 | `agent_type: kai` / `fork_turns: none` |
-| platform応答 | `unknown agent_type 'kai'` |
-| Kai実行 | 未開始 |
-| `architecture-options.md` | 未作成 |
-| fallback | 未実施 |
-| Gen再試行 | 0回（契約どおり） |
+Stage 4で確定した現在状態は次のとおりである。
 
-同一セッションで作成したadapterがagent registryへ反映されていない可能性。原因は未確定。新しいCodexセッションで `current-task.md` と本節を読み、同じ確定依頼を使って名前付きKai起動を1回だけ試す。未認識なら再度代替せず人間へ戻す。
+- Kaiは条件付き参加済みである。
+- Tokiはテスト分析・テスト項目設計担当として加入済みである。
+- 標準フローは、人間 → Gen → Shino → Kai → Toki → Rin → Gen → 人間である。
+- コード実装では、Tokiのテスト分析、人間の項目承認、テスト骨組みレビュー、
+  RED → GREEN → REFACTORの順を採用する。
+- Stage 4は2026-07-19に条件付き完了した。
+- Toki関連の中間ドラフト・依頼・判断前資料36件は、正本と主要証跡への集約後、
+  2026-07-20の人間承認により未コミットのまま削除した。
 
-## 14. 2026-07-19 fresh session再開結果
+## 3. 継続する境界
 
-| 項目 | 結果 |
-|---|---|
-| 起動条件 | `agent_type: kai` / `fork_turns: none` |
-| platform応答 | 名前付きKai task `/root/kai_stage4_named_trial_20260719` を作成・完了 |
-| Kai実行 | 1ターンで完了、再試行0回、fallbackなし |
-| 成果物 | `docs/work/architecture-options.md` を新規作成（158行） |
-| 設計案 | A: タスク専用ファイルシステム投影 / B: allowlist入出力ゲートウェイ / C: 通常起動＋境界監査 |
-| 契約形式適合 | 3案、pros/cons、成立条件、限界、責務境界、未確認表示、採否留保をGenが内容確認。要件IDは記載確認のみで意味上の照合は未実施 |
-| 未実施の申告とGen観測 | Kai自己申告: 実装・PoC、外部調査、VCS操作、外部送信なし / Gen会話内観測: 技術方式の採用、実現可能性検証、代替起動、再試行なし / 独立した全操作監査なし |
+Stage 4完了後も、次の事項は未検証または未採用である。
 
-この成功は、fresh sessionで名前付きKaiが認識され、指定成果物を作成した機能証跡である。read allowlist非逸脱、repo全体のwrite非逸脱、現在のCodexでの各案の実現可能性、技術的強制の成立を証明するものではない。
+- Kai・Tokiの初回結果は各1サンプルであり、再現性を証明しない。
+- fresh context内部、read/write非逸脱、安全性、技術的強制は未検証である。
+- `architecture-options.md`の技術方式A・B・Cは未採用である。
+- sandbox・permission profile変更、PoC、設定変更、外部調査は未承認である。
+- Tokiは初期責務としてテスト実行、証跡生成、実結果評価、最終合否を担当しない。
 
-次は標準手順の振り返りとして、Genが試運転の観測事実・契約適合・証跡限界を整理し、Rinレビュー後にKai試運転の採用 / 条件付き採用 / 保留とStage 4の次ゲートを人間へ戻す。人間がKai加入ループの扱いとToki開始を明示承認するまでは、技術方式の採用、実現可能性検証、実装、Stage 4完了、Toki加入へ進まない。保留・却下・条件未充足では停止を継続する。
+Toki初回試運転の`CD-01`は未解消である。各`TI-01`〜`TI-11`には入力版が直接
+記載されていないため、G4入力SHA-256との外部結合で追跡性を補う。後続転記では
+`analysis-draft`、承認者なし、ゲート利用不可、G4入力SHA-256を不可分に保持する。
 
-## 15. Rin初回レビューとGen対応
+## 4. 残すStage 4証跡
 
-RinはP0なし / P1 3件 / P2 2件を報告した。Genは5件すべてを採用し、振り返りドラフトを次のとおり修正した。
+後から条件付き採用を振り返るため、Tokiの一次成果、固定契約、評価、主要レビューを
+次の11件へ限定して残す。
 
-| 指摘 | Gen対応 | 状態 |
-|---|---|---|
-| P1-1 単発成果によるKai固有価値・加入完了評価 | 1サンプルの契約充足へ限定し、固有増分・再現性・Gen比較は未検証と明記 | 技術ドラフト解消 / 十分性は人間判断待ち |
-| P1-2 未強制期間の利用範囲なし | 機密・個人・顧客・本番データ・秘密情報なしを人間確認したrepo内Markdown、固定read allowlist、`docs/work/`新規1成果物、既存時停止、外部送信・VCS・実装・設定変更なしを暫定上限として提示 | 技術ドラフト解消 / 許容範囲は人間判断待ち |
-| P1-3 Toki停止解除が結果非依存 | Kaiループの扱い確定とToki開始の明示承認を解除条件化 | 技術ドラフト解消 / 順序は人間判断待ち |
-| P2-1 要件ID追跡の過大評価 | ID記載の形式適合に限定し、意味上の照合は未実施と明記 | 差分レビュー後に14節を事後同期 / 形式適合の十分性は人間判断待ち |
-| P2-2 未実施主張の強さ不統一 | 自己申告 / Gen会話内観測 / 独立監査なしを各要約へ付記 | 解消 |
+- [初回成果物](test-analysis.md)
+- [試運転契約TC-1](toki-stage4-initial-trial-contract-draft.md)
+- [非公開評価計画EP-1](toki-stage4-initial-trial-evaluation-plan.md)
+- [G3承認記録](toki-stage4-initial-trial-g3-approval-record.md)
+- [G4承認記録](toki-stage4-initial-trial-g4-approval-record.md)
+- [G5 dispatch記録](toki-stage4-initial-trial-g5-dispatch-record.md)
+- [Gen評価](toki-stage4-initial-trial-gen-evaluation.md)
+- [Genレビュー対応](toki-stage4-initial-trial-gen-response.md)
+- [Rin初回レビュー](risk-review-stage4-toki-initial-trial.md)
+- [Rin差分再レビュー](risk-review-stage4-toki-initial-trial-rereview.md)
+- [人間判断記録](toki-stage4-initial-trial-human-decision-record.md)
 
-## 16. Rin差分再レビュー結果と人間判断ゲート
+初回成果物のSHA-256は
+`3c0594e6a1d3eadf6c058161d4392848f37a8c36f1c04acf3eb5622306291c59`、G4入力の
+SHA-256は`b2be3698f34b92d4056d4460413c0cafdc37fdcd824ceb623748322922bd82cf`である。
 
-- P1-1〜P1-3: 技術ドラフトの不足は解消。単発証跡の十分性、未強制期間の利用範囲、Toki開始条件は人間判断待ち
-- P2-1: 差分再レビュー時点では一部解消。14節の要約を「形式適合・意味照合未実施」へ事後同期
-- P2-2: 解消
-- 新規P0 / P1: なし
-- 再々レビュー: 原則1周のため未実施
+## 5. Stage 5開始ゲート
 
-判断資料は `docs/work/stage4-kai-trial-decision-summary.md`。人間判断まで、Kai加入ループ完了、未強制状態での通常運用、技術方式採用、実現可能性検証、実装、Toki開始へ進まない。
+Stage 5を開始する前に、人間とGenは次を固定する。
 
-## 17. 2026-07-19 人間判断: Kai参加
+1. 検証に使う実テーマと期待する人間判断。
+2. Shino、Kai、Toki、Rinの参加範囲と、省略する場合の理由。
+3. 各agentのread/write allowlist、停止条件、再試行上限、fallback禁止。
+4. コード実装、実テスト、PoC、設定変更、外部調査を含むか。
+5. 機密性、安全境界、sandbox・permission profileを変更しないこと。
+6. 完了条件と、条件未充足時に人間へ戻す判断ゲート。
 
-人間は「とりあえずKaiを参加させるので良い」と判断した。Genは、この判断を
-次の範囲で記録する。
-
-| 論点 | 人間判断の記録 |
-|---|---|
-| Kaiの初回成果 | 1サンプルの条件付き機能証跡として採用 |
-| Kai加入ループ | 条件付き完了。役割定義とadapterは現状維持 |
-| Kai固有価値・再現性 | 未検証のまま維持。参加承認を実証済みの意味へ広げない |
-| 当面の運用 | `team.md`・`safety.md`と、タスクごとのread/write allowlist・停止条件・再試行上限に従う設計成果物作成 |
-| 技術的強制 | 方式選定・実現可能性確認・実装を保留 |
-| 高リスク案件 | コード実装、PoC、設定変更、外部連携、高権限・本番操作、読ませてはいけない機密・blind入力、または既存安全境界やタスク単位契約を越えるread/writeを含む依頼のKai割当前に人間へ再判断を戻す |
-| Toki | 今回の判断に含めず、別の明示承認まで開始しない |
-
-RinのP1-1は、限定された証跡でKai参加を認めるリスクを人間が条件付きで
-受容したものとして記録する。P1-2は、技術的強制がない状態での参加を既存の
-安全境界とタスク単位契約の範囲に限って受容し、列挙範囲を越える依頼は再判断へ
-戻す。P1-3は、Toki停止を継続することで対応する。
-
-案A・B・Cの採否、sandbox・permission profileの構成、read制限の必要範囲は
-確定しない。必要性が具体化するまで技術テーマとして保留する。
-
-## 18. 2026-07-19 正本昇格完了
-
-人間の明示承認に基づき、Kai参加判断の正本昇格を完了した。
-
-- `docs/decisions/ADR-0015-kai-conditional-participation.md`を正式追加した。
-- `docs/roadmap.md`のStage 4を「進行中」へ更新した。
-- RinのP1-1・P1-4は緩和策を採用して反映した。P1-2・P1-3・P1-5・P1-6は
-  差分再レビューで解消済みであり、新規P0/P1はない。
-- workflowの原則1周に従い、Rinの再々レビューは行わない。
-
-Stage 4は完了ではない。技術方式は保留し、Tokiは別の明示承認まで開始しない。
-
-## 19. Kai成果物整理（案A完了）
-
-人間は、Kai関連の未コミット成果物19件について、9件を状態同期して残し、正本・
-恒久記録へ集約済みの10件を整理候補とする[案A](stage4-kai-cleanup-plan.md)を承認した。
-10件を通常のコミット履歴へ残さない方針も承認済みである。
-
-- 残す9件: 技術方式保留、Toki試運転候補、試運転契約、主要リスク証跡を維持
-- 整理候補10件: 定義・adapterドラフト、依頼、対応表、判断前サマリー
-- Rin削除前レビュー: P0 0件 / P1 0件 / P2 1件。削除可否を人間の最終承認へ返却可能
-- P2緩和条件: 削除実行後に最新handoffを先頭へ追記し、状態の二義性を解消
-- 人間の最終判断: 整理候補10件の削除を承認
-- 削除結果: 未コミットの10件を削除。通常のコミット履歴には残らない
-- 参照確認: 削除直前の生きたMarkdownリンク0件。削除後の再検証を実施
-- P2緩和: 整理完了handoffを先頭へ追記
-- 未承認: 技術方式の採用、Tokiの定義・加入・起動
-
-[Rinレビュー](risk-review-stage4-kai-cleanup.md)の条件を満たして整理を完了した。
-次はToki加入を自動開始せず、定義・試運転範囲・起動操作を別の人間判断へ戻す。
+このゲートが確定するまで、Stage 5のagent起動、実装、実テスト、外部調査、
+設定変更を開始しない。

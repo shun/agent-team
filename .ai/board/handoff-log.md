@@ -6,6 +6,224 @@
 
 ---
 
+## 2026-07-20（Toki Stage 4成果物整理）— 正本自立化、work 36件削除完了
+
+- **担当**: Gen（玄）+ 人間
+- **人間判断**: 明示したToki中間成果物36件の削除と`current-task.md`圧縮を承認
+- **削除前確認**: 削除対象への生きたMarkdownリンクは、圧縮対象の`current-task.md`と
+  削除対象同士に限定。残す正本・11証跡からのリンクなし
+- **正本自立化**: ADR-0016〜0019から昇格済みADR候補への依存を除去。
+  ADR-0016へ`CD-01`、両SHA-256、採用・実行・転記境界を直接固定
+- **削除**: ADR候補、定義・adapterドラフト、依頼、判断前資料、中間レビューなど
+  未コミット36件。通常のVCS履歴からは復元不可
+- **維持**: `test-analysis.md`、TC-1、EP-1、G3〜G5、Gen評価・対応、Rin初回・
+  差分レビュー、人間判断の11件
+- **進捗の正**: `current-task.md`をStage 5未着手、Stage 4確定結果、継続境界、
+  11証跡、Stage 5開始ゲートへ圧縮
+- **状態境界**: Toki加入済み、Stage 4条件付き完了、Stage 5未着手。`CD-01`、
+  fresh性、read/write非逸脱、再現性、安全性、技術的強制は未解消
+- **対象外**: Ritsu/Hayate関連、技術方式A・B・C、sandbox・permission profile、
+  実装、PoC、設定変更、実テスト、外部調査
+- **VCS**: コミットなし
+- **次に見るべきもの**: `docs/work/current-task.md` /
+  `docs/decisions/ADR-0016-toki-test-analysis-participation.md` /
+  `docs/work/toki-stage4-initial-trial-human-decision-record.md`
+
+## 2026-07-19（Toki加入・Stage 4正本昇格）— 5人構成正式化、Stage 5未着手
+
+- **担当**: Gen（玄）+ 人間
+- **人間判断**: Tokiを加入済みメンバーとし、関連work成果物の判断を正本へ昇格
+- **正本更新**: `team.md` Toki加入済み / `workflow.md` 5人標準フロー・テスト分析先行
+  TDD / `roadmap.md` Stage 4条件付き完了
+- **ADR昇格**: ADR-0016 Toki参加 / ADR-0017 出力量 / ADR-0018 5人workflow /
+  ADR-0019 テスト分析先行TDD
+- **work成果物**: 削除・移動なし。ADR候補を昇格済みへ更新し、
+  `toki-stage4-promotion-record.md`へ昇格対象と継続境界を統合
+- **レビュー境界**: Toki定義・初回試運転は各Rin初回+差分レビュー済み。
+  5人workflowの最終文面だけを対象にした新規Rinレビューは行わず、人間直接承認で反映
+- **継続境界**: `CD-01`、fresh性、read/write非逸脱、再現性、安全性、技術的強制は
+  未検証。技術方式A・B・C、sandbox・permission profile、実装、PoC、設定変更、
+  実テスト、外部調査は未採用
+- **状態**: Toki加入済み。Stage 4条件付き完了。Stage 5未着手
+- **VCS**: 昇格前に許可された素の`jj st`だけを実行。コミット・他VCS操作なし
+- **次に見るべきもの**: `docs/work/toki-stage4-promotion-record.md` /
+  `docs/decisions/ADR-0016-toki-test-analysis-participation.md` /
+  `docs/agent/workflow.md` / `docs/work/current-task.md` 30節
+
+## 2026-07-19（Stage 4 Toki初回試運転判断）— 案A条件付き採用
+
+- **担当**: Gen（玄）+ 人間
+- **人間判断**: `CD-01`を明記し、後から振り返れる状態を維持する条件で、初回試運転の
+  案A「成果物内容だけを条件付き採用」を採用
+- **採用範囲**: `test-analysis.md`の1入力・1試行の成果物内容だけ
+- **CD-01**: 各`TI-01`〜`TI-11`に一意な入力版が直接ない必須属性不足。G4 digest
+  `b2be3698f34b92d4056d4460413c0cafdc37fdcd824ceb623748322922bd82cf`
+  へGen側で結合するが、解消済みにはしない
+- **振り返り条件**: 原成果物を変更せず、転記時はanalysis-draft / 承認者なし /
+  ゲート利用不可 / G4 digestを不可分に付与。次回契約では各項目へ明記
+- **状態境界**: Tokiは参加採用・加入準備中。加入済み、Stage 4完了、技術方式A・B・C、
+  安全性、実行境界、sandbox・permission profile変更、ADR昇格、実装、PoC、実テスト、
+  外部調査、コミットは今回判断しない
+- **VCS**: 操作なし
+- **次に見るべきもの**: `docs/work/toki-stage4-initial-trial-human-decision-record.md` /
+  `docs/work/current-task.md` 29節 / `docs/work/stage4-toki-initial-trial-decision-brief.md`
+
+## 2026-07-19（Stage 4 Toki初回試運転）— Fast Lane完了、人間判断待ち
+
+- **担当**: Gen（玄）+ Toki（時・`/root/toki_stage4_initial_trial_tc1_attempt1`）+
+  Rin（凛・`/root/rin_stage4_toki_initial_trial_review`）
+- **前提照合**: `TC-1` / `EP-1` / G4入力のSHA-256一致、完了・停止成果物未存在、
+  名前付き`toki`利用可能を確認
+- **dispatch**: `agent_type: toki` / `fork_turns: none`。初回1回で完了、再試行0回、
+  fallbackなし
+- **Toki成果**: `docs/work/test-analysis.md`を新規作成。379行、SHA-256
+  `3c0594e6a1d3eadf6c058161d4392848f37a8c36f1c04acf3eb5622306291c59`
+- **Gen評価**: EP-1非公開標本9要素に重大な誤判定なし。必須9節、固定母集団51要素、
+  テスト条件10件、具体項目11件を確認
+- **Rin初回レビュー**: P0 0件 / P1 3件 / P2 1件。G5証拠、契約適合ラベル、
+  入力版属性、draft転記耐性を指摘
+- **Gen対応**: 全件採用。G5記録、証拠3区分、G4 digest結合、`CD-01`契約差分、
+  転記ルールへ反映。原`test-analysis.md`は未変更
+- **差分再レビュー**: 新規P0/P1なし。P1-2解消、P1-1・P1-3・P2-1は技術ドラフト
+  修正済み・人間判断待ち。原則1周完了、再々レビューなし
+- **Gen推奨**: `CD-01`と転記条件を許容し、成果物内容だけを1入力・1試行の条件付き
+  採用とする案A
+- **状態境界**: Tokiは参加採用・加入準備中。Toki加入済み、Stage 4完了、技術方式
+  A・B・C採用、sandbox・permission profile変更、ADR昇格、実装、PoC、設定変更、
+  実テスト、外部調査、コミットなし
+- **VCS**: 操作なし
+- **次に見るべきもの**: `docs/work/stage4-toki-initial-trial-decision-brief.md` /
+  `docs/work/risk-review-stage4-toki-initial-trial-rereview.md` /
+  `docs/work/current-task.md` 29節
+
+## 2026-07-19（Stage 4 Toki G4）— 低感度入力確認済み、dispatch G5判断待ち
+
+- **担当**: Gen（玄）+ 人間
+- **人間判断**: G4-Aとして`architecture-options.md`を本試運転1回の低感度入力に採用
+- **入力固定**: 160行 / SHA-256 `b2be3698f34b92d4056d4460413c0cafdc37fdcd824ceb623748322922bd82cf`
+- **確認結果**: 概念設計・仮説・未確認・3案比較が中心。秘密・認証情報、個人情報、顧客・本番データは見当たらず、外部送信不要。機密候補パターン該当0件
+- **G3整合**: `TC-1` / `EP-1`のdigestは承認記録と一致。固定版を変更せずG4専用記録へ実値を分離
+- **現在の起動状態**: adapterは作成済みだが、現在のセッションが公開する名前付きagent typeに`Toki`は未表示。未認識を断定しない
+- **次のゲート**: G5として新しいCodexセッションで名前付きfresh起動要求と分析開始を原子的dispatchするかの人間判断
+- **停止中**: G5、dispatch、名前付きToki起動、試運転、`test-analysis.md`、停止成果物、`acceptance-criteria.md`、技術方式、sandbox・permission profile、PoC、実装、外部調査、workflow変更、ADR昇格、Stage 4完了、コミット
+- **VCS**: 操作なし
+- **次に見るべきもの**: `docs/work/stage4-toki-g5-decision-brief.md` / `docs/work/toki-stage4-initial-trial-g4-approval-record.md` / `docs/work/current-task.md` 28節
+
+## 2026-07-19（Stage 4 Toki G3）— 契約案A+A2確定、低感度入力G4判断前
+
+- **担当**: Gen（玄）+ 人間
+- **人間判断**: 現行契約案Aと行数ポリシーA2を採用
+- **G3結果**: 初回試運転契約を`TC-1`、非公開評価計画を`EP-1`として確定
+- **A2境界**: 320行前後は目安。必須契約を優先し、超過時は実行行数・理由・圧縮しなかった必須要素を記録。行数超過だけでは停止・不合格にしない
+- **版固定**: Toki非公開のG3承認記録へ両ファイルのSHA-256、承認者、承認時刻を記録。変更時はG3承認を失効
+- **Rin指摘との関係**: `RTAT-03`後の人間判断としてA2を採用。旧曖昧表現へ戻さず優先順位と超過時の扱いを具体化。再々レビューなし
+- **次のゲート**: G4として`architecture-options.md`の版と低感度性を人間確認するかの判断
+- **停止中**: G4、G5、dispatch、名前付きToki起動、試運転、`test-analysis.md`、停止成果物、`acceptance-criteria.md`、技術方式、sandbox・permission profile、PoC、実装、外部調査、workflow変更、ADR昇格、Stage 4完了、コミット
+- **VCS**: 操作なし
+- **次に見るべきもの**: `docs/work/toki-stage4-initial-trial-g3-approval-record.md` / `docs/work/stage4-toki-g3-decision-brief.md` / `docs/work/current-task.md` 27節
+
+## 2026-07-19（Stage 4 Toki adapter G1・G2）— 作成・照合完了、試運転契約G3判断前
+
+- **担当**: Gen（玄）+ 人間
+- **人間判断**: adapter案どおり`.codex/agents/toki.toml`を新規作成する案Aを承認
+- **G1結果**: 承認済みTOML本文だけを`.codex/agents/toki.toml`へ新規作成
+- **G2結果**: adapter案との`diff`は差分なし。TOML構文と`name`・`developer_instructions`の必須keyを確認
+- **状態境界**: Tokiは参加採用・加入準備中のまま。adapter作成は、認識、fresh性、read/write非逸脱、QA能力、加入完了を証明しない
+- **次のゲート**: G3として初回試運転契約案と非公開評価計画案を確定するかの人間判断
+- **停止中**: G3、低感度入力確認、dispatch、名前付きToki起動、試運転、`test-analysis.md`、停止成果物、`acceptance-criteria.md`、技術方式、sandbox・permission profile、PoC、実装、外部調査、workflow変更、ADR昇格、Stage 4完了、コミット
+- **VCS**: G1/G2完了後に許可された素の`jj st`で状態確認。コミットなし
+- **次に見るべきもの**: `docs/work/toki-stage4-initial-trial-contract-draft.md` / `docs/work/toki-stage4-initial-trial-evaluation-plan.md` / `docs/work/risk-review-stage4-toki-adapter-trial-rereview.md` / `docs/work/current-task.md` 26節
+
+## 2026-07-19（Stage 4 Toki adapter・試運転契約案）— Rin 1周レビュー完了、adapter作成判断待ち
+
+- **担当**: Gen（玄）+ Rin（凛・`/root/rin_stage4_toki_adapter_trial_review_20260719`）
+- **作成**: Toki Codex adapter案、初回試運転契約案、非公開評価計画案、Rin初回・差分レビュー、Gen対応、判断資料
+- **adapter境界**: 正本参照、タスク単位read/write allowlist、名前付きfresh context、fallback禁止、停止、自己検証、再試行上限を明示。`.codex/agents/toki.toml`自体は未作成
+- **試運転境界**: 入力候補は`architecture-options.md`、完了出力候補は`test-analysis.md`。初回は実行・実結果評価・最終合否・TDD・自動化・回帰を担当せず、`acceptance-criteria.md`を作らない
+- **Rin初回レビュー**: P0 0件 / P1 6件 / P2 1件。非公開標本、fresh自己認証、曖昧な行上限、限定代行、ゲート不足、停止証跡、低感度記録を指摘
+- **Gen対応**: 全7件を採用。非公開評価計画、Gen側dispatch証跡、320行hard limit、限定代行削除、G1〜G7、停止成果物、低感度記録へ修正
+- **差分再レビュー**: 初回6件は修正済み、RTAT-05は後続G5の人間判断待ち。新規P0/P1なし、新規P2 1件は評価計画の版固定として即時修正。adapter作成判断G1へ戻せる
+- **最初の判断**: adapter本文案どおり`.codex/agents/toki.toml`を新規作成するか。承認後もG2の内容照合で停止する
+- **停止中**: adapter作成、試運転契約確定、低感度入力確認、名前付きToki起動、試運転、`test-analysis.md`、技術方式、sandbox・permission profile、PoC、実装、外部調査、workflow変更、ADR昇格、Stage 4完了、コミット
+- **VCS**: 開始時に許可された素の`jj st` / `jj log`、終了時に素の`jj st`で確認。
+  終了時の素の`jj diff`はsandbox内のsnapshot権限不足で失敗し、コミットは未実施
+- **次に見るべきもの**: `docs/work/stage4-toki-adapter-trial-decision-brief.md` / `docs/work/toki-codex-adapter-draft.md` / `docs/work/risk-review-stage4-toki-adapter-trial-rereview.md` / `docs/work/current-task.md` 26節
+
+## 2026-07-19（Stage 4 Toki正本定義反映）— 参加採用・加入準備中、adapter判断前
+
+- **担当**: Gen（玄）+ 人間
+- **人間判断**: 修正版Toki定義の正本反映とShino・Kai節の相互参照の同時更新を承認
+- **正本反映**: `team.md`へ案BのToki定義を`参加採用・加入準備中`として追加。Shino節とKai節の`将来のToki`参照を現在形へ更新
+- **Rin P1判断**: P1-1〜P1-3は、加入済み遷移条件、初回評価契約のdispatch前承認、将来案Cの独立性を含む修正版の採用として人間判断を記録
+- **growth-log**: Toki正本定義の採用、Rinレビュー、状態境界、保留範囲を記録
+- **次のゲート**: `.codex/agents/toki.toml`のadapter案を作成するかの人間判断
+- **停止中**: adapter、試運転契約、Toki起動・試運転、加入済み表示、workflow変更、技術方式、sandbox・permission profile変更、PoC、実装、外部調査、Stage 4完了
+- **VCS**: 許可された素の`jj st` / `jj log` / `jj diff`による確認のみ。コミットなし
+- **次に見るべきもの**: `docs/agent/team.md` Toki節 / `docs/work/toki-definition-draft.md` 5節 / `docs/work/current-task.md` 25節 / `.ai/board/growth-log.md`先頭
+
+## 2026-07-19（Stage 4 Toki正本定義ドラフト）— Rin 1周レビュー完了、正本反映判断待ち
+
+- **担当**: Gen（玄）+ Rin（凛・`/root/rin_stage4_toki_test_analysis_review_20260719`）
+- **作成**: `docs/work/toki-definition-draft.md`、Toki参加のADR候補、初回・差分Rinレビューと対応記録
+- **定義案**: 案BのQA・テスト分析担当。正本反映時は`参加採用・加入準備中`であり、まだ起動可能・加入済みと扱わない
+- **Rin初回レビュー**: P0 0件 / P1 3件 / P2 2件。早すぎる加入済み表示、初回評価契約からの人間承認脱落、将来案Cの独立性弱化、正本内旧参照、5人workflowゲートを指摘
+- **Gen対応**: 全5件を採用。加入済み遷移条件、dispatch前の人間承認、条件作成者と技術評価者の分離、Shino・Kai参照更新、workflow後続ゲートを追加
+- **差分再レビュー**: 初回P1 3件は技術ドラフト修正済み・人間判断待ち、P2 2件は修正済み。新規P0 / P1 / P2なし。正本反映判断へ戻せる
+- **次の判断**: `team.md`へTokiを`参加採用・加入準備中`として追加し、Shino・Kai節の相互参照を同時更新するか
+- **停止中**: 正本反映、growth-log、adapter、試運転契約、Toki起動・試運転、加入済み表示、workflow変更、技術方式、sandbox・permission profile変更、PoC、実装、外部調査、Stage 4完了
+- **VCS**: 許可された素の`jj st` / `jj log` / `jj diff`による確認のみ。コミットなし
+- **次に見るべきもの**: `docs/work/toki-definition-draft.md` / `docs/work/risk-review-stage4-toki-definition.md` / `docs/work/risk-review-stage4-toki-definition-rereview.md` / `docs/work/current-task.md` 24節
+
+## 2026-07-19（Stage 4 Toki参加の人間判断）— 案Bで採用、加入作業は未実施
+
+- **担当**: Gen（玄）
+- **人間判断**: 案B「テスト分析・テスト項目設計担当」としてTokiを採用
+- **採用条件**: Rinレビュー後の6条件を参加パッケージとして採用。独立評価母集団、判定可能な項目契約、実装担当との責任分担と再分析、品質・セキュリティ共有責任、案Cの将来保留と独立評価、分析用期待結果のゲート隔離、非省略開始ゲートを維持
+- **状態境界**: 参加方針は採用済み。正本定義・adapter・試運転契約・名前付き起動は未実施で、まだ起動可能ではない
+- **次のゲート**: `docs/work/`で正本定義ドラフトを作成し、Rinレビュー後に正本反映を人間へ戻す
+- **状態維持**: 技術方式は保留、Stage 4は進行中。sandbox・permission profile変更、PoC、実装、外部調査、Stage 4完了なし
+- **VCS**: 許可された`jj st` / `jj log` / `jj diff`による確認のみ。コミットなし
+- **次に見るべきもの**: `docs/work/stage4-toki-test-analysis-decision-brief.md` 8〜9節 / `docs/work/stage4-toki-test-analysis-role-options.md` 10節 / `docs/work/current-task.md` 23節
+
+## 2026-07-19（Stage 4 Toki役割の最初の人間判断）— 案B採用、残る開始条件は判断待ち
+
+- **担当**: Gen（玄）
+- **人間判断**: Tokiの初期役割に案B「テスト分析・テスト項目設計担当」を採用。案A/C/Dは今回未選択
+- **確定した境界**: QA技法を使った品質リスク、カバレッジモデル、テスト条件、具体的テスト項目、期待結果、優先度、追跡関係の作成。初回のテスト実行・実結果評価は対象外
+- **未判断**: 独立評価母集団と判定可能な項目契約、Toki/実装担当の責任と再分析、品質・セキュリティ共有責任、案Cの将来保留と独立評価、分析用期待結果のゲート隔離、非省略開始ゲート
+- **停止位置**: 残る6条件の判断まで正本定義ドラフトを開かない。正本・adapter・試運転契約確定・Toki加入/起動へ進まない
+- **状態維持**: 技術方式は保留、Tokiは未承認、Stage 4は進行中。VCS操作・コミットなし
+- **次に見るべきもの**: `docs/work/stage4-toki-test-analysis-decision-brief.md` 8節 / `docs/work/stage4-toki-test-analysis-role-options.md` 10節 / `docs/work/current-task.md` 22節
+
+## 2026-07-19（Stage 4 Toki QAテスト分析中心へ改訂）— Rin 1周レビュー完了、人間判断待ち
+
+- **担当**: Gen（玄）+ Rin（凛・`/root/rin_stage4_toki_test_analysis_review_20260719`）
+- **人間の指摘**: TokiはQA技法を使ったテスト分析とテスト項目作成を中心責務にするべき。TDDだけでは横断的な漏れを防げない可能性がある
+- **改訂**: 旧案の証跡契約中心から、品質リスク、技法選択、カバレッジ、条件、具体的項目、期待結果、優先度、追跡関係を作る案Bへ変更
+- **TDD境界**: Toki成果は実装前・横断リスクの非網羅入力。実装担当は実装レベル分析、自動化、TDD、回帰、差分記録を所有し、変更時は再分析判断へ戻す
+- **Rin初回レビュー**: P0 0件 / P1 5件 / P2 3件。閉じた偽カバレッジ、判定不能なオラクル、一方向引渡し、責任集中、将来案Cの自己認証を指摘
+- **Gen対応**: 人間承認の独立評価母集団、具体的観測・3値判定、双方向再分析、品質・セキュリティ共有責任、条件作成者と評価者の独立性、案Dの同粒度比較を追加
+- **差分再レビュー**: 初回8指摘は技術ドラフトへ反映済み。新規P0 0件 / P1 1件 / P2 0件。案C・Dの開始分岐欠落を指摘
+- **分岐修正**: A・修正版Bだけ正本ドラフトへ進む。Cは将来候補として停止、DはToki導入を閉じて案件別QA所有者を決定、保留・却下は停止。再々レビューなし
+- **最初の判断**: 修正版B、独立評価母集団、判定可能な項目契約、TDDとの責任分担、共有責任、案Cの将来保留、分析用期待結果の隔離、非省略ゲートを採るか
+- **停止中**: Toki正本・adapter・試運転契約の確定、Toki加入・名前付き起動、技術方式採用、sandbox・permission profile変更、PoC、実装、外部調査、Stage 4完了
+- **状態維持**: 技術方式は保留、Tokiは未承認、Stage 4は進行中。VCS操作・コミットなし
+- **次に見るべきもの**: `docs/work/stage4-toki-test-analysis-decision-brief.md` / `docs/work/stage4-toki-test-analysis-role-options.md` / `docs/work/risk-review-stage4-toki-test-analysis.md` / `docs/work/risk-review-stage4-toki-test-analysis-rereview.md` / `docs/work/current-task.md` 21節
+
+## 2026-07-19（Stage 4 Toki参加判断準備）— 修正版BとRin 1周レビュー完了、人間判断待ち
+
+- **担当**: Gen（玄）+ Rin（凛・`/root/rin_stage4_toki_participation_review_20260719`）
+- **作成**: Toki役割3案、初回試運転・成果物契約候補、初回Rinレビュー、修正版B判断資料、差分再レビュー
+- **Gen推奨**: 修正版B。Tokiは検証契約のdraftまでを担い、テスト実行、証跡生成、提出証跡の評価、重大度、技術方式・最終合否を担当しない
+- **初回テーマ**: `architecture-options.md`から`test-analysis.md`を作る設計分析に限定。案A・B・Cの実現可能性、read/write非逸脱、技術的強制、実行能力は試さない
+- **成果物境界**: 初回criteriaは分析専用draft。実ゲート利用前に不変ID、版、状態、承認者を持つ独立criteriaと人間承認へ分離判断を戻す
+- **Rin初回レビュー**: P0 0件 / P1 6件 / P2 2件。案B原案へ反対し、固有成功結果、意味差分、基準独立性、未検証既定値、段階別開始ゲートを要求
+- **Rin差分再レビュー**: 初回P1 6件は技術ドラフト修正済み・人間判断待ち、初回P2 2件は修正済み。新規P0 / P1なし、開始ゲート欠落なし。新規P2 1件は語彙を別軸化して修正
+- **最初の判断**: 修正版B、Toki固有成功結果、分析専用criteria、非省略ゲートを採るか。今回開く範囲は次の正本定義ドラフトまでとするか
+- **停止中**: Toki正本・adapter・試運転契約の確定、Toki加入・名前付き起動、技術方式採用、sandbox・permission profile変更、PoC、実装、外部調査、Stage 4完了
+- **状態維持**: 技術方式は保留、Tokiは未承認、Stage 4は進行中。VCS操作・コミットなし
+- **次に見るべきもの**: `docs/work/stage4-toki-participation-decision-brief.md` / `docs/work/risk-review-stage4-toki-participation.md` / `docs/work/risk-review-stage4-toki-participation-rereview.md` / `docs/work/current-task.md` 20節
+
 ## 2026-07-19（Stage 4 Kai成果物整理案A）— 10件削除・整理完了、Toki判断待ち
 
 - **担当**: Gen（玄）+ 人間

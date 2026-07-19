@@ -6,6 +6,58 @@
 
 ---
 
+## 2026-07-20 — Toki正本の自立化・Stage 4 work整理【人間承認・完了】
+
+- **提案**: 正本化コミットへ`docs/work/`の中間成果物を混在させず、採用判断を
+  ADR-0016〜0019へ直接固定してから、一次証跡だけを残してworkを縮小する
+- **正本自立化**: ADRから昇格済みADR候補へのリンクを除去。ADR-0016へ`CD-01`、
+  成果物とG4入力のSHA-256、条件付き採用、実行境界、転記条件を直接記録
+- **人間の判断**: 明示した36件の削除と`current-task.md`の現在地への圧縮を承認
+- **整理結果**: 定義・adapter・ADRドラフト、依頼、判断前資料、中間レビューなど
+  未コミット36件を削除。原成果物、TC-1、EP-1、G3〜G5、Gen評価・対応、Rin初回・
+  差分レビュー、人間判断の11件を監査証跡として維持
+- **状態**: Toki加入済み、Stage 4条件付き完了、Stage 5未着手を維持。`CD-01`、
+  初回1サンプル、fresh性・read/write非逸脱・再現性・安全性・技術的強制は未解消
+- **対象外**: Ritsu/Hayate関連、技術方式A・B・C、sandbox・permission profile、
+  実装、PoC、設定変更、実テスト、外部調査
+- **反映先**: `docs/decisions/ADR-0016〜0019` / `docs/work/current-task.md` /
+  `.ai/board/handoff-log.md`
+
+## 2026-07-19 — Toki加入・5人標準workflow・Stage 4条件付き完了【採用・正本昇格済み】
+
+- **提案**: 初回試運転と原則1周レビューを完了したTokiを加入済みとし、作業成果物に
+  固定した参加判断、出力量方針、5人標準workflow、テスト分析先行TDDを正本へ昇格する
+- **試した結果**: 名前付きTokiは初回1回、再試行0回、fallbackなしで379行の
+  `test-analysis.md`を作成。EP-1非公開標本9要素、固定母集団51要素、QA技法から
+  11項目への導出を確認。成果物内容だけを案Aで条件付き採用し、`CD-01`を維持
+- **Rinレビュー**: Toki定義レビューは初回P0:0/P1:3/P2:2、差分で新規指摘なし。
+  初回試運転レビューはP0:0/P1:3/P2:1、Gen対応後の差分で新規P0/P1なし。
+  workflow更新は定義レビューP2-2の後続ゲートと既承認roadmap・memoを実行し、
+  今回の最終文面だけを対象にした新規Rinレビューは行っていない
+- **人間の判断**: 「Tokiはもうメンバー入り」として加入済み表示とwork成果物の
+  正本昇格を承認。5人標準workflow、テスト分析先行TDD、Stage 4条件付き完了を採用
+- **正本昇格**: `ADR-0016` Toki参加 / `ADR-0017` 出力量ポリシー /
+  `ADR-0018` 5人標準workflow / `ADR-0019` テスト分析先行TDD
+- **正本反映**: `team.md`のToki加入済み、`acceptance-criteria.md`判断境界、
+  `workflow.md`の標準フローと実装ゲート、`roadmap.md`のStage 4条件付き完了
+- **継続境界**: `CD-01`、初回1サンプル、fresh性・read/write非逸脱・再現性・
+  安全性・技術的強制は未検証。技術方式A・B・C、sandbox・permission profile、
+  実装、PoC、設定変更、実テスト、外部調査は未採用
+- **反映先**: `docs/agent/team.md` / `docs/agent/workflow.md` / `docs/roadmap.md` /
+  `docs/decisions/ADR-0016〜0019` / `docs/work/pending-rules.md` /
+  `docs/work/toki-stage4-promotion-record.md` / `docs/work/current-task.md`
+
+## 2026-07-19 — Stage 4 Toki正本定義【採用・加入準備中】
+
+- **提案**: Tokiを案B「テスト分析・テスト項目設計担当」とし、QA技法、品質リスク、カバレッジ、テスト条件、具体的項目、期待結果、優先度、追跡関係を担当させる。初期責務にテスト実行・実結果評価を含めない
+- **Rinレビュー**: 初回P0:0 / P1:3 / P2:2。早すぎる加入済み表示、初回評価契約の人間承認脱落、将来案Cの独立性弱化、正本内旧参照、5人workflowゲートを指摘。Gen修正後の差分再レビューは新規P0/P1/P2なしで、正本反映判断へ戻せると判定
+- **人間の判断**: 修正版Toki定義の`team.md`反映と、Shino・Kai節の相互参照の同時更新を承認
+- **反映**: Tokiを`参加採用・加入準備中`として正本へ追加。初回の独立評価母集団・項目契約のdispatch前承認、将来案Cの条件作成者と技術評価者の分離、実装担当とのTDD境界、品質・セキュリティ共有責任を反映
+- **状態境界**: `加入済み`への遷移は、adapter、試運転契約、低感度入力、名前付きfresh session、試運転、振り返り、加入作業完了の人間承認後。今回の正本反映から自動承認しない
+- **保留**: adapter、試運転契約、Toki起動・試運転、加入済み表示、workflow変更、技術方式A・B・C、sandbox・permission profile変更、PoC、実装、外部調査、Stage 4完了
+- **ADR候補**: `docs/work/adr-drafts/2026-07-19-toki-test-analysis-participation.md`は未昇格のまま維持
+- **反映先**: `docs/agent/team.md` / `docs/work/toki-definition-draft.md` / `docs/work/risk-review-stage4-toki-definition-rereview.md` / `docs/work/current-task.md` / `.ai/board/handoff-log.md`
+
 ## 2026-07-19 — Stage 4 Kai参加判断【条件付き採用・正本昇格済み】
 
 - **提案**: 名前付きKaiの初回成果を1サンプルの条件付き機能証跡として採用し、役割定義・adapterを現状維持してKaiをチームへ参加させる。技術的強制方式は別テーマとして保留する
