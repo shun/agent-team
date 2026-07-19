@@ -6,15 +6,16 @@
 
 ---
 
-## 2026-07-19 — Stage 4 Kai名前付き試運転完了・参加判断【条件付き採用】
+## 2026-07-19 — Stage 4 Kai参加判断【条件付き採用・正本昇格済み】
 
 - **提案**: 名前付きKaiの初回成果を1サンプルの条件付き機能証跡として採用し、役割定義・adapterを現状維持してKaiをチームへ参加させる。技術的強制方式は別テーマとして保留する
 - **試した結果**: fresh sessionで`agent_type: kai` / `fork_turns: none`をplatformが認識。1ターン・再試行0回・fallbackなしで`architecture-options.md`を158行で作成し、責任境界の異なる3案、pros/cons、成立・不成立条件、限界を提示
 - **Rinレビュー**: 初回P0:0 / P1:3 / P2:2。Gen修正後の差分再レビューで新規P0/P1なし。P1 3件は技術ドラフト不足が解消し、限定証跡の十分性、未強制期間の利用、Toki停止解除に関する人間判断待ちへ移行
 - **人間の判断**: 「とりあえずKaiを参加させるので良い」として条件付き採用。Kai固有価値・再現性・read/write非逸脱・技術的強制は未検証のまま維持し、既存安全境界とタスク単位契約内の設計成果物に限定して参加を許容
-- **保留**: 案A・B・Cの採否、sandbox・permission profile構成、read制限の必要範囲、実現可能性確認、PoC、実装。コード・外部連携・高権限操作・読ませてはいけない機密またはblind入力を含む案件は割当前に再判断
+- **保留**: 案A・B・Cの採否、sandbox・permission profile構成、read制限の必要範囲、実現可能性確認、PoC、実装。コード実装、PoC、設定変更、外部連携、高権限・本番操作、読ませてはいけない機密・blind入力、または既存安全境界やタスク単位契約を越えるread/writeを含む案件は割当前に再判断
 - **次のゲート**: Toki加入は別の明示承認まで停止。Stage 4全体は完了扱いにしない
-- **反映先**: `docs/work/current-task.md` / `stage4-kai-trial-decision-summary.md` / `stage4-kai-trial-retrospective.md` / `risk-review-stage4-kai-trial-rereview.md` / `.ai/board/handoff-log.md`
+- **正本昇格**: RinのP1-1・P1-4の緩和策を採用し、規定パスの独立ADR候補から`ADR-0015-kai-conditional-participation.md`へ昇格。`docs/roadmap.md`のStage 4は状態行だけを「進行中」へ更新。P1-2・P1-3・P1-5・P1-6は差分再レビューで解消済み、新規P0/P1なし。原則1周のためRinの再々レビューは未実施
+- **反映先**: `docs/decisions/ADR-0015-kai-conditional-participation.md` / `docs/roadmap.md` / `docs/work/current-task.md` / `stage4-kai-trial-decision-summary.md` / `stage4-kai-trial-retrospective.md` / `risk-review-stage4-kai-trial-rereview.md` / `adr-drafts/2026-07-19-kai-conditional-participation.md` / `stage4-promotion-draft.md` / `risk-review-stage4-promotion.md` / `.ai/board/handoff-log.md`
 
 ## 2026-07-19 — Stage 4 Kai定義・Codex adapter・初回試運転【採用・正本反映済み・起動未認識】
 

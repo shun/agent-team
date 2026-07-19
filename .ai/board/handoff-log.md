@@ -6,18 +6,20 @@
 
 ---
 
-## 2026-07-19（Stage 4 Kai参加判断）— 条件付き参加、技術方式保留、Toki未承認
+## 2026-07-19（Stage 4 Kai参加判断）— 正本昇格完了、技術方式保留、Toki未承認
 
 - **担当**: Gen（玄）+ 人間
 - **人間の判断**: 「とりあえずKaiを参加させるので良い」として、名前付きKaiの初回成果を条件付き採用し、Kaiをチームへ参加させる
 - **加入状態**: Kai加入ループは条件付き完了。`team.md`のKai定義と`.codex/agents/kai.toml`は現状維持
+- **正本昇格**: 人間の明示承認に基づき、規定パスの独立ADR候補を`ADR-0015-kai-conditional-participation.md`へ昇格し、`docs/roadmap.md`のStage 4状態行を「進行中」へ更新
+- **Rinレビュー反映**: P1-1は承認状態を分離、P1-4は独立ADR候補から昇格する緩和策を採用。P1-2・P1-3・P1-5・P1-6は差分再レビューで解消済み、新規P0/P1なし。原則1周のため再々レビューなし
 - **残留リスク**: 初回1サンプル。Kai固有価値・再現性、read/write非逸脱、repo全体write非逸脱、技術的強制は未検証
 - **当面の運用**: 既存の`team.md`・`safety.md`とタスク単位の入力・出力allowlist、停止条件、再試行上限に従う設計成果物に限定
-- **再判断ゲート**: コード、外部連携、高権限操作、または読ませてはいけない機密・blind入力を含む案件は、受入れ・Kai割当前に停止して人間へ戻す
+- **再判断ゲート**: コード実装、PoC、設定変更、外部連携、高権限・本番操作、読ませてはいけない機密・blind入力、または既存安全境界やタスク単位契約を越えるread/writeを含む案件は、Kai割当前に停止して人間へ戻す
 - **保留**: 案A・B・Cの採否、sandbox・permission profile、read制限の必要範囲、実現可能性確認、PoC、実装
 - **Toki**: 今回の判断に含めず、別の明示承認まで開始しない。Stage 4全体は未完了
-- **VCS**: 操作なし
-- **次に見るべきもの**: `docs/work/current-task.md` 17節 / `stage4-kai-trial-decision-summary.md` / `.ai/board/growth-log.md` 本エントリ
+- **VCS**: 人間がコミット`82bd79ec`を作成済み。今回の正本昇格完了分は未コミットで、Genは許可された素の`jj st` / `jj log` / `jj diff`による確認だけを行う
+- **次に見るべきもの**: `docs/work/current-task.md` 18節 / `docs/decisions/ADR-0015-kai-conditional-participation.md` / `docs/work/risk-review-stage4-promotion.md` / `.ai/board/growth-log.md` 本エントリ
 
 ## 2026-07-19（Stage 4 Kai fresh-session再開・振り返り）— 名前付き起動成功、Rin差分レビュー完了、人間判断待ち
 
