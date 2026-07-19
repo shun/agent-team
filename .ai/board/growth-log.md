@@ -15,6 +15,7 @@
 - **保留**: 案A・B・Cの採否、sandbox・permission profile構成、read制限の必要範囲、実現可能性確認、PoC、実装。コード実装、PoC、設定変更、外部連携、高権限・本番操作、読ませてはいけない機密・blind入力、または既存安全境界やタスク単位契約を越えるread/writeを含む案件は割当前に再判断
 - **次のゲート**: Toki加入は別の明示承認まで停止。Stage 4全体は完了扱いにしない
 - **正本昇格**: RinのP1-1・P1-4の緩和策を採用し、規定パスの独立ADR候補から`ADR-0015-kai-conditional-participation.md`へ昇格。`docs/roadmap.md`のStage 4は状態行だけを「進行中」へ更新。P1-2・P1-3・P1-5・P1-6は差分再レビューで解消済み、新規P0/P1なし。原則1周のためRinの再々レビューは未実施
+- **成果物整理**: 案Aを採用し、技術方式保留・Toki候補入力・主要リスク証跡の9件を維持。正本・主要レビュー・ログへ集約済みの未コミット中間成果物10件は、Rin削除前レビュー（P0:0 / P1:0 / P2:1）と人間の最終承認後に削除。Kai定義・adapter・ADRの内容変更なし
 - **反映先**: `docs/decisions/ADR-0015-kai-conditional-participation.md` / `docs/roadmap.md` / `docs/work/current-task.md` / `stage4-kai-trial-decision-summary.md` / `stage4-kai-trial-retrospective.md` / `risk-review-stage4-kai-trial-rereview.md` / `adr-drafts/2026-07-19-kai-conditional-participation.md` / `stage4-promotion-draft.md` / `risk-review-stage4-promotion.md` / `.ai/board/handoff-log.md`
 
 ## 2026-07-19 — Stage 4 Kai定義・Codex adapter・初回試運転【採用・正本反映済み・起動未認識】
