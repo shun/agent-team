@@ -97,13 +97,13 @@ memo セクション23 は「自己成長機構」を MVP 外としているが�
 
 ## Stage 4: 四人目・五人目 — Kai(設計)、Toki(QA)
 
-> 状態: **進行中**（2026-07-19 人間承認）
+> 状態: **完了（条件付き）**（2026-07-19 人間承認。Kai・Toki加入と5人標準workflowを正本化。初回1サンプル、fresh性・read/write非逸脱・再現性・技術方式A・B・Cは未検証または未採用）
 
 - 迎える契機: 設計判断が必要なテーマ(Kai)、確認観点の整理が必要なテーマ(Toki)が来たとき
 - それぞれ標準手順で迎える(同時には迎えない。一人ずつ)
 - Kai の試運転: 実テーマで `architecture-options.md`(複数案 + pros/cons 必須)
 - Toki の試運転: 同テーマで `test-analysis.md`(人間がレビューできる粒度)
-- 5人そろったら `docs/agent/workflow.md` を memo セクション16 の標準フローに更新
+- 5人加入後、`docs/agent/workflow.md`をmemoセクション16の標準フローへ更新済み
 
 ## Stage 5: フルサイクル検証
 
