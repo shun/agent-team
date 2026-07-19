@@ -6,6 +6,27 @@
 
 ---
 
+## 2026-07-20 — Ritsu実装・複合実行担当の加入準備開始【人間承認・fresh session待ち】
+
+- **提案**: 専門担当が判断を固定した後の制作・実装・検証をRitsuへ委譲し、専門判断と
+  受入れ確認を依頼元へ残したままend-to-end時間を短縮する
+- **事前レビュー**: Shinoが要件を改訂し、Kaiがdispatch案、Tokiが速度・品質評価計画、
+  Rinが初回・差分・最終確認を実施。最終判定は条件付き進行可、新規リスクなし、
+  Gate C限定P0 1件、加入順・Luna証跡・baselineのP1 3件、P2 0件
+- **人間の判断**: Toki部分のコミット後、「Ritsuを進めよう」と指示。Ritsuだけを先行し、
+  Hayateの正本・adapter・試用・加入はRitsuのgrowth loop完了まで進めない
+- **正本反映**: Ritsuを`加入準備中`として定義。Luna/high必須、Gen集中dispatch、
+  専門判断非委譲、4段階加入状態、docs-only初回、コードwrite隔離gateを固定
+- **adapter**: `.codex/agents/ritsu.toml`を作成。公式Codex manualでcustom agent fileの
+  `model` / `model_reasoning_effort`対応を確認したが、実利用modelの証明とは扱わない
+- **未検証**: 名前付きfresh起動、実model・effort、fresh性、read/write非逸脱、速度、
+  品質非劣性、コード能力、技術的write隔離
+- **work整理**: 合同ドラフト、依頼書、重複レビューをRitsu専用の評価計画と統合
+  リスクレビューへ圧縮し、Stage Rの現行成果物を5ファイルへ限定
+- **反映先**: `team.md` / `workflow.md` / `roadmap.md` / `ADR-0020` /
+  `.codex/agents/ritsu.toml` / `current-task.md` / `ritsu-gate-s-smoke-contract.md` /
+  `ritsu-evaluation-plan.md` / `ritsu-onboarding-risk-review.md`
+
 ## 2026-07-20 — Toki正本の自立化・Stage 4 work整理【人間承認・完了】
 
 - **提案**: 正本化コミットへ`docs/work/`の中間成果物を混在させず、採用判断を

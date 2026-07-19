@@ -19,6 +19,7 @@
 | 3 | **Shino**(篠) | 要件整理 | Mio |
 | 4 | **Kai**(甲斐) | アーキテクチャ | Ren |
 | 5 | **Toki**(時) | QA / テスト設計 | Toma |
+| 6 | **Ritsu**(律) | 実装・複合実行 | — |
 
 2人目以降の順序は Stage 1 の終わりに Gen と人間で決め直してよい。Rin を早めに置くのは、No Consensus Without Dissent(反対意見のない合意は合意ではない)を早期にチームの文化として固定するため。人間と Gen の二人だけだと楽観合意に流れやすい。
 
@@ -104,6 +105,30 @@ memo セクション23 は「自己成長機構」を MVP 外としているが�
 - Kai の試運転: 実テーマで `architecture-options.md`(複数案 + pros/cons 必須)
 - Toki の試運転: 同テーマで `test-analysis.md`(人間がレビューできる粒度)
 - 5人加入後、`docs/agent/workflow.md`をmemoセクション16の標準フローへ更新済み
+
+## Stage R: 六人目 — Ritsu（実装・複合実行）
+
+> 状態: **進行中**（2026-07-20 人間がRitsu単独先行を承認）
+
+Stage 5の開始前に、詳細化済みの制作・実装・検証を担う共有実行担当としてRitsuを
+一人ずつのgrowth loopで迎える。Hayateは本Stageの対象外とし、Ritsuの試運転、
+振り返り、人間判断が終わるまでadapter作成・試用を開始しない。
+
+- GenがRitsuの正本定義を反映し、`gpt-5.6-luna` / reasoning effort `high`を
+  必須とするCodex adapterを作る
+- fresh sessionで名前付きRitsu、model ID、effortをplatform証跡から確認する
+- 最初の試用は、試行専用の新規`docs/work/`出力だけを扱うdocs-onlyタスクとする
+- 現行方式と、専門担当 → Gen → Ritsu → 専門担当レビューのend-to-end時間・品質を比較する
+- 1回の結果は機能pilotに限定し、複数タスク・事前固定反復なしに速度改善・品質非劣性・
+  正式加入を主張しない
+- コード試用は、技術的write隔離、基準版、競合停止、独立差分確認、復旧主体を
+  実装・実証した後に、人間が別途承認した場合だけ開始する
+- `未加入 → docs-only試用 → コード試用 → 役割別加入`を個別に判断する
+
+**完了条件**: Ritsuが指定Luna/highで名前付き起動し、docs-only試用とコード試用の
+結果をRinがレビューし、人間が実装・複合実行担当として加入可否を判断する。
+
+完了後、Stage 5の開始ゲートへ戻る。
 
 ## Stage 5: フルサイクル検証
 

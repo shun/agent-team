@@ -1,89 +1,90 @@
-# current-task: Stage 5 — フルサイクル検証
+# current-task: Stage R — Ritsu実装・複合実行担当の加入準備
 
 - 更新: 2026-07-20 / 更新者: Gen（玄）
-- 状態: **未着手**
+- 状態: **正本・Codex adapter反映済み / fresh session起動待ち**
 - 直前の完了: Stage 4 **完了（条件付き）**
-- 次の判断者: 人間
+- 一時保留: Stage 5 **未着手**
+- 次の判断者: fresh sessionでのGen、起動結果確認後の人間
 
-本書は現在地と次の開始ゲートだけを保持する。Stage 4の判断理由は正本ADR、
-成長記録、handoff、残した一次証跡へ集約済みであり、完了済みの逐次経過はここで
-重複管理しない。
+本書はRitsuの成長ループを進捗の正として管理する。Toki関連はコミット済みであり、
+Stage 4の確定結果は正本、ADR、成長記録、残した一次証跡を参照する。
 
-## 1. 現在地
+## 1. 人間判断
 
-Stage 4ではKaiとTokiが加入し、5人構成と標準workflowを正本化した。Stage 5の
-実テーマ、入出力、実装範囲はまだ決めておらず、フルサイクル検証は開始していない。
+人間は2026-07-20、Toki部分をコミットした後、Ritsuを次の一人として進めるよう指示した。
+この判断によりRitsuだけを先行し、Hayateは今回の対象外とする。
 
-現在の正本は次のとおりである。
+採用範囲は次のとおりである。
 
-- [チーム定義](../agent/team.md)
-- [安全境界](../agent/safety.md)
-- [標準workflow](../agent/workflow.md)
-- [ロードマップ](../roadmap.md)
-- [Kai参加判断](../decisions/ADR-0015-kai-conditional-participation.md)
-- [Toki参加判断](../decisions/ADR-0016-toki-test-analysis-participation.md)
-- [Toki出力量方針](../decisions/ADR-0017-toki-trial-output-size-policy.md)
-- [5人標準workflow](../decisions/ADR-0018-five-member-standard-workflow.md)
-- [テスト分析先行TDD](../decisions/ADR-0019-test-analysis-first-tdd.md)
+- Ritsuを実装・複合実行担当の`加入準備中`メンバーとして正本化する
+- 必須実行条件を`gpt-5.6-luna` / reasoning effort `high`とする
+- 初期dispatchをGenへ集中し、専門担当は判断中核と受入れ確認を保持する
+- 状態を`未加入 → docs-only試用 → コード試用 → 役割別加入`に分ける
+- Stage 5は未着手のまま維持し、Ritsuのgrowth loop完了後に開始ゲートへ戻る
 
-## 2. Stage 4の確定結果
+判断原文と非承認範囲は
+[人間判断記録](ritsu-participation-human-decision-record.md)を参照する。
 
-Stage 4で確定した現在状態は次のとおりである。
+## 2. 反映済み
 
-- Kaiは条件付き参加済みである。
-- Tokiはテスト分析・テスト項目設計担当として加入済みである。
-- 標準フローは、人間 → Gen → Shino → Kai → Toki → Rin → Gen → 人間である。
-- コード実装では、Tokiのテスト分析、人間の項目承認、テスト骨組みレビュー、
-  RED → GREEN → REFACTORの順を採用する。
-- Stage 4は2026-07-19に条件付き完了した。
-- Toki関連の中間ドラフト・依頼・判断前資料36件は、正本と主要証跡への集約後、
-  2026-07-20の人間承認により未コミットのまま削除した。
+Ritsuの加入準備に必要な正本と実行adapterは反映済みである。
 
-## 3. 継続する境界
+- [チーム定義](../agent/team.md): Ritsuを`加入準備中`として追加
+- [標準workflow](../agent/workflow.md): 固定後作業委譲と実装担当の境界を追加
+- [ロードマップ](../roadmap.md): Stage Rを進行中として追加
+- [ADR-0020](../decisions/ADR-0020-ritsu-implementation-worker.md): 採用理由と境界を固定
+- [Codex adapter](../../.codex/agents/ritsu.toml): Luna/highと停止条件を固定
+- [統合リスクレビュー](ritsu-onboarding-risk-review.md): 正本反映前レビューと残留リスク
 
-Stage 4完了後も、次の事項は未検証または未採用である。
+adapterの存在は、名前付き起動、指定model、effort、fresh性、品質、速度、加入を証明しない。
 
-- Kai・Tokiの初回結果は各1サンプルであり、再現性を証明しない。
-- fresh context内部、read/write非逸脱、安全性、技術的強制は未検証である。
-- `architecture-options.md`の技術方式A・B・Cは未採用である。
-- sandbox・permission profile変更、PoC、設定変更、外部調査は未承認である。
-- Tokiは初期責務としてテスト実行、証跡生成、実結果評価、最終合否を担当しない。
+## 3. 継続する安全境界
 
-Toki初回試運転の`CD-01`は未解消である。各`TI-01`〜`TI-11`には入力版が直接
-記載されていないため、G4入力SHA-256との外部結合で追跡性を補う。後続転記では
-`analysis-draft`、承認者なし、ゲート利用不可、G4入力SHA-256を不可分に保持する。
+Ritsuの正本表示は加入準備中、lifecycle状態は未加入である。次の境界を維持する。
 
-## 4. 残すStage 4証跡
+- 指定Luna/highをplatform証跡で確認できなければ`inconclusive / blocked`とする
+- default agent、汎用worker、別model、別effort、会話履歴付き起動へfallbackしない
+- docs-only試用は、試行専用の新規`docs/work/`出力だけを許可する
+- 既存コード、正本、adapter、共有成果物への書込みを試用契約へ含めない
+- コード試用は、技術的write隔離、基準版、競合停止、独立差分確認、復旧主体を
+  実装・実証し、人間が別途承認するまで開始しない
+- VCS、merge、deploy、本番・高権限操作、外部送信を行わない
 
-後から条件付き採用を振り返るため、Tokiの一次成果、固定契約、評価、主要レビューを
-次の11件へ限定して残す。
+## 4. Gate S — fresh session機能スモーク
 
-- [初回成果物](test-analysis.md)
-- [試運転契約TC-1](toki-stage4-initial-trial-contract-draft.md)
-- [非公開評価計画EP-1](toki-stage4-initial-trial-evaluation-plan.md)
-- [G3承認記録](toki-stage4-initial-trial-g3-approval-record.md)
-- [G4承認記録](toki-stage4-initial-trial-g4-approval-record.md)
-- [G5 dispatch記録](toki-stage4-initial-trial-g5-dispatch-record.md)
-- [Gen評価](toki-stage4-initial-trial-gen-evaluation.md)
-- [Genレビュー対応](toki-stage4-initial-trial-gen-response.md)
-- [Rin初回レビュー](risk-review-stage4-toki-initial-trial.md)
-- [Rin差分再レビュー](risk-review-stage4-toki-initial-trial-rereview.md)
-- [人間判断記録](toki-stage4-initial-trial-human-decision-record.md)
+次のCodexセッションで、成果物を作らない機能スモークを1回だけ行う。
 
-初回成果物のSHA-256は
-`3c0594e6a1d3eadf6c058161d4392848f37a8c36f1c04acf3eb5622306291c59`、G4入力の
-SHA-256は`b2be3698f34b92d4056d4460413c0cafdc37fdcd824ceb623748322922bd82cf`である。
+1. `.codex/agents/ritsu.toml`が名前付きagent registryへ公開されていることを確認する。
+2. `agent_type: ritsu` / `fork_turns: none`でRitsuを起動する。
+3. platform応答からagent識別子、名前付きtype、model ID、reasoning effortを記録する。
+4. `gpt-5.6-luna` / `high`を確認できればGate S成功候補とする。
+5. 未認識、証跡不足、別model・effortの場合は再試行・fallbackせず停止する。
 
-## 5. Stage 5開始ゲート
+設定ファイル値とRitsuの自己申告だけを実利用証跡として数えない。現セッション開始後に
+adapterを追加したため、同一セッション内の未認識を失敗判定へ使わない。
 
-Stage 5を開始する前に、人間とGenは次を固定する。
+## 5. Gate M — docs-only速度・品質pilot
 
-1. 検証に使う実テーマと期待する人間判断。
-2. Shino、Kai、Toki、Rinの参加範囲と、省略する場合の理由。
-3. 各agentのread/write allowlist、停止条件、再試行上限、fallback禁止。
-4. コード実装、実テスト、PoC、設定変更、外部調査を含むか。
-5. 機密性、安全境界、sandbox・permission profileを変更しないこと。
-6. 完了条件と、条件未充足時に人間へ戻す判断ゲート。
+Gate S成功後、[Ritsu速度・品質評価計画](ritsu-evaluation-plan.md)を入力として固定契約を
+作り、人間承認後にpilotを行う。
+開始前に次を決める。
 
-このゲートが確定するまで、Stage 5のagent起動、実装、実テスト、外部調査、
-設定変更を開始しない。
+1. 低感度の固定タスク、hidden oracle、試行専用の新規出力先。
+2. 主評価baselineとなる現行方式の実行者と工程境界。
+3. 契約readyから受入れ・Gen統合までの計測点と記録主体。
+4. blind reviewer、必須項目、重大指摘、品質非劣性条件。
+5. 反復数、実行順、欠測処理、再作業上限。
+
+最初の1試行は機能pilotだけとし、速度改善、品質非劣性、正式加入を主張しない。
+
+## 6. 完了条件
+
+Stage Rは、次をすべて満たし、人間がRitsuの役割別加入を明示承認したときに完了する。
+
+- 名前付きRitsuと指定Luna/highを信頼できるplatform証跡で確認する
+- docs-only試用を固定契約で実施し、速度・品質・再作業・Gen負荷を振り返る
+- コードwrite境界を技術的に実装・実証し、人間承認済みの回復可能なコード試用を行う
+- Rinが試用結果と残留リスクをレビューする
+- 人間が加入可否、許容リスク、正本上の`加入済み`表示を判断する
+
+完了後、Stage 5の開始ゲートへ戻る。Hayateは別の人間判断まで進めない。

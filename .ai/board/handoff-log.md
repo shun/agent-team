@@ -6,6 +6,33 @@
 
 ---
 
+## 2026-07-20（Ritsu加入準備開始）— 正本・adapter反映、fresh session待ち
+
+- **担当**: Gen（玄）+ 人間
+- **人間判断**: Toki部分のコミット後、HayateではなくRitsuを次の一人として進める
+- **正本反映**: `team.md`へRitsu加入準備中定義、`workflow.md`へ固定後作業委譲、
+  `roadmap.md`へStage R、`ADR-0020`へ採用理由と境界を追加
+- **adapter**: `.codex/agents/ritsu.toml`を新規作成。必須設定は
+  `gpt-5.6-luna` / reasoning effort `high`、fallback禁止
+- **公式仕様確認**: 2026-07-20取得のCodex manualで、project custom agentを
+  `.codex/agents/`へ置き、`model`と`model_reasoning_effort`を指定できることを確認
+- **現在地**: 正本・adapter反映済み、Ritsuは加入準備中、Stage 5は未着手
+- **work整理**: 人間の整理承認を受け、合同評価計画を`ritsu-evaluation-plan.md`、
+  3段階のRinレビューを`ritsu-onboarding-risk-review.md`へ自己完結化
+- **削除**: 昇格済み元資料、Hayate合同ドラフト、依頼書、重複レビュー計22件を削除。
+  Stage Rの現行成果物を`current-task.md`、Gate S契約、人間判断記録、評価計画、統合
+  リスクレビューの5件へ限定
+- **次のゲート**: fresh sessionで`RITSU-GS-01`を1回実行し、名前付きtype、platform管理の
+  model ID / effort、fresh性を確認。証跡不足はblocked、fallbackなし
+- **コード境界**: docs-only試用は新規`docs/work/`だけ。Gate Cは技術的write隔離、
+  基準版、競合停止、独立差分確認、復旧主体の実証と別の人間承認まで停止
+- **対象外**: Hayate、速度閾値、固定task、baseline、コード試用、実装、PoC、外部調査
+- **VCS**: `jj st` / `jj diff`のみ実行。コミット、その他VCS操作なし
+- **次に見るべきもの**: `docs/work/current-task.md` /
+  `docs/work/ritsu-gate-s-smoke-contract.md` /
+  `docs/work/ritsu-evaluation-plan.md` / `docs/work/ritsu-onboarding-risk-review.md` /
+  `docs/decisions/ADR-0020-ritsu-implementation-worker.md`
+
 ## 2026-07-20（Toki Stage 4成果物整理）— 正本自立化、work 36件削除完了
 
 - **担当**: Gen（玄）+ 人間
