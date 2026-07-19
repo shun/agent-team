@@ -6,6 +6,46 @@
 
 ---
 
+## 2026-07-19（Stage 4 Kai参加判断）— 条件付き参加、技術方式保留、Toki未承認
+
+- **担当**: Gen（玄）+ 人間
+- **人間の判断**: 「とりあえずKaiを参加させるので良い」として、名前付きKaiの初回成果を条件付き採用し、Kaiをチームへ参加させる
+- **加入状態**: Kai加入ループは条件付き完了。`team.md`のKai定義と`.codex/agents/kai.toml`は現状維持
+- **残留リスク**: 初回1サンプル。Kai固有価値・再現性、read/write非逸脱、repo全体write非逸脱、技術的強制は未検証
+- **当面の運用**: 既存の`team.md`・`safety.md`とタスク単位の入力・出力allowlist、停止条件、再試行上限に従う設計成果物に限定
+- **再判断ゲート**: コード、外部連携、高権限操作、または読ませてはいけない機密・blind入力を含む案件は、受入れ・Kai割当前に停止して人間へ戻す
+- **保留**: 案A・B・Cの採否、sandbox・permission profile、read制限の必要範囲、実現可能性確認、PoC、実装
+- **Toki**: 今回の判断に含めず、別の明示承認まで開始しない。Stage 4全体は未完了
+- **VCS**: 操作なし
+- **次に見るべきもの**: `docs/work/current-task.md` 17節 / `stage4-kai-trial-decision-summary.md` / `.ai/board/growth-log.md` 本エントリ
+
+## 2026-07-19（Stage 4 Kai fresh-session再開・振り返り）— 名前付き起動成功、Rin差分レビュー完了、人間判断待ち
+
+- **担当**: Gen（玄）+ Kai（甲斐・`/root/kai_stage4_named_trial_20260719`）+ Rin（凛・`/root/rin_stage4_kai_trial_review_20260719`）
+- **復帰地点**: `docs/work/current-task.md` 13節。同一セッションで未認識だった名前付きKaiを、確定済み依頼のままfresh sessionで1回だけ再開
+- **Kai結果**: `agent_type: kai` / `fork_turns: none` をplatformが認識。1ターン・再試行0回・fallbackなしで `docs/work/architecture-options.md` を新規作成（158行）
+- **Kai成果**: タスク専用ファイルシステム投影 / allowlist入出力ゲートウェイ / 通常起動＋境界監査の3案。各案にpros/cons、成立・不成立条件、限界、責務境界、未確認表示、採否留保
+- **証跡限界**: 初回1サンプル。Kai固有価値・再現性、read非逸脱、repo全体write非逸脱、外部・VCS等の独立監査、現行Codexでの実現可能性、技術的強制は未検証。要件IDは形式適合のみで意味照合未実施
+- **Rin初回レビュー**: P0なし / P1 3件 / P2 2件。単発成果の過大評価、未強制期間の利用範囲、Toki停止解除条件、ID追跡表現、不実施主張の証跡強度を指摘
+- **Gen対応**: 5件すべて採用。1サンプル限定、利用上限、Toki明示承認、形式適合限定、自己申告 / Gen観測 / 独立監査なしへ修正
+- **Rin差分再レビュー**: 新規P0/P1なし。P1 3件は技術ドラフト不足解消・人間判断待ち、P2-2解消。P2-1は `current-task.md` 14節を事後同期し、原則1周のため再々レビューなし
+- **人間判断待ち**: `docs/work/stage4-kai-trial-decision-summary.md` の推奨案。初回証跡の条件付き採用、Kai加入ループ条件付き完了、未強制期間の列挙境界、全設計案未採用、ID形式適合、Toki別承認ゲート
+- **停止中**: Kai通常利用、技術方式採用、実現可能性検証、実装・PoC・外部操作、Stage 4全体完了、Toki開始。保留・却下・条件未充足でも停止継続
+- **VCS**: 操作なし。一時的な `docs/work/` 成果物はコミット対象外
+- **次に見るべきもの**: `docs/work/stage4-kai-trial-decision-summary.md` / `stage4-kai-trial-retrospective.md` / `risk-review-stage4-kai-trial.md` / `risk-review-stage4-kai-trial-rereview.md` / `current-task.md` 14〜16節
+
+## 2026-07-19（Stage 4 Kai定義反映・同一セッション初回起動）— 名前付きKai未認識、fallbackなしで停止
+
+- **担当**: Gen（玄）+ Shino（要件整理）+ Rin（定義・試運転境界レビュー）
+- **人間の判断**: Kaiに複数案・pros/cons・限界を作らせる方針、Kai定義正本反映、Codex adapter作成、試運転依頼確定、`agent_type: kai` / `fork_turns: none` 起動を明示承認
+- **反映**: `docs/agent/team.md` Kai節、`.codex/agents/kai.toml`、`docs/work/kai-stage4-trial-request.md`。growth-logへ定義変更を記録
+- **Rinレビュー**: 初回P0:0 / P1:7 / P2:1。差分再レビューで初回8件解消。新規P1 KAI-R09は独立認識確認を廃止し、承認済み試運転へ統合する緩和策を反映
+- **起動結果**: `agent_type: kai` / `fork_turns: none` に対し `unknown agent_type 'kai'`。Kai実行前に停止。default / inline / 履歴付き起動へのfallbackなし、再試行0回、`architecture-options.md`未作成
+- **残留リスク**: 同一セッション作成adapterのregistry未反映可能性。原因未確定。read/write技術的強制も引き続き未検証
+- **次に行うこと**: 新しいCodexセッションで `docs/work/current-task.md` 13節と確定済み `kai-stage4-trial-request.md` を読み、名前付きKai起動を1回だけ再試行。未認識なら代替せず人間へ戻す
+- **VCS**: 操作なし。一時的な `docs/work/` 成果物はコミット対象外
+- **次に見るべきもの**: `docs/work/current-task.md` 12・13節 / `docs/work/kai-stage4-trial-request.md` / `.codex/agents/kai.toml`
+
 ## 2026-07-19（Stage 3 Shinoクローズ）— 修正版案A採用、条件付き完了、一時成果物を未コミット削除
 
 - **担当**: Gen(玄) + 人間

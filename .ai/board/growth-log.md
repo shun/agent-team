@@ -6,6 +6,26 @@
 
 ---
 
+## 2026-07-19 — Stage 4 Kai名前付き試運転完了・参加判断【条件付き採用】
+
+- **提案**: 名前付きKaiの初回成果を1サンプルの条件付き機能証跡として採用し、役割定義・adapterを現状維持してKaiをチームへ参加させる。技術的強制方式は別テーマとして保留する
+- **試した結果**: fresh sessionで`agent_type: kai` / `fork_turns: none`をplatformが認識。1ターン・再試行0回・fallbackなしで`architecture-options.md`を158行で作成し、責任境界の異なる3案、pros/cons、成立・不成立条件、限界を提示
+- **Rinレビュー**: 初回P0:0 / P1:3 / P2:2。Gen修正後の差分再レビューで新規P0/P1なし。P1 3件は技術ドラフト不足が解消し、限定証跡の十分性、未強制期間の利用、Toki停止解除に関する人間判断待ちへ移行
+- **人間の判断**: 「とりあえずKaiを参加させるので良い」として条件付き採用。Kai固有価値・再現性・read/write非逸脱・技術的強制は未検証のまま維持し、既存安全境界とタスク単位契約内の設計成果物に限定して参加を許容
+- **保留**: 案A・B・Cの採否、sandbox・permission profile構成、read制限の必要範囲、実現可能性確認、PoC、実装。コード・外部連携・高権限操作・読ませてはいけない機密またはblind入力を含む案件は割当前に再判断
+- **次のゲート**: Toki加入は別の明示承認まで停止。Stage 4全体は完了扱いにしない
+- **反映先**: `docs/work/current-task.md` / `stage4-kai-trial-decision-summary.md` / `stage4-kai-trial-retrospective.md` / `risk-review-stage4-kai-trial-rereview.md` / `.ai/board/handoff-log.md`
+
+## 2026-07-19 — Stage 4 Kai定義・Codex adapter・初回試運転【採用・正本反映済み・起動未認識】
+
+- **提案**: Kaiを最小の汎用アーキテクトとして定義し、要件から複数設計案、pros/cons、成立・不成立条件、限界を比較可能にする。初回テーマは名前付きサブエージェントのread/write境界の技術的強制・検知・検証
+- **Rinレビュー**: 初回P0:0 / P1:7 / P2:1。Gen対応後の差分再レビューで初回8件すべて解消。新規P1 KAI-R09は、独立認識確認を廃止し、承認済み試運転の初回起動へ統合するRin推奨緩和策を反映
+- **人間の判断**: Kaiに複数案・各案の限界・pros/consを考慮させる方針を採用。続いてKai定義の正本反映、Codex adapter作成、試運転依頼確定、`agent_type: kai` / `fork_turns: none` での名前付き初回起動を明示承認
+- **境界**: 概念設計と比較材料まで。技術方式の採用、実装、PoC、外部連携、高権限操作は未承認。Kai未認識時のdefault / inline / 履歴付き起動へのfallback禁止
+- **試した結果**: `team.md` Kai節、`.codex/agents/kai.toml`、確定試運転依頼を順に反映後、同一セッションで `agent_type: kai` / `fork_turns: none` を実行。platform応答は `unknown agent_type 'kai'`。Kai実行前に停止し、fallback・再試行なし、`architecture-options.md`未作成
+- **次のゲート**: adapter読み込みがセッション開始時である可能性（未確定）を踏まえ、新しいCodexセッションで名前付きKai起動を1回だけ再試行。未認識なら代替せず人間判断へ戻す
+- **反映先**: `docs/agent/team.md` Kai節 / `.codex/agents/kai.toml` / `docs/work/kai-stage4-trial-request.md` / `docs/work/current-task.md`
+
 ## 2026-07-19 — Stage 3 Shino試運転の振り返り【案A採用・条件付き完了】
 
 - **提案**: Shino定義とCodex adapterを現状維持し、正式テンプレート化を次のShino実テーマまで保留してStage 3を条件付き完了とする案A。対案は、今テンプレートを作る案Bと、別テーマでもう1回試運転する案C
