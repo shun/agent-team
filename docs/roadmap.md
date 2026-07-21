@@ -20,6 +20,7 @@
 | 4 | **Kai**(甲斐) | アーキテクチャ | Ren |
 | 5 | **Toki**(時) | QA / テスト設計 | Toma |
 | 6 | **Ritsu**(律) | 実装・複合実行 | — |
+| 7 | **Hayate**(疾風) | 短時間制約付き限定実装 | — |
 
 2人目以降の順序は Stage 1 の終わりに Gen と人間で決め直してよい。Rin を早めに置くのは、No Consensus Without Dissent(反対意見のない合意は合意ではない)を早期にチームの文化として固定するため。人間と Gen の二人だけだと楽観合意に流れやすい。
 
@@ -108,36 +109,52 @@ memo セクション23 は「自己成長機構」を MVP 外としているが�
 
 ## Stage R: 六人目 — Ritsu（実装・複合実行）
 
-> 状態: **進行中**（2026-07-20 人間がRitsu単独先行を承認）
+> 状態: **完了（役割採用）**（2026-07-21 人間承認。性能、platform telemetry、
+> 技術的write隔離、長期再現性は未実証）
 
-Stage 5の開始前に、詳細化済みの制作・実装・検証を担う共有実行担当としてRitsuを
-一人ずつのgrowth loopで迎える。Hayateは本Stageの対象外とし、Ritsuの試運転、
-振り返り、人間判断が終わるまでadapter作成・試用を開始しない。
+詳細化済みの制作・実装・検証を担う共有実行担当としてRitsuを迎えた。固定合成課題の
+TypeScript、Go、Rustで機能・hidden testを通過し、Work modeの文書試行とばらつき確認を
+経て、人間が標準実装担当としての役割採用を承認した。
 
-- GenがRitsuの正本定義を反映し、`gpt-5.6-luna` / reasoning effort `high`を
-  必須とするCodex adapterを作る
-- fresh sessionで名前付きRitsu、model ID、effortをplatform証跡から確認する
-- 最初の試用は、試行専用の新規`docs/work/`出力だけを扱うdocs-onlyタスクとする
-- 現行方式と、専門担当 → Gen → Ritsu → 専門担当レビューのend-to-end時間・品質を比較する
-- 1回の結果は機能pilotに限定し、複数タスク・事前固定反復なしに速度改善・品質非劣性・
-  正式加入を主張しない
-- コード試用は、技術的write隔離、基準版、競合停止、独立差分確認、復旧主体を
-  実装・実証した後に、人間が別途承認した場合だけ開始する
-- `未加入 → docs-only試用 → コード試用 → 役割別加入`を個別に判断する
+Stage完了は組織上の役割採用だけを意味する。per-run model、effort、fresh性、tool・network
+非逸脱、sandbox強制、一般的な品質非劣性は未確認のままとする。技術的write隔離、基準版、
+write前競合停止、独立差分確認、復旧主体を実証できない環境では、既存repository fileを
+Ritsuへ委譲しない。
 
-**完了条件**: Ritsuが指定Luna/highで名前付き起動し、docs-only試用とコード試用の
-結果をRinがレビューし、人間が実装・複合実行担当として加入可否を判断する。
+**完了条件**: 試運転結果と残留リスクを保持したまま、人間がRitsuを標準実装担当として
+加入済みへ昇格する。2026-07-21に達成した。
 
-完了後、Stage 5の開始ゲートへ戻る。
+Ritsuの現在のroutingと書込み境界は[チーム定義](agent/team.md)と
+[ワークフロー](agent/workflow.md)を正とする。
+
+## Stage H: 七人目 — Hayate（短時間制約付き限定実装）
+
+> 状態: **完了（役割採用）**（2026-07-21 人間承認。速度優位、品質非劣性、
+> platform telemetry、技術的write隔離、長期再現性は未実証）
+
+Hayateを、速度優位を前提とせず、入力、時間、再作業を狭くした短時間制約付き限定実装担当
+として迎えた。TypeScript、Go、Rustを各3回試し、短時間の好材料と、言語・runごとの
+first-pass品質の揺れを確認したうえで、人間が条件付きroutingの役割採用を承認した。
+
+Stage完了は組織上の役割採用だけを意味する。HayateはRitsuを置き換えず、固定API、独立oracle、
+低リスク、単一責務その他の全routing条件をdispatch前に満たす場合だけ選ぶ。1回で受入れを
+満たさなければ再作業せず、原因に応じて上流または新しい作業IDのRitsuへ切り替える。
+
+**完了条件**: 3言語×3回の結果と未確認事項を保持したまま、人間がHayateを限定実装担当として
+加入済みへ昇格する。2026-07-21に達成した。
+
+Hayateの現在のroutingと書込み境界は[チーム定義](agent/team.md)と
+[ワークフロー](agent/workflow.md)を正とする。
 
 ## Stage 5: フルサイクル検証
 
 > 状態: 未着手
 
-5人で1つのテーマを1周し、チームとして機能するかを検証する。
+7人で1つのテーマを1周し、専門工程と実装担当routingを含むチーム全体が機能するかを検証する。
 
 - 人間がテーマを提示(memo セクション29 の候補B/C 規模)
-- 人間の依頼 → Gen → Shino → Kai → Toki → Rin → Gen 統合 → `final-proposal.md` → 人間判断
+- 人間の依頼 → Gen → Shino → Kai → Toki → Rin → Gen 統合 → `final-proposal.md` →
+  人間判断 → RitsuまたはHayateによる承認済み実装
 - memo の仮説1〜5を検証し、結果を記録
   - 名前付きで出力品質が上がったか / 成果物経由で反論・修正が成立したか / Rin が過剰合意を抑制したか / final-proposal だけで判断できたか / Markdown + 明示リンクで足りたか
 - 失敗条件(memo セクション25)チェック — 特に「名前だけ増えて出力が同じ」「Rin が一般論だけ」「final-proposal が長すぎる」

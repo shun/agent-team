@@ -1,90 +1,61 @@
-# current-task: Stage R — Ritsu実装・複合実行担当の加入準備
+# current-task: docs/work 全体整理
 
-- 更新: 2026-07-20 / 更新者: Gen（玄）
-- 状態: **正本・Codex adapter反映済み / fresh session起動待ち**
-- 直前の完了: Stage 4 **完了（条件付き）**
+- 更新: 2026-07-22 / 更新者: Gen（玄）
+- 状態: **docs/work全体整理完了 / Stage 5未着手**
+- 直前の完了: 66件を削除し、`current-task.md`だけへ整理
 - 一時保留: Stage 5 **未着手**
-- 次の判断者: fresh sessionでのGen、起動結果確認後の人間
+- 次の判断者: 人間（Stage 5の開始テーマ）
 
-本書はRitsuの成長ループを進捗の正として管理する。Toki関連はコミット済みであり、
-Stage 4の確定結果は正本、ADR、成長記録、残した一次証跡を参照する。
+完了済みStageの判断根拠を正本へ吸収し、`docs/work/current-task.md`だけを残す全体整理を
+完了した。このファイルでは整理後の現在地と次の開始判断だけを扱う。
 
-## 1. 人間判断
+## 0. 現在人間判断
 
-人間は2026-07-20、Toki部分をコミットした後、Ritsuを次の一人として進めるよう指示した。
-この判断によりRitsuだけを先行し、Hayateは今回の対象外とする。
+人間は2026-07-21、蓄積した試運転・比較結果を踏まえ、RitsuとHayateの両方を採用し、
+昇格・正本化するよう指示した。
 
-採用範囲は次のとおりである。
+採用内容は[ADR-0021](../decisions/ADR-0021-ritsu-hayate-implementation-routing.md)へ昇格した。
+Ritsuを標準実装担当、Hayateを固定済み・小規模・低リスク・独立自動検証可能な作業の
+短時間制約付き限定実装担当とする。
+Hayateが1回で受入れを満たさない場合、同じ作業を繰り返さずRitsuへ切り替える。
 
-- Ritsuを実装・複合実行担当の`加入準備中`メンバーとして正本化する
-- 必須実行条件を`gpt-5.6-luna` / reasoning effort `high`とする
-- 初期dispatchをGenへ集中し、専門担当は判断中核と受入れ確認を保持する
-- 状態を`未加入 → docs-only試用 → コード試用 → 役割別加入`に分ける
-- Stage 5は未着手のまま維持し、Ritsuのgrowth loop完了後に開始ゲートへ戻る
+## 1. 完了した反映
 
-判断原文と非承認範囲は
-[人間判断記録](ritsu-participation-human-decision-record.md)を参照する。
+今回の人間判断は、次の正本と記録へ反映した。
 
-## 2. 反映済み
+- [チーム定義](../agent/team.md): 両名の加入済み表示と継続境界
+- [ワークフロー](../agent/workflow.md): Ritsu既定、Hayate全条件routing、失敗時分岐
+- [ロードマップ](../roadmap.md): Stage R/Hの役割採用完了
+- [ADR-0021](../decisions/ADR-0021-ritsu-hayate-implementation-routing.md): 採用理由と非決定事項
+- Codex adapter: Ritsu/Hayateのwrite停止条件とHayateの1回実行
 
-Ritsuの加入準備に必要な正本と実行adapterは反映済みである。
+## 2. 継続境界
 
-- [チーム定義](../agent/team.md): Ritsuを`加入準備中`として追加
-- [標準workflow](../agent/workflow.md): 固定後作業委譲と実装担当の境界を追加
-- [ロードマップ](../roadmap.md): Stage Rを進行中として追加
-- [ADR-0020](../decisions/ADR-0020-ritsu-implementation-worker.md): 採用理由と境界を固定
-- [Codex adapter](../../.codex/agents/ritsu.toml): Luna/highと停止条件を固定
-- [統合リスクレビュー](ritsu-onboarding-risk-review.md): 正本反映前レビューと残留リスク
+加入後も、次の安全境界と未確認事項を維持する。
 
-adapterの存在は、名前付き起動、指定model、effort、fresh性、品質、速度、加入を証明しない。
+- 人間の今回の判断は加入と役割分担の承認であり、性能優位の確定ではない。
+- per-run model・effort・fresh性、tool・network非逸脱は未確認のまま残す。
+- production、VCS、外部送信、正本変更は個別の承認と`safety.md`に従う。
+- 技術的write隔離を実証できない環境では、既存repository fileを両名へ直接委譲しない。
 
-## 3. 継続する安全境界
+## 3. Work整理の結果
 
-Ritsuの正本表示は加入準備中、lifecycle状態は未加入である。次の境界を維持する。
+Rinの全体整理レビューはP0 0 / P1 4 / P2 2で、ADR自己完結、全対象分類、完全な目録と
+展開検証、全repositoryリンク検査を削除条件とした。ADR-0014〜0017とADR-0021への転記、
+66件・550,619 bytesの目録、アーカイブ展開後の全digest照合、削除対象への生きたMarkdown
+リンク0件を確認し、66件と空ディレクトリを削除した。`docs/work/`の全entryは本ファイルだけである。
 
-- 指定Luna/highをplatform証跡で確認できなければ`inconclusive / blocked`とする
-- default agent、汎用worker、別model、別effort、会話履歴付き起動へfallbackしない
-- docs-only試用は、試行専用の新規`docs/work/`出力だけを許可する
-- 既存コード、正本、adapter、共有成果物への書込みを試用契約へ含めない
-- コード試用は、技術的write隔離、基準版、競合停止、独立差分確認、復旧主体を
-  実装・実証し、人間が別途承認するまで開始しない
-- VCS、merge、deploy、本番・高権限操作、外部送信を行わない
+完全な目録は`.ai/board/work-cleanup-manifest-2026-07-21.tsv`、削除前アーカイブは
+`/private/tmp/agent-team-docs-work-full-cleanup-20260721.tar.gz`にある。一時アーカイブは永続保管を
+保証しない。分類、保留理由、再開条件、digestは`.ai/board/handoff-log.md`の先頭へ記録した。
 
-## 4. Gate S — fresh session機能スモーク
+## 4. 次の開始ゲート
 
-次のCodexセッションで、成果物を作らない機能スモークを1回だけ行う。
+削除対象66件は、昇格済み、保留、単なる作業証跡へ分類済みで、成果物全体としての却下は
+0件である。保留した技術方式、platform能力、`CD-01`、Stage 5テーマの再開条件も正本または
+handoff-logへ移した。
 
-1. `.codex/agents/ritsu.toml`が名前付きagent registryへ公開されていることを確認する。
-2. `agent_type: ritsu` / `fork_turns: none`でRitsuを起動する。
-3. platform応答からagent識別子、名前付きtype、model ID、reasoning effortを記録する。
-4. `gpt-5.6-luna` / `high`を確認できればGate S成功候補とする。
-5. 未認識、証跡不足、別model・effortの場合は再試行・fallbackせず停止する。
+人間の2026-07-22の継続指示を削除実行の承認として反映した。VCS操作は行っていない。
 
-設定ファイル値とRitsuの自己申告だけを実利用証跡として数えない。現セッション開始後に
-adapterを追加したため、同一セッション内の未認識を失敗判定へ使わない。
-
-## 5. Gate M — docs-only速度・品質pilot
-
-Gate S成功後、[Ritsu速度・品質評価計画](ritsu-evaluation-plan.md)を入力として固定契約を
-作り、人間承認後にpilotを行う。
-開始前に次を決める。
-
-1. 低感度の固定タスク、hidden oracle、試行専用の新規出力先。
-2. 主評価baselineとなる現行方式の実行者と工程境界。
-3. 契約readyから受入れ・Gen統合までの計測点と記録主体。
-4. blind reviewer、必須項目、重大指摘、品質非劣性条件。
-5. 反復数、実行順、欠測処理、再作業上限。
-
-最初の1試行は機能pilotだけとし、速度改善、品質非劣性、正式加入を主張しない。
-
-## 6. 完了条件
-
-Stage Rは、次をすべて満たし、人間がRitsuの役割別加入を明示承認したときに完了する。
-
-- 名前付きRitsuと指定Luna/highを信頼できるplatform証跡で確認する
-- docs-only試用を固定契約で実施し、速度・品質・再作業・Gen負荷を振り返る
-- コードwrite境界を技術的に実装・実証し、人間承認済みの回復可能なコード試用を行う
-- Rinが試用結果と残留リスクをレビューする
-- 人間が加入可否、許容リスク、正本上の`加入済み`表示を判断する
-
-完了後、Stage 5の開始ゲートへ戻る。Hayateは別の人間判断まで進めない。
+次はMission RoomをStage 5候補として具体化する。目的、利用者、最小機能、保存する状態、
+人間の判断点を`current-task.md`へ定義してから、Shinoの要件整理へ進む。

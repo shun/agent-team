@@ -6,6 +6,47 @@
 
 ---
 
+## 2026-07-21 — Ritsu・Hayate加入、条件付きrouting正本化【人間承認・完了】
+
+- **提案**: 蓄積したRitsu/Hayate試運転結果を正本へ昇格し、Ritsuを標準実装担当、
+  Hayateを短時間制約付き限定実装担当として使い分ける
+- **試した結果**: Ritsuは固定合成課題3言語で機能・hidden testを通過。Work mode文書試行は
+  3回で95、90、87点。Hayateは3言語×3回で機能合格率がTypeScript 1/3、Go 2/3、
+  Rust 3/3、厳格pass候補が0/3、1/3、1/3。約110〜136秒の短時間シグナルを観測
+- **人間の判断**: RitsuとHayateの両方を採用し、加入済みへ昇格・正本化する
+- **Rinレビュー**: 初回P0 1 / P1 6 / P2 2。全件を採用し、技術的write隔離、加入表示、
+  Hayate全条件routing、原因別切替、二軸受入れ、既存workflowゲート、履歴保持を修正。
+  差分再レビューで全P0/P1解消、新規P0/P1なし
+- **正本判断**: 加入は組織上の役割採用と条件付きrouting eligibilityだけを意味し、性能、
+  platform構成、安全強制、個別作業承認、包括権限の証明としない
+- **routing**: Ritsuを既定とする。Hayateは単一責務、固定API、低リスク、独立oracle、
+  時間上限その他の全条件を満たす場合だけ1回実行し、機能不合格は新IDでRitsuへ切り替える
+- **継続境界**: 技術的write隔離を実証できない環境では既存repository fileを両名へ委譲しない。
+  性能優位、per-run telemetry、sandbox強制、長期再現性は未実証
+- **反映先**: `docs/agent/team.md` / `docs/agent/workflow.md` / `docs/roadmap.md` /
+  `docs/decisions/ADR-0021-ritsu-hayate-implementation-routing.md` /
+  `.codex/agents/ritsu.toml` / `.codex/agents/hayate.toml` / `docs/work/current-task.md`
+
+## 2026-07-21 — Hayate短時間制約付き実装候補の比較準備【人間承認・fresh session待ち】
+
+- **提案**: RitsuのLuna/high実装pilotに対し、同じLunaのreasoning effort `medium`を使う
+  named HayateへTypeScript（Deno）、Go、Rustの同一課題を実施させる
+- **人間の判断**: 比較前にHayateの正本定義とnamed adapterを作成する。Hayateは
+  Luna/medium、Ritsuは既存どおりLuna/highとする
+- **Rinレビュー**: 初回P0 0 / P1 8 / P2 2。全件を採用。1回限りの差分再レビューで
+  新規P0/P1なし、残ったP1 3件も成果物間の表現、結果schema、Stage境界を修正して閉じた
+- **正本反映**: Hayateを`加入準備中・高速性未実証`の短時間制約付き実装候補として追加。
+  未指定semantics、trust境界、直接・間接write、GREEN後write禁止時のREFACTOR境界を固定
+- **adapter**: `.codex/agents/hayate.toml`をLuna/mediumで作成。現sessionへ動的反映されたと
+  仮定せず、新規sessionでnamed typeをpreflightする
+- **比較境界**: 異なるnamed role packageの単発観測とする。telemetry欠測時は成果物単体
+  評価だけを行い、差・比率・順位を算出しない。単発時間は加入判断の根拠にしない
+- **Stage境界**: Stage HはStage Rと比較目的で並行可能。Stage 5の必須gateには今回せず、
+  関係は未判断として人間へ残す
+- **反映先**: `docs/agent/team.md` / `docs/roadmap.md` /
+  `.codex/agents/hayate.toml` / `docs/work/current-task.md` /
+  `docs/work/hayate-ritsu-code-comparison-new-session-prompt.md`
+
 ## 2026-07-20 — Ritsu実装・複合実行担当の加入準備開始【人間承認・fresh session待ち】
 
 - **提案**: 専門担当が判断を固定した後の制作・実装・検証をRitsuへ委譲し、専門判断と

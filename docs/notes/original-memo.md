@@ -892,7 +892,7 @@ WikiLink [[...]] は使ってもよいが、AIが確実に辿れる保証はな�
 関連:
 - [Agent Team](../agent/team.md)
 - [Workflow](../agent/workflow.md)
-- [Risk Review](../work/risk-review.md)
+- `Risk Review`（旧配置: `../work/risk-review.md`、判断内容は正式ADRへ昇格済み）
 
 LLMに期待するのは、魔法のリンク解決ではなく、明示されたファイル構造をもとに必要情報を探すことである。
 

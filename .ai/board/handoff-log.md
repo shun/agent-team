@@ -6,6 +6,167 @@
 
 ---
 
+## 2026-07-22（docs/work全体整理）— 66件削除・Mission Room準備へ
+
+- **担当**: Gen（玄）+ 人間
+- **人間判断**: 「どんどん整理して、早くMission Roomを作りたい」という継続指示を、
+  削除前ゲートを進める明示承認として反映
+- **削除**: 2026-07-21の完全目録にある66件、550,619 bytesと空の`adr-drafts/`
+- **整理後**: `docs/work/`の全entryは`current-task.md`だけ
+- **正本**: 判断根拠はADR-0014〜0017、ADR-0021へ吸収済み。保留事項と再開条件は
+  2026-07-21の直前エントリへ保持
+- **復旧**: `.ai/board/work-cleanup-manifest-2026-07-21.tsv`と、展開・全件照合済みの
+  `/private/tmp/agent-team-docs-work-full-cleanup-20260721.tar.gz`を維持
+- **VCS**: 操作なし
+- **次に見るべきもの**: `docs/work/current-task.md` / `docs/roadmap.md` Stage 5。
+  Mission Roomの目的・最小機能・状態境界を次テーマとして定義する
+
+## 2026-07-21（docs/work全体整理）— 正本自立化完了・削除前ゲート
+
+- **担当**: Gen（玄）+ Rin（凛・`/root/ritsu_hayate_promotion_review`）+ 人間
+- **人間判断**: 完了済み成果物をさらに整理し、`docs/work/current-task.md`だけを残す
+- **Rinレビュー**: P0 0 / P1 4 / P2 2、当初No-Go。P1は、ADR自己完結、全対象分類、
+  永続的な目録と展開検証、repository全Markdownリンク検査の4件
+- **P1処置**: ADR-0014〜0017とADR-0021へ試行条件、実測値、digest、レビュー・人間判断、
+  未確認事項、再判断条件を転記。削除対象への生きたリンクを除去した
+- **分類**: 66件を次の順序で一意に分類した。保留6件は`architecture-options.md`、
+  `open-questions.md`、Ritsu評価契約レビュー2件、platform能力評価、技術的強制入力。
+  昇格済みは`adr-drafts/*`、`*-participation-human-decision-record.md`、`*-result.md`、
+  Ritsuの`*contract*`・runtime addendum・Work mode 3出力、Hayate runbook、
+  `requirements.md`、`test-analysis.md`、Kai判断サマリー、Stage 4昇格案、Toki人間判断。
+  却下された成果物全体は0件で、却下した選択肢は各ADR本文へ保持。残りは依頼、preflight、
+  中間レビュー、cleanup案などの単なる作業証跡とした
+- **保留境界**: 技術方式A/B/C、per-run telemetry、sandbox・write隔離は未採用・未実証。
+  コード、外部連携、高権限、機密入力、または現行境界を越える依頼が具体化したとき再判断する。
+  Tokiの`CD-01`は未解消で、次契約では各具体項目へ入力版を直接付ける。Stage 5はテーマ未選択
+- **目録**: `.ai/board/work-cleanup-manifest-2026-07-21.tsv`。66件、550,619 bytes、
+  SHA-256 `fab03813c1db7158fb98265e4ccdb35483078c356c9d8fc43039cde61b91738f`
+- **アーカイブ**: gzip圧縮tar
+  `/private/tmp/agent-team-docs-work-full-cleanup-20260721.tar.gz`、197,529 bytes、SHA-256
+  `8e7824a47571f6fb748851346372ef1430f60e2cd44e812baf0efb6bbf27ac0b`。
+  別ディレクトリへ展開し、66件すべてのSHA-256一致を確認。一時領域のため永続性は保証しない
+- **リンク検査**: 削除対象へのrepository内Markdownリンクは、凍結メモの旧リンク1件も
+  非リンク化して0件。将来作成用のコード表記パスは配置規約として維持する
+- **削除ゲート**: 正本・目録・アーカイブ準備は完了。人間によるVCS復旧点の確認後にだけ
+  66件を削除する。エージェントによるVCS操作は行わない
+- **次に見るべきもの**: `docs/work/current-task.md` / `docs/roadmap.md` Stage 5 /
+  `docs/decisions/ADR-0021-ritsu-hayate-implementation-routing.md`
+
+## 2026-07-21（Ritsu・Hayate work整理）— 中間成果物46件を削除
+
+- **担当**: Gen（玄）+ 人間
+- **人間判断**: 正本化・昇格後に不要となった`docs/work/`成果物を整理する
+- **削除**: CLI試行v1〜v3、旧Gate・評価案、レビュー依頼、初回Hayate比較、限定pilot、
+  superseded契約など46件、272,470 bytes
+- **保持**: 正本から参照する最終結果、凍結契約・runbook、生のWork mode 3回出力、
+  Ritsu/Hayate人間判断、platform能力評価、最終昇格案・Rinレビュー
+- **参照整理**: 保持成果物を`ADR-0021`から直接参照できるよう更新
+- **復旧**: 削除前アーカイブを
+  `/private/tmp/agent-team-ritsu-hayate-work-cleanup-20260721.tar.gz`へ作成。
+  SHA-256は`8e553c6a550e8c5481edf6b4ee9c4f7c86b9918464222dd1a8a7e7c5d27d532d`。
+  一時領域のため永続保管は保証しない
+- **VCS**: 操作なし
+- **次に見るべきもの**: `docs/work/current-task.md` / `docs/roadmap.md` Stage 5 /
+  `docs/decisions/ADR-0021-ritsu-hayate-implementation-routing.md`
+
+## 2026-07-21（Ritsu・Hayate正本昇格）— 7人構成と実装routingを確定
+
+- **担当**: Gen（玄）+ Rin（凛・`/root/ritsu_hayate_promotion_review`）+ 人間
+- **人間判断**: RitsuとHayateの両方を採用し、加入済みへ昇格・正本化する
+- **役割分担**: Ritsuを標準実装担当、Hayateを短時間制約付き限定実装担当とする。
+  Hayateはdispatch前の全条件成立時だけ1回使い、機能不合格は新IDでRitsuへ切り替える
+- **Rinレビュー**: 初回P0 1 / P1 6 / P2 2を全件反映。差分再レビューで全P0/P1解消、
+  新規P0/P1なし、正本化へ進行可能
+- **安全境界**: 加入と性能・権限・sandbox証明を分離。技術的write隔離を実証できない環境では
+  既存repository fileを両名へ委譲しない。機能とcomplianceの両方を通常完了に要求
+- **正本**: `team.md` / `workflow.md` / `roadmap.md` / `ADR-0021`を更新。
+  ADR-0020と試運転結果は履歴・根拠として維持
+- **adapter**: Ritsuの既存file write停止条件、Hayateの加入後説明・1回実行・write隔離を更新
+- **未実証**: 一般的速度優位、品質非劣性、per-run model・effort・fresh性、tool・network
+  非逸脱、sandbox強制、技術的write隔離、長期再現性
+- **VCS**: `jj st`のみ実行。コミット、その他VCS操作なし
+- **次に見るべきもの**: `docs/work/current-task.md` /
+  `docs/decisions/ADR-0021-ritsu-hayate-implementation-routing.md` /
+  `docs/work/ritsu-hayate-promotion-risk-review.md`
+
+## 2026-07-21（Hayate比較準備）— 正本・Luna/medium adapter反映、fresh session待ち
+
+- **担当**: Gen（玄）+ Rin（凛・`/root/hayate_onboarding_review`）+ 人間
+- **人間判断**: HayateへRitsuと同じTypeScript（Deno）、Go、Rust課題を実施する。
+  比較前に正本とnamed adapterを作り、HayateはLuna/medium、RitsuはLuna/highとする
+- **正本・adapter**: `team.md`へHayateを`加入準備中・高速性未実証`として追加し、
+  `.codex/agents/hayate.toml`をLuna/mediumで新規作成。`roadmap.md`へStage Hを追加
+- **Rinレビュー**: 初回P0 0 / P1 8 / P2 2。全件採用。1回限りの差分再レビューは
+  新規P0/P1なし。残った3件も文面修正で閉じ、未解消のまま受容するP0/P1なし
+- **比較範囲**: 異なるnamed role packageの単発観測。各言語1回、retry 0回、同一仕様・
+  rubric・独立testを使う。単発時間は一般的速度順位または加入判断の根拠にしない
+- **platform制約**: per-run model・effort telemetry欠測時は
+  `unverified configuration sample`として成果物単体評価だけを行い、Ritsuとの差、
+  比率、順位を算出しない
+- **未実行**: Hayate named preflight、TypeScript・Go・Rust pilot、正式加入、Stage 5
+- **VCS**: 操作なし
+- **次に見るべきもの**: `docs/work/hayate-ritsu-code-comparison-new-session-prompt.md` /
+  `.codex/agents/hayate.toml` / `docs/work/current-task.md`
+
+## 2026-07-21（Ritsu CLI先行評価）— fresh session用プロンプト作成
+
+- **担当**: Gen（玄）+ 人間
+- **人間判断**: 統制しやすいCLIでRitsuを先に評価し、通過後にWork modeの実運用適合性を
+  別途確認する。CLI結果からWork modeへ自動移行しない
+- **評価分離**: Phase Aはplatform能力確認、Phase Bは固定1件の品質pilot。pilot速度は
+  絶対時間だけを記録し、baselineなしで速度passまたは品質非劣性を判定しない
+- **実行境界**: 新規セッション用プロンプト送信時に限り、system temp、local loopback
+  OTel、OpenAIモデル通信、名前付きRitsu最大4回を承認する文面を作成。install、外部
+  telemetry、VCS、現`.codex/`、正本、コード、temp削除は非承認
+- **再試行**: Ritsuなしの準備修正は最大2回。Phase A/Bの測定runは再試行0回、fallbackなし
+- **成果物**: `ritsu-cli-first-evaluation-human-decision-record.md`、
+  `ritsu-cli-first-evaluation-new-session-prompt.md`
+- **未実行**: CLI能力PoC、CLI品質pilot、Rin実行結果レビュー、Work mode、正式Gate M、Gate C
+- **VCS**: 操作なし
+- **次に見るべきもの**: `docs/work/ritsu-cli-first-evaluation-new-session-prompt.md` /
+  `docs/work/ritsu-cli-first-evaluation-human-decision-record.md` /
+  `docs/work/current-task.md`
+
+## 2026-07-21（Ritsu評価契約再設計）— Rin 2段レビュー反映、platform待ち
+
+- **担当**: Gen（玄）+ Rin（凛・`/root/rin_ritsu_evaluation_contract_review`）
+- **人間判断**: Ritsuを印象で評価せず、品質非劣性とend-to-end速度の比較で進める
+- **Gate S2案**: platform確認S1と埋込み理解S2へ分離。per-run model・effort・fresh性、
+  tool無効化またはauditがなければdispatchしない
+- **Gate M案**: pilot 1件は評価外、paired 5件を事前固定。blind品質、compliance、専門受入れ、
+  品質絶対条件、速度25%/50%、負荷110%、Gen 10分/task、欠測・停止規則を定義
+- **Rin初回**: P0 2 / P1 7 / P2 3。全件採用
+- **Rin差分**: 新規P0なし、未解消P1 2、新規P1 1、P2解消。残る3件も契約へ反映し、
+  再レビュー上限1回を終了
+- **現在のblocked**: dispatch IDへ結び付く実model等、agent単位read/write制限、VCS・
+  外部アクセス拒否、per-run監査を確認できない
+- **公式仕様確認**: Work modeはsubagent単位のlocal sandbox controlを公開しない。CLIには
+  custom agent sandbox、named permission profile、model・reasoning・toolのOTel候補あり
+- **次候補**: 正本・現adapterを変えない低感度・無成果物のCLI隔離PoC契約。人間承認前は
+  `.codex/`変更、telemetry外部送信、PoC実行を行わない
+- **PoCドラフト**: `RITSU-CP-01`とtemp用permission / telemetry設定案を`docs/work/`へ作成。
+  Codex CLI `0.144.1`確認済み、現`.codex/`変更なし、PoC未実行
+- **未実行**: Gate S2、Gate M pilot、paired比較、Gate C、Ritsu再dispatch
+- **VCS**: 操作なし
+- **次に見るべきもの**: `docs/work/ritsu-evaluation-next-decision.md` /
+  `docs/work/ritsu-gate-s2-smoke-contract-draft.md` /
+  `docs/work/ritsu-gate-m-evaluation-contract-draft.md`
+
+## 2026-07-21（Ritsu Gate S）— inconclusive / blocked、fallbackなし
+
+- **担当**: Gen（玄）+ Ritsu（律・`/root/ritsu_gate_s_smoke`）
+- **契約**: `RITSU-GS-01`を`agent_type: ritsu` / `fork_turns: none`で1回dispatch
+- **platform観測**: 名前付きdispatchは受理されたが、管理応答に実model ID、reasoning
+  effort、fresh性の独立証跡が表示されず、Luna/highを確認不能
+- **Ritsu応答**: 文書読取りとコマンド禁止の両立不能を差し戻し。指定の最終要約応答は
+  返さず、1回完結条件も未達
+- **判定**: `inconclusive / blocked`。外部再試行0回、追加指示なし、agent停止済み
+- **fallback**: default agent、汎用worker、別model・effort、履歴付き起動、Gen代行なし
+- **継続停止**: Gate M、docs-only試用、コード試用。コード試用はwrite隔離等の実証と
+  人間の別途承認まで停止
+- **結果記録**: `docs/work/ritsu-gate-s-smoke-result.md`
+- **VCS**: 操作なし
+
 ## 2026-07-20（Ritsu加入準備開始）— 正本・adapter反映、fresh session待ち
 
 - **担当**: Gen（玄）+ 人間
