@@ -6,6 +6,779 @@
 
 ---
 
+## 2026-08-16 — GitHub から直接インストールできるようにした
+
+- **担当**: Aira
+- **人間判断**: 「リポジトリからダイレクトにインストールするようにできないの？」
+- **反映**: 取得元の既定を `https://github.com/shun/agent-team` に固定。
+  アーカイブを取って対象へ適用する。他 URL は拒否
+- **確認**: インストーラテスト 10 passed
+- **注意**: `raw.githubusercontent.com` のワンライナーは、この変更が
+  リモートに載ってから使える
+- **使い方**: guide.md のインストール節
+
+## 2026-08-16 — インストール PLAN を完了
+
+- **担当**: Aira
+- **人間判断**: 「OK。承認します。」
+- **T-001**: `scripts/install-manifest.json`
+- **T-003**: `scripts/install-agent-team.ts`。テスト 7 passed
+- **使い方**: `deno run --allow-read --allow-write scripts/install-agent-team.ts --source <このリポ> --target <導入先> --ref <版>`
+- **未実施**: git URL からの clone。導入先での実運用確認
+- **台帳**: `tmp/PLAN.md` status completed
+
+## 2026-08-16 — guide.md 作成と AGENTS.md 整理
+
+- **担当**: Aira
+- **人間判断**: docs 以下に AGENTS.md の内容でガイドラインを作り、
+  このリポの AGENTS.md も整理する
+- **反映**: `docs/agent/guide.md`（配布する共通入口）、
+  ルート `AGENTS.md` は MUST READ とこのリポ固有だけ
+- **残**: インストーラ本体。PLAN 開始は未承認。T-002 相当は先行実施
+- **次**: PLAN の残り（マニフェストとインストーラ）を開始するか
+
+## 2026-08-16 — ルートコンテキストは配らず docs から読む
+
+- **担当**: Aira
+- **人間判断**: ルートのコンテキストは入れなくてよい。docs 以下に
+  共通コンテキストを置き、各リポの Claude / Codex / Antigravity /
+  Cursor 用ファイルから手動追記で読む
+- **反映**: PLAN 案 T-002 を差し替え。インストーラは AGENTS.md /
+  CLAUDE.md を書かない
+- **次**: 共通ファイル名の確認
+
+## 2026-08-16 — 配布一覧を正本込みで採用
+
+- **担当**: Aira
+- **人間判断**: 一覧でよい。docs 以下の正本も対象（agent 以外も含む）
+- **採用**: `docs/agent/`、`docs/roadmap.md`、`docs/decisions/`
+- **除外維持**: `docs/work/`、`docs/notes/`
+- **PLAN 案**: `docs/work/repo-install/plan-draft.md`
+- **次**: 人間の PLAN 開始承認。承認まで `tmp/PLAN.md` は書き換えない
+
+## 2026-08-16 — 配布に run-plan.ts を含める
+
+- **担当**: Aira
+- **人間判断**: `scripts/run-plan.ts` は入れたほうがよい
+- **反映**: 配布提案から除外を撤回。テストファイルは配布しない
+- **次**: 一覧全体の採否
+
+## 2026-08-16 — 入れ方をインストーラに採用
+
+- **担当**: Aira
+- **人間判断**: 「イメージしているのはA」（インストーラ。Kai 案B）
+- **残課題**: 配布ファイル一覧。衝突・対象範囲・成功条件は一覧のあと
+- **次に見るべきもの**: 人間の一覧採否。その後に PLAN
+
+## 2026-08-16 — 配布モデルの人間判断
+
+- **担当**: Aira
+- **人間判断**: チーム育成はこのリポジトリ。他リポはここから
+  インストールし、更新もここから取得。フィードバックは PR
+- **記録**: `docs/work/repo-install/human-decision-2026-08-16.md`
+- **解釈**: 導入先の人間が pull する。このリポのエージェントは
+  他リポへ書かない。下流は独自正本にしない
+- **残課題**: 入れ方（案B / 案C）。実行用 PLAN は未作成
+- **次に見るべきもの**: 人間の入れ方判断、その後に PLAN
+
+## 2026-08-16 — リポジトリ直インストールの計画一周
+
+- **担当**: Aira。専門は [Shino](528e08c3-5220-4a20-8dc9-f0d69f1b3154) /
+  [Kai](a674e2cc-8dbc-4adc-ba1d-4e055b87563d) /
+  [Toki](02b18257-3618-498d-b691-3aa4d8cc0485) /
+  [Rin](ee6fdb4d-52da-4414-b4f8-32e462c2501b) /
+  [Ritsu](eca1e8cc-0336-4701-a5cb-50f1290e770f) /
+  [Hayate](7b895403-315f-419f-bb04-407dd5203a21)
+- **依頼**: いろいろなリポジトリへ、リポジトリから直接インストールする実装を計画して
+- **成果物**: `docs/work/repo-install/`（request / 6役 / round-1）、
+  `docs/work/final-proposal.md`
+- **判断したこと**: 7役は揃った。P0-1 / P0-2 / P0-3 が残る。
+  実行用 `tmp/PLAN.md` は作らない
+- **残課題**: 人間の Q-I-03 → Q-I-02 → Q-I-01。案 A〜E の採否はその後
+- **次に見るべきもの**: `docs/work/final-proposal.md`、
+  `docs/work/repo-install/rin.md`
+
+## 2026-08-16 — OI-01: safety の tmp 節を正本反映
+
+- **担当**: Aira
+- **人間判断**: 「まず２をやろう」（OI-01 を先に実施）
+- **反映**: `docs/agent/safety.md` 2節・4節、`docs/agent/workflow.md` 2節。
+  ADR 候補 `docs/work/adr-drafts/2026-08-16-tmp-scratch-workspace.md`
+- **残す禁止**: 正本引用、秘密情報・生ログ、未完了計画の上書き、tmp 全体削除
+- **未実施**: 正式 ADR 昇格、team-plan Skill 本文の旧禁止との差分解消、1 と 3
+
+## 2026-08-16 — runner に Cursor CLI を追加
+
+- **担当**: Aira
+- **依頼**: 例示していた Codex / Antigravity に加え、Cursor CLI でも起動できるようにする
+- **反映**: `scripts/run-plan.ts` の runner 種別に `cursor` を追加。この Mac では
+  `brew install --cask cursor-cli` の実コマンドが `cursor-agent` のため、固定 argv は
+  `cursor-agent -p <taskId>`
+- **確認**: `deno test --allow-read scripts/run-plan_test.ts` をこのあと実行する
+- **やっていないこと**: `--execute` での実起動、正本 Skill / safety 更新
+
+## 2026-08-16 — PLAN 承認後に T-001 / T-002 を完了
+
+- **担当**: Aira
+- **人間判断**: 「PLAN承認」
+- **T-001**: D-01〜D-09 を承認済みとして `decision-brief.md` に記録。未決の D なし
+- **T-002**: `scripts/run-plan.ts` を追加。`deno test --allow-read scripts/run-plan_test.ts`
+  は 7 passed / 0 failed。`status` / `next` / `run --task` を `tmp/PLAN.md` で確認
+- **確認**: 依存未完了と完了済みタスクは fail-closed。1..N 自動ループなし。
+  `--run` は既定で would-run。自由記述をコマンド化しない
+- **未実施**: `--execute` での codex / agy 実起動。正本 Skill / safety 本文
+- **Open issues**: OI-01 は現 PLAN 完了後の相談対象
+- **次の人間判断**: OI-01 を今やるか、Mission Room / Medium に戻るか、次の計画か
+
+## 2026-08-16 — D-03 採用: tmp は一時置き場として使用可
+
+- **担当**: Aira
+- **人間判断**: tmp 以下はエージェントの一時置き場なのでさわってよい
+- **反映**: 実行台帳を `tmp/PLAN.md` に置いた。D-03 を採用済み。safety 本文は未更新
+  （OI-01、現 PLAN 完了後に相談）
+- **やっていないこと**: ランナー実装、PLAN 開始、正本変更
+- **次の人間判断**: 「PLAN を承認。開始してよい」または残りの D-ID の変更
+
+## 2026-08-16 — チーム計画: 人間ボトルネック / finish-first を載せて PLAN 作成
+
+- **担当**: Aira
+- **人間方針**: 人間がボトルネック。エージェントが複数案と pros/cons を先に揃える。
+  承認後は完了まで回す。途中課題はすぐ知らせ、今の作業をやりきってから対応可否を相談する
+- **統合**: 既存の7役レビューは再実行していない。案3（PLAN を work 配下）と
+  完了まで届く Deno 入口、D-09 finish-first を decision-brief へ反映した
+- **成果物**:
+  - `docs/work/team-plan-foundation/decision-brief.md`
+  - `docs/work/plans/PLAN.md`（status: awaiting-human-approval）
+- **判断したこと**: 実装・正本・tmp/ は未着手。Skill 置換は今回の PLAN 対象外
+- **次の人間判断**: 「PLAN を承認。開始してよい」または変更したい D-ID
+- **次に見るべきもの**: `docs/work/plans/PLAN.md`
+
+## 2026-08-16 — リポジトリ網羅分析（Aira）
+
+- **担当**: Aira
+- **依頼**: リポジトリを網羅的に分析する。正本変更・実装・VCS・deployは対象外
+- **読んだ正本**: docs/agent/team.md / safety.md / workflow.md / docs/roadmap.md /
+  AGENTS.md / .ai/board/handoff-log.md / docs/work/current-task.md
+- **横断対象**: docs/decisions（ADR 21）、docs/work（Markdown 85）、
+  docs/work/adr-drafts（6）、.codex/.claude/.agents adapter、
+  mission-room/app と tests、team-plan-foundation、growth-log
+- **判断したこと**: 分析のみ。採用・却下・正本反映・Stage 5 状態更新はしていない
+- **人間向け成果物**: チャット要約と
+  canvases/repo-analysis.canvas.tsx（チャット横で開く分析面）
+- **残課題**: current-task は 2026-08-03 の Medium 試運転のまま。
+  team-plan-foundation は Shino / Kai / Toki まで。Rin / Ritsu / Hayate 未提出。
+  final-proposal.md は未作成
+- **次に見るべきもの**:
+  1. docs/work/team-plan-foundation/shino.md の Q-01〜Q-04
+  2. docs/work/medium-two-slice-pilot-decision-brief.md
+  3. docs/work/current-task.md と roadmap Stage 5 状態行のずれ
+
+## 2026-08-03（Agent-team Medium 2スライス試運転）— fresh Toki差分分析・Medium復帰判定
+
+- **担当**: Gen + fresh named Toki + 人間
+- **人間承認**: M1 owner counting ruleをpilot分析入力として採用し、M2案A
+  `runtime terminal gate`を選択、fresh Tokiによる両slice差分再分析までを限定承認
+- **Toki dispatch**: Codex `agent_type: toki` / `fork_turns: none`、返却ID
+  `/root/toki_medium_two_slice_delta`。effective per-run model ID/effortはplatform非公開のため`unknown`
+- **Toki契約**: `docs/work/toki-medium-two-slice-pilot-delta-request.md`（131行、SHA-256
+  `086df13528b4268ee76ce9b2e9a4da32afe0194487309b7943b5f31cbf33064b`）
+- **Toki成果物**: `docs/work/test-analysis-medium-two-slice-pilot-delta.md`（95行、SHA-256
+  `da61f0b9d24c5437052d73cbb635303e20cd0f255f2cf554ef268b1753ec217c`）。固定母集団13/13、
+  M1-X1/M2-X1解消、test未実行、analysis-draft、blockerなし
+- **Gen統合**: M1は採用count ruleの5状態exact-one、M2は案Aのruntime terminal gateと
+  lifecycle oracleによりMedium候補へ復帰。combined pilotを元の最初の実装ゲートへ提示可能とした
+- **Blocked**: real GPU/context-loss delivery、context restore、実AT/OSは証拠なし。
+  deterministic seam、source regex、過去Pass、visual、人間判断で代替しない
+- **不変確認**: package/lock、7 source、B5 test 5件の承認前SHAが全一致。
+  product/test/package、network、VCS、隔離copy、Ritsu/Rin、正本・adapter・deploy・productionは未変更・未実施
+- **人間向け成果物**: `docs/work/medium-two-slice-pilot-decision-brief.md`へToki結果とMedium判定を統合
+- **次の人間判断**: M1/M2採用、Toki差分分析受入れ、各sliceのskeleton artifactを残しつつ
+  skeleton単独承認を省略し、同じRitsuを隔離RED→GREEN→REFACTORへ進める今回限りの例外を承認するか
+
+## 2026-08-03（Agent-team Medium 2スライス試運転）— M1 rule固定・fresh Kai M2比較
+
+- **担当**: Gen + fresh named Kai + 人間
+- **人間承認**: M2をHighへ戻して実装ゲートを保留し、M1 owner counting rule固定と
+  fresh KaiによるM2責務境界・成立案比較までを限定承認
+- **M1成果物**: `docs/work/medium-two-slice-pilot-m1-owner-counting-rule.md`（60行、SHA-256
+  `ff1140b2065a398ede1b050c5da773fdfc53e6b755a04544c69c2e51dd039c9b`）。DOM、accessibility、
+  完全content subtreeのexact-oneをSSR/hydration前/ready/二fallbackで固定したdraft
+- **Kai dispatch**: Codex `agent_type: kai` / `fork_turns: none`、返却ID
+  `/root/kai_medium_two_slice_m2`。effective per-run model ID/effortはplatform非公開のため`unknown`
+- **Kai契約**: `docs/work/kai-medium-two-slice-pilot-m2-request.md`（79行、SHA-256
+  `7d7725d7aec82c60f6c842ead2b7798f9db407d19071ba72a55e4e2a260b2814`）
+- **Kai成果物**: `docs/work/architecture-options-medium-two-slice-pilot-m2.md`（101行、SHA-256
+  `8671d4f43d02afdc10448e911e46dc2cdb1f9859e96a48a5e6a7b30c6642949e`）。
+  案A runtime terminal gateと案B client canvas-event gateを比較、blockerなし
+- **Gen統合**: 案Aを推奨。Engine/Scene、loss observer、dispose ownerをruntimeへ集約し、
+  React更新前にruntime mutatorを閉じられる。M1はrule採用後、M2は案A採用とToki差分再分析後に
+  Medium復帰候補。real GPU/context-loss deliveryはBlockedのまま
+- **人間向け成果物**: `docs/work/medium-two-slice-pilot-decision-brief.md`（58行、SHA-256
+  `bce8ab1316fa5d3821a77f1d728b43c07b3e09b429f59e2f35e0ed26dcfcf1ba`）へ限定分析を統合
+- **安全境界**: product/test、Ritsu/Toki/Rin/Hayate、test skeleton、RED/GREEN、package、
+  正本・adapter・roadmap・growth-log、VCS、deploy、productionは未変更・未実施
+- **次の人間判断**: M1 rule採用、M2案A選択、fresh named Tokiによる両slice差分再分析までを
+  一括承認するか。実装ゲートとは分離する
+
+## 2026-08-02（Agent-team Medium 2スライス試運転）— Toki分析後のMedium停止
+
+- **担当**: Gen + fresh named Toki
+- **開始確認**: 指定正本、handoff先頭、current-task、roadmap成長ループ/Stage 5、B5四成果物、
+  `mission-room/app/3d/`全source、rendered HTML/B1〜B5全testを確認
+- **working copy evidence**: plain `jj st` / `jj diff`は`.git/objects`へのsnapshot書込み拒否で失敗。
+  権限拡張、git、別jj commandへ迂回せず、現行SHAとB5 final manifestの一致を代替証拠とした
+- **Toki dispatch**: Codex `agent_type: toki` / `fork_turns: none`、返却ID
+  `/root/toki_medium_two_slice`。effective per-run model ID/effortはplatform非公開のため`unknown`
+- **Toki契約**: `docs/work/toki-medium-two-slice-pilot-request.md`（92行、SHA-256
+  `cae95d1d00e33828049a2b13ba4c9876fa4ffff1d86f78b68435a17d745b4ceb`）
+- **Toki成果物**: `docs/work/test-analysis-medium-two-slice-pilot.md`（81行、SHA-256
+  `bc49607dc14eef2cd266b62214a941c60fbde4ac9134fdf8ccb86c2dfb5e24c1`）。固定母集団13/13、test未実行
+- **判定**: M1はowner counting rule未固定の条件付きMedium。M2はloss通知owner、決定論的seam、
+  generation/dispose、同一turn action oracle未固定でMedium断定不可。厳しい停止条件を適用した
+- **人間向け成果物**: `docs/work/medium-two-slice-pilot-decision-brief.md`（58行、SHA-256
+  `ca90d8de7a5a66eb298cb606ac7d5e9b38ca1a402dd76d25c5570b55314f7bd1`）
+- **安全境界**: product/test、Ritsu/Rin/Hayate、隔離copy、test skeleton省略、2件目、package、
+  正本・adapter・roadmap・growth-log、VCS、deploy、productionは未変更・未実施
+- **次の人間判断**: M2をHighへ戻して本pairを保留し、M1 counting rule固定とfresh Kaiによる
+  M2責務境界・成立案の限定分析までを承認するか
+
+## 2026-08-02（Agent-team Medium 2スライス試運転）— 新セッションprompt作成
+
+- **担当**: Gen + 人間
+- **人間依頼**: Medium相当の2スライスで、accepted completion時間、人間gate数、
+  rework数、review後新規P1、人間必読artifact数を比較する新セッションpromptを作る
+- **成果物**:
+  `docs/work/agent-team-medium-two-slice-pilot-launcher.md`（貼付用）と
+  `docs/work/agent-team-medium-two-slice-pilot-new-session-prompt.md`（詳細契約）
+- **仮候補**: M1はB5 P2-3のsemantic owner一本化、M2はB5 P2-1のready後
+  WebGL lossに対するtruthful fallback。いずれもMedium判定と人間採用前は未承認
+- **試運転設計**: fresh Tokiの2件合同差分分析後、1つのdecision briefでscope、
+  Toki分析、skeleton単独承認省略を一括判断。承認後はM1→M2を直列実行し、各sliceを
+  fresh Rinがレビュー。generation 2後のP0/P1は自動loopせず人間へ戻す
+- **測定補強**: 一意な必読artifact数だけでなく、同一artifactの再提示回数と
+  内部artifact数も併記し、指標の見かけ上の圧縮を防ぐ
+- **安全境界**: 正本・adapter・roadmap・growth-log、product/test、VCS、deployは未変更。
+  このprompt作成は試運転実装または恒久ルール変更の承認ではない
+- **次**: 新セッションへlauncherのtext blockを送り、開始確認、Medium判定、Toki差分分析、
+  最初の人間ゲートまで進める
+
+## 2026-07-25（Mission Room Babylon.js B5）— P1四件修正、final browser再観測Blocked
+
+- **担当**: Gen + fresh Ritsu 2 work + same Rin + 人間
+- **人間判断**: 「4件とも修正で進めて」
+- **P1 remediation**:
+  canonical acceptance、実行可能exact oracle、実測lifecycle/geometry、
+  ordered four-step flowを隔離TDDで修正
+- **same Rin re-review**:
+  `docs/work/risk-review-babylonjs-b5-p1-rereview.md`
+  （119行、SHA-256
+  `1b774aecb5662bed58c82b0df42edf3e9f34e5137f4b95d14350326982dcf1e7`）。
+  P1-1〜3 Closed、P1-4はStep 4 projectionとclear/Escape flowのP1二件を残した
+- **fresh flow closure**:
+  `docs/work/ritsu-mission-room-babylonjs-b5-flow-closure-result.md`
+  （72行、SHA-256
+  `a2f9c340cadc426359b951e6af1e5ec35fdba228520dd61dfb735991e1ab9f9e`）。
+  accepted outcomeのMission＋exact三壁結果をStep 4へbindし、pure journey functionで
+  clear後もStep 3/4履歴を保持、再選択要件をlive statusへ明示
+- **final automated evidence**: focused 26/26、full 54 total / 48 pass /
+  0 fail / 6 skip、build/lint exit 0
+- **Gen final artifact**:
+  `docs/work/gen-mission-room-babylonjs-b5-flow-closure-verification.md`
+- **Blocked**: final buildのfresh browser起動は承認サービス利用上限、
+  既存targetはbrowser security policyで拒否。回避せずpost-closure browser再観測を未Passとした
+- **残留**: original P2-1〜5は未解決・未受容。deploy、正本変更、VCS操作なし
+
+---
+
+## 2026-07-25（Mission Room Babylon.js B5）— 実装・Gen検証・Rinレビュー完了、P1四件の人間判断待ち
+
+- **担当**: Gen + 同じprimary Ritsu + fresh Rin + 人間
+- **人間判断**: B5 skeletonを「ok。すすめて」と明示承認し、隔離TDD・限定統合・検証へ進行
+- **Ritsu実装**:
+  `docs/work/ritsu-mission-room-babylonjs-b5-result.md`
+  （75行、SHA-256
+  `44d2e82bc22a848abd208fbf6f2b17d9931cd685f766045c0c91785109b4fe6f`）。
+  `/private/tmp/mission-room-babylon-b5.NoKOas`で許可6 source＋新規B5 test 4fileだけを変更
+- **一回のrework**: Genがscene seamのalternate/stale outcome置換と
+  `onDeskPick` observer predicate漏れを検出。同じRitsuがguard・直接oracleを追加し、
+  focused/build/full/lintを全再実行
+- **main統合・自動検証**: 競合なしのB4 hashから10fileだけを`apply_patch`。
+  focused `8 pass / 2 skip`、full `41 pass / 6 skip`、build/lint exit 0。
+  package/lock、既存test、`/`、config/workerは不変
+- **Gen browser/visual evidence**:
+  `docs/work/gen-mission-room-babylonjs-b5-verification.md`
+  （87行、SHA-256
+  `b2d37e3b9499394c63e6c04e3e70bf3abcd9862e973e79e1e407f7c55abfe0b6`）。
+  1440×1000/390×844、三outcome exact sets、五view、二Desk経路、三real card、
+  plain wall、orbit/zoom、clear/Escape/reset、三route再入場、overflow 0、
+  console issue 0、41/41 same-origin assetを実測
+- **Blocked evidence**: approved browserにWebGL failure injectionなし。
+  Enter/Space injectionはnative button focusを得たがactivationを生成できずBlocked。
+  実AT/OS/GPUとhuman comprehensionもpending。repository skipはPassに数えていない
+- **fresh Rin結果**:
+  `docs/work/risk-review-babylonjs-b5.md`
+  （167行、SHA-256
+  `accd8c710c9c327902e99179f92a0f15df73edb94d9a4151a832cd90edecf7fc`）。
+  P0 0 / P1 4 / P2 5、risk未受容
+- **P1 queue**:
+  1. rapid alternate/stale actionでReact/scene outcome分岐の可能性
+  2. runtime suiteがregex中心でbehavior exactnessを実行しない
+  3. lifecycle/geometry evidenceが自己申告属性中心
+  4. approved四段階journeyに対し画面flowが三段階
+- **次**: 人間がP1各件を修正必須・保留・risk受容へ仕分ける。未判断のまま次Slice、
+  deploy、正本変更、VCS操作へ進まない。local production `/3d`は提示用に維持
+
+---
+
+## 2026-07-25（Mission Room Babylon.js B5）— Ritsu test skeleton・人間レビュー待ち
+
+- **担当**: Gen + fresh primary Ritsu
+- **人間判断**: B5 Toki分析を「承認。すすめて」と明示承認し、skeleton gateへ進行
+- **契約**: `docs/work/ritsu-mission-room-babylonjs-b5-skeleton-request.md`
+  （188行、SHA-256
+  `076af5bece3b1e35138fb2240653231921f37755b52742f43b1edc25845d7d9a`）
+- **成果物**: `docs/work/ritsu-mission-room-babylonjs-b5-test-skeleton.md`
+  （76行、SHA-256
+  `ae155e281d62d09f63ffe50e52f5ac3c41d7bba33883dbdb8d28bcdb90c57a14`）
+- **Gen受入れ**: B5-01〜30、B5C-01〜22を全件確認。
+  state/interface、三outcome exact set、五view/Desk、reset/stale/fallback/lifecycle、
+  RED-1〜6、grouped regressionに欠落・弱化・invented behaviorなし
+- **future ownership**: 同じprimary Ritsuが使い捨て隔離copyで`app/3d/` 6fileと
+  新規B5 test 4fileを所有。既存test、package/lock、`/`、config/workerはread-only
+- **未実施**: product/test code、隔離copy、RED/GREEN、test/build/lint/browser、
+  package/network、deploy、VCS
+- **環境**: plain `jj st`はsandboxの`.git/objects`書込み拒否で失敗。
+  権限拡張せず、承認Toki/product/testの直接SHA照合は全件一致
+- **次**: 人間がskeletonを明示承認した後だけ、同じ
+  `/root/ritsu_babylon_b5` thread/modelで隔離TDDへ進む
+
+## 2026-07-25（Mission Room Babylon.js B5）— Toki分析完成・人間レビュー待ち
+
+- **担当**: Gen + fresh named Toki + 人間
+- **人間判断**: command/read allowlist違反で停止した2回の後、正本全文readを許可した
+  fresh named Tokiの例外再起動1回を承認
+- **契約**: `docs/work/toki-mission-room-babylonjs-b5-request.md`
+  （217行、SHA-256
+  `8340b1b642a2b2348573ea8367a2301cd0adb63c733c7c2b0940ccafdddb2bf3`）
+- **成果物**: `docs/work/test-analysis-babylonjs-b5.md`
+  （207行、SHA-256
+  `a02b5d5da93326cbe1bb0b8960de49ddcf29671a7e0fdcfb43a724a1a6e4c19d`）
+- **Gen受入れ**: B5C-01〜22を全件追跡。三軸状態、三outcomeのMission＋三壁exact set、
+  五view、native/real Desk focus、clear/Escape、二reset、冪等・stale、fallback、
+  route再入場、a11y、responsive、console/network、人間理解を被覆
+- **回帰**: RHとB1〜B4はsuite単位でB5固有接続を記録。browser skip、過去結果、
+  source、visual、人間判断を相互のPassへ変換していない
+- **Blocked**: BLK5-01〜04（in-repo browser harness、B5観測/注入seam、
+  実AT/OS/browser/GPU母集団、三択同格/visual/human判断）
+- **未実施**: Ritsu、test skeleton、product/test code、build、lint、browser、
+  package/network、deploy、VCS
+- **次**: 人間が分析を明示承認した後だけ、fresh primary RitsuのB5 skeleton gateへ進む
+
+## 2026-07-25（Mission Room Babylon.js B5）— Toki分析dispatch停止
+
+- **担当**: Gen + fresh named Toki
+- **範囲**: B5「Human judgment at the Decision Desk」の実装前テスト分析のみ。
+  product/test code、build、lint、browser、package、network、VCSは未着手
+- **開始確認**: `jj st` / `jj diff`は差分なし。B5 prompt記載のpackage、lock、
+  `/3d` 6 source、B4 test 4件、rendered HTMLのSHA-256は全13件一致
+- **契約**: `docs/work/toki-mission-room-babylonjs-b5-request.md`
+  （217行、SHA-256
+  `2b99e032cada0babb1d8b276e6d2c983ddcbb3a7fe2c99ab68e463b95ad48f78`）
+- **初回停止**: Tokiが許可した`shasum -a 256`ではなく`sha256sum`を使用し、
+  command allowlist違反として自己停止。分析成果物は未作成
+- **外部再試行1/1停止**: 同じnamed Tokiへ唯一の再試行を返したが、
+  `docs/agent/workflow.md`の許可した1・2・8節に加えて3〜7節を読み、
+  read allowlist違反として自己停止。分析成果物は未作成
+- **状態**: `docs/work/test-analysis-babylonjs-b5.md`は不存在。GenはTokiを代行せず、
+  product/test codeや次のRitsu gateへ進んでいない
+- **次の人間判断**: 再試行上限の例外として、正本を全文read可能に直した契約で
+  新しいfresh named Tokiを1回起動するか、B5を保留するかを選ぶ
+
+## 2026-07-25（Mission Room Babylon.js B5）— 新セッションプロンプト作成
+
+- **担当**: Gen + 人間
+- **人間判断**: B4の次をDecision Deskとし、人間が承認・保留・差戻しを選び、
+  結果を三壁へ戻す方向を「良いんじゃないかな」と評価。新セッション用prompt作成を依頼
+- **成果物**: `docs/work/mission-room-babylonjs-b5-new-session-prompt.md`
+  （498行、SHA-256
+  `061e86dcdacd9ab928a5098782864e1f2d9b665e3ce1af74963f8361343c2e37`）
+- **B5範囲**: `decision-lantern-01`一件、outcomeは`approve / hold / return / null`。
+  AIは推奨・事前選択・自動適用せず、native human controlだけがoutcomeを設定する
+- **体験**: B4の三壁反映後にDecision Desk viewへ進み、人間判断をmission stateと
+  Kanban / Scribe / Ganttのexact三結果へ投影。既存Desk pickも同じviewへfocusする
+- **状態境界**: selection / applied update / decision outcomeを独立axisとして扱う。
+  decision resetはupdateを保持し、update resetは依存decisionをclearする
+- **工程**: fresh Toki分析の人間承認 → fresh primary Ritsu skeletonの人間承認 →
+  同じRitsuの隔離TDD → Gen限定統合・main browser QA → fresh Rin risk review
+- **維持/禁止**: B4 flat wall board、5 view以外の既存挙動、`/`、package / lockfileを維持。
+  package/network/backend/persistence/通知/AI判断/deploy/VCSは対象外
+- **次**: 人間がprompt全文を新しいセッションへ送信する。現セッションではB5実装未着手
+
+## 2026-07-25（Mission Room Babylon.js B4）— 立体箱を壁面カードへ統合
+
+- **担当**: Gen + 人間
+- **起点**: 人間がKanban上の立体箱を「このはこいるの？」と評価し、削除を明示依頼
+- **設計判断**: 透明化だけの局所対応ではなく、表示を三つの壁面ボードへ一本化。
+  立体box meshと個別label planeを廃止し、操作専用の不可視plane hotspotへ分離した
+- **契約維持**: hotspotは既存のactual mesh ID、canonical item、`CrossWallRef`、
+  source wall、representation kindを保持。選択は三面highlight、更新は三面board再描画を維持
+- **resource整理**: 重複していたB4更新用DynamicTexture/materialを廃止し、
+  三つのboard resourceを初期・選択・更新で再利用。resource count / dispose観測も維持
+- **変更**: `mission-room/app/3d/room-scene.ts`、B3/B4 test 3file、
+  `docs/work/adr-drafts/2026-07-25-mission-room-wall-board-interaction.md`
+- **TDD / 自動検証**: 新しい表示・hotspot境界をRED化後に実装。最終suiteは
+  33 pass / 4 explicit browser skip / 0 fail、lint exit 0、production build exit 0。
+  既知の500kB超chunkとvinext route分類警告のみ
+- **browser受入れ**: 狭幅500×819で立体箱なし、flat LANTERN card可読を確認。
+  alpha 0ではpick不成立を実測し、表示上見えない0.001へ補正。Kanban card直接pickで
+  actual mesh ID、selected item、highlight 3を確認し、更新反映もupdated count 3、
+  board state updated、console warning/error 0
+- **境界**: package、外部network、backend、deploy、VCS操作なし。B5には進んでいない
+- **次**: B4を説明なしで再評価後、判断Deskで承認/保留/差戻しを扱うB5の範囲を人間判断へ戻す
+
+## 2026-07-25（Mission Room Babylon.js B4）— 壁面体験の構造修正
+
+- **担当**: Gen + 人間
+- **起点**: 人間評価で「壁に何もないため、何をどう確認する体験か分からない」と判明。
+  上部の操作説明だけではB4C-20を満たさないため、B5へ進まず3D投影層を修正した
+- **設計判断**: 小さな札の拡大ではなく、同一`item-lantern`を三つの役割別ボードへ投影。
+  Kanbanは準備/進行中/判断待ち、Scribeは課題/仮説/反対意見/人間レビュー依頼、
+  Ganttは実装・確認/レビュー予定/判断待ち停止を壁全面で常時表示する
+- **状態投影**: 選択時は三面の案件枠を強調。反映時はKanbanカードを判断待ちへ移動し、
+  Scribeの依頼を確定、Ganttを判断点で停止。3Dカードは日本語の
+  `進捗/議論/計画：LANTERN`として同一案件を示す責務へ限定した
+- **表示補正**: DynamicTextureの上下反転を修正し、空壁向けだった固定近接カメラを
+  ボード全体用へ変更。canvas aspectが1.35未満では半径を1.35倍し、狭幅でも端を欠かさない
+- **変更**: `mission-room/app/3d/room-scene.ts`、`room-runtime.ts`、
+  新規`tests/babylonjs-b4-wall-experience.test.mjs`
+- **TDD / 自動検証**: wall board、三状態投影、resource dispose、全体画角を順にRED→GREEN。
+  最終suiteは33 pass / 4 explicit browser skip / 0 fail、lint exit 0、production build exit 0。
+  既知の500kB超chunkとvinext route分類警告のみ
+- **browser受入れ**: native狭幅500×818（canvas 474×390）で更新後のKanban/Scribe/Ganttを確認。
+  responsive radius 10.125 / 11.475 / 10.125、updated mesh 3、board state updated、
+  overflow 0、console warning/error 0。desktop実CSS 1108×769でもKanban三列を全表示
+- **境界**: package追加、外部network、backend、deploy、VCS操作なし。B5には進んでいない
+- **表示**: `http://localhost:3000/3d`を初期step 1 / Overviewでdeliverable表示。
+  次は人間が壁切替と反映前後を再評価する
+
+## 2026-07-24（Mission Room Babylon.js B4）— 人間向けフロー再設計
+
+- **担当**: Gen + 人間
+- **起点**: 人間評価でB4C-20の「流れが全然わからない」が未達と判明。B5へ進まず、
+  B4の理解導線を修正した
+- **設計判断**: 文言の差し替えだけではなく、画面の主役を
+  `Scribeから更新が届く → Lantern案件を確認 → 三壁へ反映 → 三結果を確認`の一本の流れへ再編。
+  3Dは結果確認の補助表示へ責務を下げ、更新元・次の操作・結果を同じ領域で追えるようにした
+- **変更**: `mission-room/app/3d/page.tsx`、`babylon-room-client.tsx`、`room-3d.css`、
+  `tests/babylonjs-b4-static.test.mjs`。3段階stepper、日本語のbefore/after、結果プレビュー、
+  完了表示、未実行の取消操作disabled、スマホ一列表示、見出し孤立改行の防止を追加
+- **TDD / 自動検証**: 新しい理解導線と操作disabledを先にRED化してから実装。
+  最終suiteは30 pass / 4 explicit browser skip / 0 fail、B4 focused 6 pass、
+  lint exit 0、production build exit 0。既知の500kB超chunkとvinext route分類警告のみ
+- **browser受入れ**: desktop 1440×1000と実CSS 390×844で、
+  initial step 1 → select step 2 → apply step 3 → reset → clearを実操作。
+  update ID `update-decision-wait-01`、updated mesh 3件、三result `applied`、
+  Kanban view切替を確認。両幅でglobal overflow 0 / out-of-bounds 0、
+  console warning・error 0、外部asset 0
+- **境界**: package追加、外部network、backend、deploy、VCS操作なし。B5には進んでいない
+- **表示**: `http://localhost:3000/3d`を初期step 1でdeliverable表示。
+  local production serverは継続中。次は人間が説明なしで操作し、B4C-20を再評価する
+
+## 2026-07-23（Mission Room Babylon.js B4）— cross-wall update propagation実装完了
+
+- **担当**: Gen + Toki + Ritsu（core / UIの非競合2 lane）+ 人間
+- **人間判断**: Toki分析、Ritsu test skeletonの誤記修正と骨組みを承認し、B4実装まで進行
+- **実装**: 既存`item-lantern`へcanonical update `update-decision-wait-01`を1件だけ追加。
+  Scribeの`Human review requested`をsourceとして、Kanban `progress=waiting-for-decision`、
+  Scribe `discussion=human-review-request`、Gantt `schedule=blocked-on-human-decision`へ同時反映。
+  selection IDとapplied update IDは独立し、apply / repeat apply / clear / Escape / reset /
+  repeat reset / 4 view維持 / route resetを実装した
+- **変更境界**: `mission-room/app/3d/`の既存6file、新規B4 test 3file、core/UI result 2file、
+  B4 request・analysis・skeleton成果物だけ。`package.json` SHA-256
+  `d140b1db0cabe53c1c13b2303794fe1ae153d81529c58d4fabe53a9bca8a897d`、lockfile
+  `659fd494739666e94a23dc932fa83528daff5212f1a02e25f7be5ddd4818b59d`でbyte不変
+- **自動検証**: Node 24 production build exit 0、lint exit 0、B1〜B4 + rendered HTMLは
+  29 pass / 4 explicit browser skip / 0 fail。repository browser skipはPass集計外
+- **desktop browser**: 実CSS viewport 1440×1000でoverflow 0 / out-of-bounds 0。
+  initial→select→apply、4 view、clear、Escape、selection保持reset、repeat apply/resetを実測。
+  updated meshはexact 3件、resource 3、revision 0/1、update observer/callback 0を維持
+- **B3回帰**: actual mesh `b3-object-item-lantern-{kanban,scribe,gantt}`を3件ともpickし、
+  metadata setを確認。plain wall focus、orbit、zoom後もstateを維持。更新済み状態から
+  `/3d`→`/`→`/3d`を3回行い、毎回Overview / selection null / update null / count 0へreset
+- **mobile browser**: 実CSS viewport 390×844でinitial / selected / updated / cleared / resetを確認。
+  全状態でglobal overflow 0、out-of-bounds 0、controls / status / canvasの横欠けなし
+- **console / asset**: browser warning・error 0。観測runtime asset 40件はすべて
+  `http://localhost:3000`と同一origin。外部asset、package追加、timer、backend、deploy、VCSなし
+- **BlockedをPass化しない**: 現行in-app browserにはWebGL無効化機構がなく、指示どおり
+  test-only fallback実装は追加していない。WebGL failureはstatic/runtimeのfallback境界は合格、
+  強制browser実証だけBlocked。実AT確認とB4C-20の「一event / 三結果」理解は人間判断待ち
+- **表示**: `http://localhost:3000/3d`をselected + updated Overviewでdeliverable表示。
+  local production serverは継続中。次Sliceへは進まない
+
+## 2026-07-23（Mission Room Babylon.js B4）— Ritsu test skeleton・機械修正1件の判断待ち
+
+- **担当**: Gen + Ritsu
+- **人間判断**: B4 Toki分析を「分析を承認」と明示承認し、fresh primary Ritsuのskeleton作成へ進行
+- **契約**: `docs/work/ritsu-mission-room-babylonjs-b4-skeleton-request.md`（217行、SHA-256
+  `5f7948e6f67ff3c12f1a95a20cfd27b42adcbce60d7e572398ea38dd44ec9a82`）
+- **成果物**: `docs/work/ritsu-mission-room-babylonjs-b4-test-skeleton.md`（72行、SHA-256
+  `203b297770fccaa6c7e88a82775995aa0d3e70b3739d023e0392ea1d2093171b`）
+- **Genレビュー**: B4-01〜24、B4C-01〜20、二軸state/interface、RED-1〜6、RH/B1/B2/B3回帰、
+  core/UIの非重複ownershipを確認。初版のactual mesh ID、callback非必須化、request hash誤記を
+  許可済み外部再作業1回で差戻した
+- **解消済み**: representation setとactual mesh setを分離し、actual ID
+  `b3-object-item-lantern-{kanban,scribe,gantt}`をexact oracle化。dedicated update callbackは0件でもよく、
+  generation baselineからcallback/observerを増やさない契約へ補正
+- **残る不整合**: 成果物70行目のrequest hashは正しいが、72行目に
+  `...38ec9a82`という誤記が残る。正値は`...38dd44ec9a82`。機能oracleや追跡の欠落ではないが、
+  baseline自己検証記録が内部不整合のためskeleton受入れ未完了
+- **再作業境界**: 契約上の外部再作業1回を消費済み。GenはRitsu成果物を代行修正せず停止
+- **未実施**: product/test code、isolation copy、RED/GREEN、test/build/lint/browser、package/network、VCS
+- **次の判断**: 人間が同じRitsuによる追加の機械的1文字修正を例外承認するか、既知誤記を許容して
+  skeletonを承認するかを明示する。承認前にimplementationへ進まない
+
+## 2026-07-23（Mission Room Babylon.js B4）— Tokiテスト分析・人間レビュー待ち
+
+- **担当**: Gen + Toki
+- **限定範囲**: B4 cross-wall update propagationのテスト分析だけ。Ritsu、test skeleton、
+  product/test code、build/lint/browser、package/network、deploy、VCSは未着手
+- **契約**: `docs/work/toki-mission-room-babylonjs-b4-request.md`（253行、SHA-256
+  `72153467652e4faa4e24f0ad740424d4495dd8ad66f2c6605d3758eb718b3f6d`）
+- **成果物**: `docs/work/test-analysis-babylonjs-b4.md`（179行、SHA-256
+  `78660b862a957e62b4d3689c008df337a9555dbd722e7ce44073f3966f19c9be`）
+- **Gen受入れ**: B4C-01〜20を全件追跡。選択/更新の二軸四状態、全viewとapply/clear/Escape/resetの
+  遷移、exact-one/set-equality、三updated mesh、camera不変、idempotence、resource世代、fallback、
+  a11y、responsive、console/network、visual/human証拠境界を確認。B1〜B3とRHはsuite単位で接続
+- **状態**: `analysis-draft`、承認者なし、gate利用不可、全項目未実行。repository browser testの
+  skip、過去結果、static source、主観評価をPassへ変換していない
+- **Blocked**: in-repo browser harness、B4 resource/failure観測seam、実AT等の母集団、
+  selected/updatedの視覚差と一event/三結果の人間理解（BLK4-01〜04）
+- **次のゲート**: 人間が本分析を明示承認した後だけ、fresh primary RitsuによるB4 test skeletonへ進む
+
+## 2026-07-23（Mission Room Babylon.js B4）— 新セッションプロンプト作成
+
+- **担当**: Gen + 人間
+- **人間判断**: B3の次は「1つの更新が三壁へ伝播する」小Sliceを実装する
+- **成果物**: `docs/work/mission-room-babylonjs-b4-new-session-prompt.md`
+- **B4範囲**: `item-lantern`へ固定decision-wait更新を1件だけ適用し、Scribe source、
+  Kanban / Scribe / Ganttの三結果、apply / reset、選択との独立性、fallback、route resetを検証
+- **人間向け分析**: Toki成果物は冒頭に60行以内の判断要約を置き、全体240行を目安にする。
+  既存回帰matrixの重複転載を避け、状態・リスク・証拠・Blockedを先に読める構成へ固定
+- **並行実装**: skeleton承認後、primary Ritsuをcore lane、second RitsuをUI laneへ分ける。
+  write ownershipと隔離copyを分離し、依存で並行不能なら1体に戻して理由を記録する
+- **境界**: package / lockfile、既存`/`、B1〜B3 tests、build/worker configは変更禁止。
+  network、deploy、VCS、複数更新、Decision Deskは未承認
+- **次のゲート**: 新セッションでstartup check後、fresh Toki分析を作成し、人間承認まで停止する
+
+## 2026-07-22（Mission Room Babylon.js B3）— cross-wall selection完成
+
+- **担当**: Gen + Toki + Ritsu + 人間
+- **人間判断**: Toki分析、object pickでcurrent view維持、Ritsu skeletonを承認。実装は同じRitsu
+  threadを隔離copyで継続し、Genが限定統合・独立browser受入れを担当
+- **実装**: canonical `item-lantern` / `ref-lantern`をKanban progress、Scribe discussion、
+  Gantt scheduleの実meshへ対応。semantic/mesh選択、三highlight、view維持、clear/Escape、fallback、
+  route resetを追加。実画面QAで識別性を補正し、各壁へ明瞭なlocal label付きcardを表示
+- **検証**: main build/lint exit 0、Node test 19 pass / browser skip 3 / fail 0。skipはPass外。
+  desktop 1440×1000で三actual mesh pick、4 view、repeat、negative、orbit/zoom、390×844で
+  initial/selected/cleared/fallback・overflow 0、route 3往復、console issue 0、same-origin assetのみ
+- **境界**: package / lockfile byte不変、`/`不変、外部asset/network/package変更/deploy/VCSなし。
+  Ritsu 2体目は、同一thread実装契約とGen独立受入れを重複させるため起動しなかった
+- **表示**: `http://127.0.0.1:3000/3d`をselected Overviewでdeliverable表示。local server継続中
+- **残課題**: repository正式browser harness、実AT確認、cross-wall理解の最終人間評価。
+  次Sliceの更新・複数item・判断Desk操作は未承認
+
+## 2026-07-22（Mission Room Babylon.js B3）— Ritsu test skeleton・人間レビュー待ち
+
+- **担当**: Gen + Ritsu
+- **人間判断**: B3 Toki分析とobject pickのcamera維持を承認
+- **契約/成果**: `docs/work/ritsu-mission-room-babylonjs-b3-skeleton-request.md`、
+  `docs/work/ritsu-mission-room-babylonjs-b3-test-skeleton.md`（91行、SHA-256
+  `5762250912d857efaaa15433591b2c7a2aaf05a0a180f3881fda86d9424024e5`）
+- **Gen受入れ**: 初版のbrowser evidence ownerと圧縮IDを同一Ritsu threadの外部再作業1回で補正。
+  B3C-01〜17、B3-01〜25、B1-01〜25、B2-01〜29、RH-01〜03を完全prefixで全件追跡
+- **固定挙動**: object mesh selectionとclear/Escapeはcurrent view/camera維持。plain wall pickだけ
+  B2 wall focus。canonical I/R各1、三representation/highlight、actual picked mesh証拠を要求
+- **証拠owner**: repository browser testはexplicit skip。Ritsuはskip skeletonのみ、external browser
+  acceptanceはGen、visual/human判断は別owner。skipはPassへ数えない
+- **並行判断**: 単一skeleton writeのためRitsu 1体。後続の同一Ritsu継続を守り、2体目は独立・
+  非競合の検証へ分離できる場合だけ使用
+- **未実施**: product/test code、isolation copy、RED/GREEN、test/build/lint/browser、package、network、VCS
+- **次のゲート**: 人間がskeletonを承認後、同じRitsu threadへimplementation requestを渡す
+
+## 2026-07-22（Mission Room Babylon.js B3）— Tokiテスト分析・人間レビュー待ち
+
+- **担当**: Gen + Toki
+- **限定範囲**: B3 cross-wall object selectionのテスト分析だけ。Ritsu、test skeleton、
+  product/test code、build/lint/browser、network、deploy、VCSは未着手
+- **契約/成果**: `docs/work/toki-mission-room-babylonjs-b3-request.md`、
+  `docs/work/test-analysis-babylonjs-b3.md`（309行、SHA-256
+  `574c77530eacd2b0037d5283c488771e22e9a671311b0db1d5dd832c6cd9e49d`）
+- **追跡**: B3C-01〜17、B1-01〜25、B2-01〜29、rendered HTML 3項目を全件接続。
+  actual picked mesh ID、exact-one/set-equality、三highlight、state/pairwise、negative、a11y、
+  fallback、lifecycle、geometry、console/network、visual/human境界、RED順序を含む
+- **状態**: analysis-draft、承認者なし、ゲート利用不可、全項目未実行。repository browser
+  testのskipや過去B1/B2結果をB3 Passへ流用していない
+- **人間判断**: object mesh pick時はcamera/current viewを維持する。object selectionと移動を
+  分離し、plain wall pickだけはB2どおりsource wallへfocusする
+- **人間追加指示**: 後続で独立・非競合に分割できる場合はRitsuを最大2体まで並行利用する。
+  今回はToki分析ゲートで停止するためRitsu未起動
+- **次のゲート**: 人間がToki分析を明示承認後、B3 test skeleton契約を作成する
+
+## 2026-07-22（Mission Room Babylon.js B3）— 新セッションプロンプト作成
+
+- **担当**: Gen + 人間
+- **人間判断**: B2の次を新セッションで進めるため、B3引継ぎプロンプトを作成する
+- **成果物**: `docs/work/mission-room-babylonjs-b3-new-session-prompt.md`
+- **B3範囲**: 架空item 1件の`CrossWallRef`を三壁へ表現し、mesh / keyboard選択、
+  三壁highlight、view間維持、Overview、clear / Escape、fallback、route resetを検証する
+- **維持**: B2 light theme、4 view、wall pick、orbit / zoom、390px、既存`/`、package / lockfile
+- **非対象**: 複数item、編集・更新、backend同期、判断操作、animation、package/network、deploy
+- **工程**: fresh Toki分析の人間承認 → fresh Ritsu skeletonの人間承認 → 同じRitsu threadの
+  隔離TDD → Gen限定統合・main browser QA。Tokiは最大360行、低いtoken budgetを固定しない
+- **次の操作**: 人間が成果物全文を新しいセッションへ送信する。VCS操作なし
+
+## 2026-07-22（Mission Room Babylon.js B2）— ライトテーマ・三壁フォーカス完成
+
+- **担当**: Gen + Toki + Ritsu + 人間
+- **範囲**: `/3d`だけをライトテーマ化し、Overview / Kanban / Scribe / Ganttのキーボード操作、
+  3D wall pick、壁view内orbit / zoom、390px対応を追加。既存`/`とpackage / lockfileは不変
+- **隔離**: `/private/tmp/mission-room-babylon-b2.CxLmMY`。fresh Toki分析をfresh Ritsuへ渡し、
+  Genが限定差分だけを`apply_patch`統合。実ブラウザで見つけたRay副作用import不足を補正
+- **検証**: main build/lint exit 0、Node test 12 pass / 2 browser-harness skip / 0 fail。
+  BrowserでEnter / Space 4 view、camera pose、wall pick、orbit / zoom、390px、WebGL拒否fallback、
+  route 3往復、console error/warning 0、localhost-only networkを実測
+- **audit**: package変更なし。registryの新規勧告で17件（low 1 / moderate 5 / high 11）。
+  B2による依存増加ではなく、依存更新は今回の範囲外なので未実施
+- **表示**: `http://127.0.0.1:3000/3d`をライトテーマでローカル提示。server継続、deployなし
+- **残課題**: 初期化途中例外注入、正式browser harness、object選択・同期・更新・判断操作
+- **次のゲート**: 人間がB2画面を評価してから次の小Sliceを決める。VCS操作なし
+
+## 2026-07-22（Mission Room Babylon.js B1）— `/3d`完成・人間評価待ち
+
+- **担当**: Gen + Toki + Ritsu + 人間
+- **人間判断**: Toki分析とRitsu骨組みを承認後、npm依存metadata送信リスク説明を受けて
+  `npm audit`と`@babylonjs/core@9.17.1` exact installを再承認
+- **隔離**: `/private/tmp/mission-room-babylon-b1.PVs44Z`。`.git`なし、全baseline hash一致。
+  同じRitsu threadでPhase 1〜3を実行し、Genが許可差分だけを`apply_patch`統合
+- **実装**: 現行`/`を保持し、`/3d`へ三面room、7 agents、判断Desk、semantic DOM/fallback、
+  ArcRotateCamera orbit/zoom、resize/unmount cleanup、390px対応を追加
+- **依存/audit**: core exact 1件だけ追加。auditは前後/mainとも15件で増加なし。
+  CDN、外部asset、runtime外部request、deployなし
+- **検証**: main build/lint exit 0、Node test 7 pass / 1 skip。BrowserでWebGL2 ready、
+  desktop/390px、orbit/zoom、WebGL拒否fallback、route 3往復、console/networkを実測
+- **表示**: `http://127.0.0.1:3000/3d`をCodex内ブラウザでdeliverable表示。server継続中
+- **残課題**: baseline RED事前ログ、初期化途中例外専用注入、scene直接観測、正式browser harness。
+  B1外の壁接近・選択・同期・更新・判断操作は未実装
+- **次のゲート**: 人間が画面を評価するまで次の3D Sliceへ進まない。VCS操作なし
+
+## 2026-07-22（Antigravity adapter）— 7人構成実装・実機pilot待ち
+
+- **担当**: Gen + Rin + 人間
+- **変更**: `.agents/agents.md`、`.agents/workflows/agent-team.md`を追加。Genはmainのまま、
+  Shino/Kai/Toki/Rin/Ritsu/Hayateを固定名custom subagentとして動的定義・起動する
+- **model**: `agy 1.1.5 models`でGemini 3.6 Flashのhigh/medium/low IDを確認。親で人間が
+  選んだtierを継承し、3 ID以外へfallbackしない
+- **安全**: Local Modeと親の同一workspace継承を起動前に確認できなければ全dispatch停止。
+  write tools default false、per-file強制は未実証、Ritsu/Hayateの既存fileは別write隔離必須
+- **Rinレビュー**: 初回P0 1 / P1 2 / P2 0、緩和後の差分再レビューは全件解消・新規指摘なし
+- **検証**: workflow YAML frontmatter、7 role / 6 subagent固定名、参照path、model ID集合を
+  ローカル検査。CLI再起動後、モデルへ送信せずslash補完上の`/agent-team`表示を確認
+- **未実施**: Antigravity model request、`define_subagent` / `invoke_subagent`、成果物write、
+  model/fresh/tool/workspace継承の実測。正式ADR昇格、VCS commit、deployなし
+- **次のゲート**: 人間が実機pilotを指示した場合、Local Modeのread-only preflightから始め、
+  同一workspaceを起動前確認できなければ停止する
+- **CLI discovery補正**: `.agents/workflows/agent-team.md`だけではCLI 1.1.5のslash一覧へ
+  出なかったため、CLI 1.1.5の実装が要求する`.agents/skills/agent-team/SKILL.md`を
+  薄い入口として追加
+
+## 2026-07-22（Mission Room Babylon.js B1）— Ritsu骨組み・人間レビュー待ち
+
+- **担当**: Gen + Ritsu
+- **人間判断**: Toki分析を「これで作っていこう」と承認。承認版SHA-256は
+  `068c53767e4b4b49a7f98e3ae9d728773591235ee5e68bb7976f737d233190dc`
+- **契約/成果**: `docs/work/ritsu-mission-room-babylonjs-b1-skeleton-request.md`、
+  `docs/work/ritsu-mission-room-babylonjs-b1-test-skeleton.md`
+- **追跡**: B3D-01〜12、B1-01〜25、BLK-01〜06、RED-1〜7を全件保持。
+  Node/DOM、build、browser automation、visual QA、人間観察を分離
+- **予定write**: `@babylonjs/core@9.17.1` exact pin、`app/3d/`新規files、新規B1 test。
+  現行`/`、layout、既存3 test、build/worker/configは変更候補外
+- **出力版**: SHA-256
+  `ece5d3471de73d6dc0e4ddfadeab7890207c0db4cd4973a496e9548e76809542`
+- **未実施**: product/test code、install、build、test、lint、browser、network、VCS
+- **次のゲート**: 人間が骨組みを承認後、同じRitsu thread/modelへ実装requestを追加する。
+  承認前にinstall/実装へ進まない
+
+## 2026-07-22（Mission Room Babylon.js B1）— Tokiテスト分析・人間レビュー待ち
+
+- **担当**: Gen + Toki
+- **限定範囲**: 現行DOM/CSS版`/`を保持し、比較用`/3d`の3D room overviewだけを分析。
+  実装、test code、install、deploy、VCSは未実施
+- **公式確認**: npm `latest`は`@babylonjs/core@9.17.1`、Apache-2.0、registry metadataに
+  engines/direct dependency/peer dependencyなし。audit基準はlow 1 / moderate 6 / high 8、計15
+- **設計記録**: `docs/work/adr-drafts/2026-07-22-mission-room-babylonjs-3d-layer.md`
+- **Toki契約/成果**: `docs/work/toki-mission-room-babylonjs-b1-request.md`、
+  `docs/work/test-analysis-babylonjs-b1.md`。B3D-01〜12を25項目・7段階REDへ全件追跡
+- **責務分離**: Node/DOM、build、browser automation、browser視覚QA、人間観察を分離。
+  一室らしさ、奥行き、label可読性、2D縮退なしは自動Passにしない
+- **Blocked**: scene/lifecycle観測、WebGL/途中例外注入、正式desktop環境、resource所有、
+  人間視覚評価。いずれも推測でPassにしない
+- **次のゲート**: 人間が「このテスト分析で進める」と明示するまでfresh Ritsuを起動せず、
+  骨組み、product/test code、`@babylonjs/core` installへ進まない
+
+## 2026-07-22（Mission Room Slice 1）— room overview完成・3D化判断待ち
+
+- **担当**: Gen + Ritsu + 人間
+- **実装**: DOM/CSS cutaway room、左Kanban、正面Scribe、右Gantt、床の7人、
+  判断Desk、DEMO架空fixture、静的CrossWallRef preview
+- **隔離**: `/private/tmp/mission-room-slice1.CIRlCo`へ`.git`を含めずcopy。
+  main基準hash一致後、許可4fileだけをGenが`apply_patch`で統合
+- **補正**: `build/sites-vite-plugin.ts`をgenerated outputでなくVite必須sourceへ再分類。
+  Ritsu再作業で三面壁の`aria-labelledby`と見出しIDを接続
+- **検証**: main build exit 0、対象test 3/3 pass、lint exit 0。browserでdesktop 1440px、
+  狭幅390px、global横overflowなし、tabs 0、console warning/error 0を確認
+- **ローカル**: `http://localhost:3000/`。serverはlocal-only、deployなし
+- **人間追加要望**: Babylon.jsの3D空間デモ。現行Option A・依存追加なしの境界を越えるため、
+  package追加とDOM版の置換/併存を人間判断へ戻す
+- **3D引継ぎ**: `mission-room-babylonjs-new-session-prompt.md`を作成。`/3d`併存、
+  `@babylonjs/core`限定追加、3D B1 room overviewまでの限定承認をprompt送信に結び付けた
+- **TDDゲート**: fresh TokiがB3D-01〜12を専用テスト分析へ具体化し、人間承認後にだけ
+  fresh Ritsuがテスト骨組みを作る。骨組み再承認後、同じRitsuが隔離copyで
+  RED → GREEN → REFACTORを実行する
+- **未実装**: 壁への接近、相互選択、更新、room復帰、判断操作、完成版keyboard
+- **VCS**: `jj st` / `jj diff`のみ。commit、その他VCS操作なし
+
+## 2026-07-22（Mission Room）— テスト骨組み承認・Slice 1実装へ
+
+- **担当**: Gen + Ritsu + 人間
+- **人間判断**: RitsuのT-36〜T-60テスト骨組みを「ok。良いです」と承認。
+  完成版を一括で作らず、小さな動くスライスごとに進捗を見せる
+- **成果物**: `ritsu-test-skeleton-request.md`、`ritsu-test-skeleton.md`
+- **Gen補正**: T-36/T-58/T-59を構造検査と視覚QAへ分割し、回帰IDと`app/page.tsx`
+  の予定パスを次の実装契約で訂正する
+- **実行境界**: 骨組み作成時はcommand、test、build、cache、product code変更なし
+- **次のSlice**: room overview。三面壁、床の7人、判断Desk、DEMO fixtureを
+  技術的write隔離したRitsu実装で作り、mainへGenが限定統合する
+- **停止ゲート**: build/test/lint/browser QA後、ローカル画面を人間へ見せる。
+  承認前にSlice 2「各壁への接近」へ進まない
+- **再開プロンプト**: `docs/work/mission-room-slice-1-new-session-prompt.md`
+
+## 2026-07-22（Mission Room壁面UX）— fresh session実装引継ぎ
+
+- **担当**: Gen + Shino + Kai + Toki + 人間
+- **人間判断**: 壁面UXを主評価対象とし、DOM/CSS cutaway room、三面壁、
+  `CrossWallRef`連携、更新済みテスト分析を「これで一旦やってみよう」と承認
+- **成果物**: `requirements.md`、`open-questions.md`、`architecture-options.md`、
+  frontend stack ADR候補、`test-analysis.md`（60項目）を壁面中心へ更新
+- **技術候補**: vinext / React / TypeScript / CSS / Wranglerを維持。fixture portで
+  Codex server appとの将来境界を分離。Excalidraw本体は未導入
+- **ローカル**: `mission-room/`を生成し依存install済み。starterをlocalhost:3000で
+  起動確認。product UIは未実装
+- **注意**: initializerが`mission-room/.git/`を生成。使用・削除しない。npm audit警告
+  low 1 / moderate 6 / high 8は未処置。deploy / VCS / 正本変更は未承認
+- **次のゲート**: fresh sessionでRitsuテスト骨組みを作り、人間レビュー後にだけ実装
+- **再開プロンプト**: `docs/work/mission-room-implementation-new-session-prompt.md`
+
+
 ## 2026-07-22（docs/work全体整理）— 66件削除・Mission Room準備へ
 
 - **担当**: Gen（玄）+ 人間

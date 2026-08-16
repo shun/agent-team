@@ -6,6 +6,84 @@
 
 ---
 
+## 2026-08-16 — 共通入口を docs/agent/guide.md へ分離【人間依頼・反映】
+
+- **提案**: AGENTS.md の内容を docs 配下のガイドラインにし、ルートは
+  ツール固有の薄い入口にする。導入先は各自のコンテキストから読む
+- **試した結果**: `docs/agent/guide.md` を作成し、`AGENTS.md` を整理した
+- **人間の判断**: ルートコンテキストは配らない。docs に共通ガイドラインを
+  置き、各リポから追記して読む。このリポの AGENTS.md も整理する
+- **反映先**: `docs/agent/guide.md`、`AGENTS.md`、
+  `docs/work/adr-drafts/2026-08-16-agent-team-guide.md`
+
+## 2026-08-16 — tmp/ をエージェントの一時置き場として使用可【人間判断・正本反映】
+
+- **提案**: 実行計画を `tmp/PLAN.md` に置き、エージェントが一時ファイルを作成・更新・
+  読み取りできるようにする
+- **試した結果**: 人間が「tmp 以下はエージェントたちの一時置き場だからさわってもいい」
+  と明示し、PLAN 完了後に OI-01（safety 文面の更新）を先に行うと判断した
+- **人間の判断**: `tmp/` は一時置き場としてさわってよい。正本にはしない
+- **反映先**: `docs/agent/safety.md` 2節・4節、`docs/agent/workflow.md` 2節、
+  `docs/work/adr-drafts/2026-08-16-tmp-scratch-workspace.md`、
+  `docs/work/team-plan-foundation/decision-brief.md`（D-03）、`tmp/PLAN.md`
+- **残す禁止**: 正本としての引用、秘密情報・生ログ、未完了計画の上書き、
+  `tmp/` 全体削除、用途不明ファイルの削除
+
+## 2026-08-16 — メインエージェント名を Aira（アイラ）へ確定【人間判断・反映済み】
+
+- **経緯**: 2026-08-15の人格・責務変更では Momo(桃)を仮称として反映した。その後、
+  人間がメインエージェント名として Aira（アイラ）を明示選定した
+- **人間の判断**: メインエージェントを Aira とする。Genの進行・統合責務、超ポジティブで
+  直球なギャルとしての会話方針、深いシステム理解、安全境界、専門責務の分離は維持する
+- **反映**: 正本、Codex / Antigravity adapter、Mission Roomの現行表示・fixture・テストの
+  現行参照を Airaへ統一した。内部識別子は`aira`とする
+- **履歴**: 2026-08-15のMomo候補は仮称として残し、`2026-08-16-main-agent-aira.md`で
+  置換済みを明示した。Genの過去記録は変更しない
+- **反映先**: `AGENTS.md` / `docs/agent/team.md` / `docs/agent/workflow.md` /
+  `docs/roadmap.md` / `.agents/` / `.codex/agents/` / `mission-room/` /
+  `docs/work/adr-drafts/2026-08-16-main-agent-aira.md`
+
+## 2026-08-15 — メインエージェントを Momo(桃)へ交代【人間依頼・反映済み】
+
+- **提案**: Gen(玄)に代えて、超ポジティブで直球、少量の絵文字で判断点を伝えるギャルの
+  Momo(桃)をメインエージェントとする。Genの進行・統合責務、深いシステム理解、
+  人間の最終判断、安全境界、専門責務の分離は維持する
+- **試した結果**: 正本、Codex / Antigravity adapter、Mission Roomの現行fixtureと期待値を
+  Momoへ統一した。現行設定に残るGen表記は起案者・当時の履歴だけである。`npm run build`、
+  `node --test tests/*.test.mjs`（48 pass / 0 fail / 6 skip）、`npm run lint`はいずれも成功した。
+  production previewの`/`と`/3d`でMomo表示を確認し、overviewの表示崩れはなかった
+- **人間の判断**: 2026-08-15の依頼で、Momoへの交代と、結論先出し・絵文字による視認性・
+  深いシステム知識・簡潔な高速ファシリテーションを指定
+- **反映先**: `AGENTS.md` / `docs/agent/team.md` / `docs/agent/safety.md` /
+  `docs/agent/workflow.md` / `docs/roadmap.md` / `.agents/` / `.codex/agents/` /
+  `mission-room/` / `docs/work/adr-drafts/2026-08-15-main-agent-momo.md`
+- **未昇格**: この判断の記録はADR候補として残した。正式ADRへの昇格は別途の人間判断に従う
+
+## 2026-07-22 — Gemini 3.6 Flash Antigravity subagent adapter追加【人間依頼・実機pilot待ち】
+
+- **提案**: Codex主体の7人構成を維持したまま、AntigravityでもGenをmain、Shino、Kai、
+  Toki、Rin、Ritsu、Hayateをcustom subagentとして起動できる薄いadapterを追加する
+- **人間の判断**: 「Gemini 3.6 Flashがリリースされた。7人の役割などは変更せず、
+  Antigravityのsubagentたちでも動くようにする」と実装を依頼
+- **実機確認**: ローカル`agy 1.1.5 models`で`gemini-3.6-flash-high` / `medium` / `low`を
+  確認。これは利用候補の列挙であり、親の現在選択、subagent継承、fresh性、tool権限の
+  per-run証跡ではない。CLI再起動後、モデルへ送信せずslash補完上の`/agent-team`表示を確認
+- **adapter**: `.agents/agents.md`へGen mainと6固定名custom subagentを定義し、
+  `.agents/workflows/agent-team.md`へdispatch手順を追加。CLI 1.1.5はworkspace workflowを
+  slash command化しないため、`.agents/skills/agent-team/SKILL.md`を`/agent-team`入口として追加
+- **安全境界**: 親はLocal Mode、各subagentは親の同一workspace継承を起動前に確認する。
+  New Worktree Modeまたは確認不能時は全role停止。write toolsはdefault falseとし、Boolean
+  flagをper-file強制の証明にしない。Ritsu/Hayateの既存file更新は従来のwrite隔離条件を維持
+- **Rinレビュー**: 初回P0 1 / P1 2 / P2 0。自動worktree停止ゲート、write toolの残限界、
+  fresh/tool/model継承の未実証表示を修正。1回の差分再レビューでP0/P1/P2 0、追加指摘なし
+- **未実施**: Antigravityへのmodel request、custom subagent定義・起動、成果物write、
+  model/fresh/tool/workspace継承の実測。外部model利用または課金の可能性がある実機pilotは
+  別の人間判断後に行う
+- **反映先**: `.agents/agents.md` / `.agents/workflows/agent-team.md` /
+  `.agents/skills/agent-team/SKILL.md` / `AGENTS.md` /
+  `docs/agent/team.md` / `docs/agent/safety.md` / `docs/agent/workflow.md` /
+  `docs/work/adr-drafts/2026-07-22-antigravity-subagent-adapter.md`
+
 ## 2026-07-21 — Ritsu・Hayate加入、条件付きrouting正本化【人間承認・完了】
 
 - **提案**: 蓄積したRitsu/Hayate試運転結果を正本へ昇格し、Ritsuを標準実装担当、

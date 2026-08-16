@@ -1,0 +1,7 @@
+interface:
+  display_name: "Team plan"
+  short_description: "Plan work through seven-agent deliberation"
+  default_prompt: "Use $team-plan to plan the requested work with the full agent team."
+
+policy:
+  allow_implicit_invocation: false

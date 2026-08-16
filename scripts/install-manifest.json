@@ -1,0 +1,21 @@
+{
+  "include": [
+    "docs/agent/",
+    "docs/roadmap.md",
+    "docs/decisions/",
+    ".codex/",
+    ".agents/",
+    ".claude/agents/",
+    "scripts/run-plan.ts"
+  ],
+  "exclude": [
+    "docs/agent/.install-lock.json",
+    ".claude/scheduled_tasks.lock"
+  ],
+  "neverWrite": [
+    "AGENTS.md",
+    "CLAUDE.md"
+  ],
+  "lockPath": "docs/agent/.install-lock.json",
+  "readHint": "MUST READ docs/agent/guide.md"
+}
