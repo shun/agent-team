@@ -2,7 +2,7 @@
 
 - Plan ID: `repo-install-2026-08-16`
 - Status: `completed`
-- 判断記録: `docs/work/repo-install/human-decision-2026-08-16.md`
+- 判断記録: `docs/decisions/ADR-0027-canonical-repo-install.md`
 - 実行台帳: `tmp/PLAN.md`
 - 写し: このファイル
 - 開始承認: 2026-08-16 人間「OK。承認します。」

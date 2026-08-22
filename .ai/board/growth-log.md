@@ -6,6 +6,22 @@
 
 ---
 
+## 2026-08-22 — docs/work 未正本化決定を ADR-0022〜0027 へ昇格【人間承認・正本反映】
+
+- **提案**: 人間判断済みで ADR 未採番だった決定を昇格する。作業ドラフトの削除は
+  文面承認と分離する
+- **試した結果**: Rin 初回 P0-1 / P0-2。選定 → 文面 → 削除の3段に分けた。
+  文面差分で 8節繰り下げ、PLAN 開始の兼ね読み、写しの第二台帳化を修正した
+- **人間の判断**: 6候補の選定を承認。文面を正本へ書いてよい。削除はまだしない
+- **反映先**: `docs/decisions/ADR-0022`〜`0027`、`docs/agent/workflow.md` 10節、
+  ADR-0002 successor 注記、ADR-0014 例外記録
+- **反映先**: `docs/decisions/ADR-0022`〜`0027`、`docs/agent/workflow.md` 10節、
+  ADR-0002 successor 注記、ADR-0014 例外記録、
+  `.agents/skills/team-plan/SKILL.md`（正本参照への付け替え。運用政策の複製ではない）
+- **削除**: 作業ドラフト 41 件。残したのは `current-task.md`、
+  `final-proposal.md`、`plans/PLAN.md`、却下の Momo ドラフト
+- **残**: コミットは人間。Mission Room P2 と Medium 実装は未決のまま current-task に残す
+
 ## 2026-08-16 — 共通入口を docs/agent/guide.md へ分離【人間依頼・反映】
 
 - **提案**: AGENTS.md の内容を docs 配下のガイドラインにし、ルートは
