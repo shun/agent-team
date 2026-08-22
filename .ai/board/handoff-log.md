@@ -6,6 +6,16 @@
 
 ---
 
+## 2026-08-22 — 導入先 docs を .agent-team/docs へ隔離
+
+- **担当**: Aira
+- **人間判断**: インストール先の agent-team ドキュメントはルートの
+  `.agent-team/docs` に入れ、既存ドキュメントと混ぜない
+- **反映**: `scripts/install-manifest.json` の destMap。コピー時に
+  `docs/` 参照を書き換え。アダプタの起動位置は維持。テスト 12 passed
+- **残課題**: コミットは人間。リモート掲載後のワンライナー確認
+- **次に見るべきもの**: `docs/work/current-task.md` 3.1
+
 ## 2026-08-22 — docs/work 整理の選定ゲートまで
 
 - **担当**: Aira。反対意見は [凛](07a1d649-d6eb-4c56-9b5e-5c0a447087f8) /

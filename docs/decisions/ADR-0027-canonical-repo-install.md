@@ -1,6 +1,7 @@
 # ADR-0027: このリポジトリを正本とし、下流はインストーラで導入する
 
-> 状態: 承認済み（2026-08-16 人間判断 / 2026-08-22 文面承認） / 起案: 人間 / 整理: Aira
+> 状態: 承認済み（2026-08-16 人間判断 / 2026-08-22 文面承認 /
+> 2026-08-22 導入先 docs 隔離） / 起案: 人間 / 整理: Aira
 
 ## 背景
 
@@ -23,14 +24,21 @@
 - 下流からのフィードバックは、このリポジトリへの PR とする
 - インストーラはルートのコンテキストファイル（`AGENTS.md`、`CLAUDE.md`
   など）を作成・上書きしない。導入先の人間が、自分のツール入口へ
-  `MUST READ docs/agent/guide.md` を追記する（[ADR-0023](ADR-0023-agent-team-guide.md)）
+  `MUST READ .agent-team/docs/agent/guide.md` を追記する
+  （[ADR-0023](ADR-0023-agent-team-guide.md)）
 - 置くものと置かないものの正は `scripts/install-manifest.json` である
+- このリポジトリの正本レイアウトは `docs/` のままとする。導入先では
+  `docs/` 配下の配布物を `.agent-team/docs/` へ写す。既存の `docs/` と
+  混ぜない（2026-08-22 人間依頼）
+- コピー時に配布ファイル内の `docs/` 参照を `.agent-team/docs/` へ
+  書き換える。`.codex/`、`.agents/`、`.claude/agents/` の起動位置は
+  変えない
 
-置く（判断時点）:
+置く（判断時点。括弧内は導入先パス）:
 
-- `docs/agent/`（`guide.md` を含む正本）
-- `docs/roadmap.md`
-- `docs/decisions/`
+- `docs/agent/`（`.agent-team/docs/agent/`。`guide.md` を含む正本）
+- `docs/roadmap.md`（`.agent-team/docs/roadmap.md`）
+- `docs/decisions/`（`.agent-team/docs/decisions/`）
 - `.codex/`、`.agents/`、`.claude/agents/`
 - `scripts/run-plan.ts`
 
@@ -56,10 +64,15 @@
 - 案 D（参照ピン留めだけ）: 「置いて使える」を満たしにくい
 - 案 E（テンプレート新規生成だけ）: 既存リポジトリへ入れられない
 - 下流向け `AGENTS.md` を上書きする: ADR-0023 が捨てた
+- 導入先でも `docs/` 直下に置く: 既存ドキュメントと混ざる
+  （2026-08-22 に捨てた）
 
 ## 影響
 
 - `README.md`、`docs/agent/guide.md`、`scripts/install-manifest.json`、
   `scripts/install-agent-team.ts` へ反映済み
+- 導入先の追記文は `.agent-team/docs/agent/guide.md` を読む。この
+  リポジトリ自身の入口は `docs/agent/guide.md` のままである
+- 以前 `docs/agent/` へ入れた下流ファイルは削除しない
 - 次の運用確認（リモート掲載後の他リポワンライナー）は進捗として
   `docs/work/current-task.md` に残す。本 ADR の完了条件ではない

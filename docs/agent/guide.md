@@ -81,7 +81,9 @@ deno run --allow-read --allow-write --allow-net --allow-run \
 
 取得元は `https://github.com/shun/agent-team` に固定する。
 版を選ぶときは `--ref <branch-or-commit>` を付ける。
-更新も同じコマンドである。
+更新も同じコマンドである。導入先では、チーム定義を
+`.agent-team/docs/` に置く。リポジトリ本体のドキュメント
+ディレクトリとは混ぜない。
 
 ## 導入先での読み込み
 
@@ -89,7 +91,7 @@ deno run --allow-read --allow-write --allow-net --allow-run \
 導入先の人間が、使っているツールの入口へ次を追記する。
 
 ```text
-MUST READ docs/agent/guide.md
+MUST READ .agent-team/docs/agent/guide.md
 ```
 
 例:

@@ -16,6 +16,12 @@
     "AGENTS.md",
     "CLAUDE.md"
   ],
-  "lockPath": "docs/agent/.install-lock.json",
-  "readHint": "MUST READ docs/agent/guide.md"
+  "lockPath": ".agent-team/.install-lock.json",
+  "readHint": "MUST READ .agent-team/docs/agent/guide.md",
+  "destMap": [
+    {
+      "prefix": "docs/",
+      "dest": ".agent-team/docs/"
+    }
+  ]
 }

@@ -6,6 +6,18 @@
 
 ---
 
+## 2026-08-22 — 導入先の正本 docs を .agent-team/docs へ隔離【人間依頼・反映】
+
+- **提案**: 導入先の既存 `docs/` と混ぜない。agent-team のドキュメントは
+  ルートの `.agent-team/docs` へ置く
+- **試した結果**: 正本リポジトリの `docs/` は維持。インストーラが
+  `docs/` → `.agent-team/docs/` へ写し、配布ファイル内の参照を書き換える。
+  ツール別アダプタの起動位置は変えない。テスト 12 passed
+- **人間の判断**: インストール先ドキュメントを既存 docs と分離する
+- **反映先**: `scripts/install-manifest.json`、
+  `scripts/install-agent-team.ts`、`scripts/install-manifest.ts`、
+  `README.md`、`docs/agent/guide.md`、ADR-0023、ADR-0027
+
 ## 2026-08-22 — docs/work 未正本化決定を ADR-0022〜0027 へ昇格【人間承認・正本反映】
 
 - **提案**: 人間判断済みで ADR 未採番だった決定を昇格する。作業ドラフトの削除は

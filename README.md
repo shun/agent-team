@@ -101,7 +101,7 @@ deno run --allow-read --allow-write --allow-net --allow-run \
 導入先で使っているツールの入口へ、次を追記する。
 
 ```text
-MUST READ docs/agent/guide.md
+MUST READ .agent-team/docs/agent/guide.md
 ```
 
 追記先の例は次のとおり。
@@ -130,17 +130,21 @@ deno run --allow-read --allow-write --allow-net --allow-run \
 
 置くものと置かないものは、
 [scripts/install-manifest.json](scripts/install-manifest.json)
-が正である。
+が正である。このリポジトリの正本は `docs/` のままである。導入先では
+`docs/` 配下を `.agent-team/docs/` へ写し、既存の `docs/` と混ぜない。
 
-| 置く | 置かない |
+| 置く（導入先） | 置かない |
 | --- | --- |
-| `docs/agent/`（`guide.md` を含む正本） | `docs/work/`（作業成果物） |
-| `docs/roadmap.md` | `docs/notes/`（凍結コピー） |
-| `docs/decisions/`（ADR） | `.ai/board/`、`tmp/` |
+| `.agent-team/docs/agent/`（`guide.md` を含む正本） | 導入先の既存 `docs/` |
+| `.agent-team/docs/roadmap.md` | `docs/work/` のコピー、`docs/notes/` |
+| `.agent-team/docs/decisions/`（ADR） | `.ai/board/`、`tmp/` |
 | `.codex/`、`.agents/`、`.claude/agents/` | `mission-room/`（デモ） |
 | `scripts/run-plan.ts` | ルートの `AGENTS.md`、`CLAUDE.md` |
 
-適用結果は `docs/agent/.install-lock.json` に記録する。
+コピー時に、配布ファイル内の `docs/` 参照を `.agent-team/docs/` へ
+書き換える。ツール別アダプタの起動位置は変えない。適用結果は
+`.agent-team/.install-lock.json` に記録する。以前 `docs/agent/` へ
+入れたファイルは削除しない。
 
 ## 使い方
 

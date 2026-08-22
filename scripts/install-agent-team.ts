@@ -5,7 +5,9 @@ import {
   MANIFEST_PATH,
   isIncluded,
   listInstallPaths,
+  mapDestPath,
   parseManifest,
+  rewriteInstalledBytes,
 } from "./install-manifest.ts";
 
 export type InstallLock = {
@@ -177,9 +179,14 @@ export async function applyInstall(options: {
     if (FORBIDDEN_ROOT.has(relative) || !isIncluded(relative, manifest)) {
       throw new Error(`fail-closed: refused ${relative}`);
     }
+    const destRelative = mapDestPath(relative, manifest);
+    if (FORBIDDEN_ROOT.has(destRelative)) {
+      throw new Error(`fail-closed: refused ${destRelative}`);
+    }
     const sourceBytes = await Deno.readFile(resolveUnder(sourceRoot, relative));
-    const sourceHash = await sha256Hex(sourceBytes);
-    const targetPath = resolveUnder(targetRoot, relative);
+    const destBytes = rewriteInstalledBytes(sourceBytes, manifest);
+    const destHash = await sha256Hex(destBytes);
+    const targetPath = resolveUnder(targetRoot, destRelative);
     let existing: Uint8Array | null = null;
     try {
       existing = await Deno.readFile(targetPath);
@@ -188,27 +195,27 @@ export async function applyInstall(options: {
     }
     if (existing) {
       const existingHash = await sha256Hex(existing);
-      if (existingHash === sourceHash) {
-        files[relative] = sourceHash;
-        unchanged.push(relative);
+      if (existingHash === destHash) {
+        files[destRelative] = destHash;
+        unchanged.push(destRelative);
         continue;
       }
-      const previousHash = previous?.files[relative];
+      const previousHash = previous?.files[destRelative];
       if (previousHash && existingHash === previousHash) {
         await Deno.mkdir(targetPath.slice(0, targetPath.lastIndexOf("/")), { recursive: true });
-        await Deno.writeFile(targetPath, sourceBytes);
-        files[relative] = sourceHash;
-        written.push(relative);
+        await Deno.writeFile(targetPath, destBytes);
+        files[destRelative] = destHash;
+        written.push(destRelative);
         continue;
       }
-      skipped.push(relative);
-      files[relative] = existingHash;
+      skipped.push(destRelative);
+      files[destRelative] = existingHash;
       continue;
     }
     await Deno.mkdir(targetPath.slice(0, targetPath.lastIndexOf("/")), { recursive: true });
-    await Deno.writeFile(targetPath, sourceBytes);
-    files[relative] = sourceHash;
-    written.push(relative);
+    await Deno.writeFile(targetPath, destBytes);
+    files[destRelative] = destHash;
+    written.push(destRelative);
   }
 
   const lock: InstallLock = { source: sourceLabel ?? sourceRoot, ref, files };

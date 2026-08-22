@@ -3,7 +3,9 @@ import {
   type InstallManifest,
   isIncluded,
   listInstallPaths,
+  mapDestPath,
   parseManifest,
+  rewriteInstalledText,
 } from "./install-manifest.ts";
 import {
   DEFAULT_SOURCE,
@@ -91,7 +93,7 @@ async function makeFixture(): Promise<{ source: string; target: string; manifest
   await write("docs/agent/team.md", "team v1\n");
   await write("docs/roadmap.md", "roadmap v1\n");
   await write("docs/decisions/ADR-0001.md", "adr v1\n");
-  await write(".codex/agents/rin.toml", "rin v1\n");
+  await write(".codex/agents/rin.toml", "read docs/agent/team.md\n");
   await write(".agents/agents.md", "agents v1\n");
   await write(".claude/agents/rin.md", "claude rin v1\n");
   await write("scripts/run-plan.ts", "runner v1\n");
@@ -100,6 +102,22 @@ async function makeFixture(): Promise<{ source: string; target: string; manifest
   await write("mission-room/app.ts", "demo\n");
   return { source, target, manifest };
 }
+
+Deno.test("maps source docs/ onto .agent-team/docs/ and rewrites references", () => {
+  assertEquals(mapDestPath("docs/agent/guide.md", manifest), ".agent-team/docs/agent/guide.md");
+  assertEquals(mapDestPath("scripts/run-plan.ts", manifest), "scripts/run-plan.ts");
+  assertEquals(
+    rewriteInstalledText("read docs/agent/team.md and docs/work/x.md", manifest),
+    "read .agent-team/docs/agent/team.md and .agent-team/docs/work/x.md",
+  );
+  assertEquals(
+    rewriteInstalledText(
+      "docs/agent/a and .agent-team/docs/agent/b",
+      manifest,
+    ),
+    ".agent-team/docs/agent/a and .agent-team/docs/agent/b",
+  );
+});
 
 Deno.test("install copies only declared files and prints the read hint", async () => {
   const { source, target, manifest } = await makeFixture();
@@ -110,10 +128,23 @@ Deno.test("install copies only declared files and prints the read hint", async (
     manifest,
   });
   assertEquals(result.lock.ref, "test-ref");
-  assertEquals(result.readHint, "MUST READ docs/agent/guide.md");
+  assertEquals(result.readHint, "MUST READ .agent-team/docs/agent/guide.md");
   assertEquals(result.skipped, []);
-  assertEquals((await Deno.readTextFile(`${target}/docs/agent/guide.md`)), "guide v1\n");
+  assertEquals(
+    await Deno.readTextFile(`${target}/.agent-team/docs/agent/guide.md`),
+    "guide v1\n",
+  );
   assertEquals((await Deno.readTextFile(`${target}/scripts/run-plan.ts`)), "runner v1\n");
+  assertEquals(
+    await Deno.readTextFile(`${target}/.codex/agents/rin.toml`),
+    "read .agent-team/docs/agent/team.md\n",
+  );
+  let sourceDocsExists = true;
+  try {
+    await Deno.stat(`${target}/docs/agent/guide.md`);
+  } catch {
+    sourceDocsExists = false;
+  }
   let workExists = true;
   try {
     await Deno.stat(`${target}/docs/work/secret.md`);
@@ -126,25 +157,47 @@ Deno.test("install copies only declared files and prints the read hint", async (
   } catch {
     agentsExists = false;
   }
+  assertEquals(sourceDocsExists, false);
   assertEquals(workExists, false);
   assertEquals(agentsExists, false);
   const report = formatReport(result);
-  assertEquals(report.includes("MUST READ docs/agent/guide.md"), true);
+  assertEquals(report.includes("MUST READ .agent-team/docs/agent/guide.md"), true);
   assertEquals(report.includes("ref test-ref"), true);
 });
 
-Deno.test("does not overwrite a different existing file", async () => {
+Deno.test("does not collide with the target repository's own docs/", async () => {
   const { source, target, manifest } = await makeFixture();
   await Deno.mkdir(`${target}/docs/agent`, { recursive: true });
-  await Deno.writeTextFile(`${target}/docs/agent/guide.md`, "local edit\n");
+  await Deno.writeTextFile(`${target}/docs/agent/guide.md`, "project docs\n");
   const result = await applyInstall({
     sourceRoot: source,
     targetRoot: target,
     ref: "test-ref",
     manifest,
   });
-  assertEquals(result.skipped.includes("docs/agent/guide.md"), true);
-  assertEquals(await Deno.readTextFile(`${target}/docs/agent/guide.md`), "local edit\n");
+  assertEquals(result.skipped, []);
+  assertEquals(await Deno.readTextFile(`${target}/docs/agent/guide.md`), "project docs\n");
+  assertEquals(
+    await Deno.readTextFile(`${target}/.agent-team/docs/agent/guide.md`),
+    "guide v1\n",
+  );
+});
+
+Deno.test("does not overwrite a different existing file", async () => {
+  const { source, target, manifest } = await makeFixture();
+  await Deno.mkdir(`${target}/.agent-team/docs/agent`, { recursive: true });
+  await Deno.writeTextFile(`${target}/.agent-team/docs/agent/guide.md`, "local edit\n");
+  const result = await applyInstall({
+    sourceRoot: source,
+    targetRoot: target,
+    ref: "test-ref",
+    manifest,
+  });
+  assertEquals(result.skipped.includes(".agent-team/docs/agent/guide.md"), true);
+  assertEquals(
+    await Deno.readTextFile(`${target}/.agent-team/docs/agent/guide.md`),
+    "local edit\n",
+  );
 });
 
 Deno.test("updates a file that still matches the previous lock hash", async () => {
@@ -162,8 +215,11 @@ Deno.test("updates a file that still matches the previous lock hash", async () =
     ref: "v2",
     manifest,
   });
-  assertEquals(result.written.includes("docs/agent/guide.md"), true);
-  assertEquals(await Deno.readTextFile(`${target}/docs/agent/guide.md`), "guide v2\n");
+  assertEquals(result.written.includes(".agent-team/docs/agent/guide.md"), true);
+  assertEquals(
+    await Deno.readTextFile(`${target}/.agent-team/docs/agent/guide.md`),
+    "guide v2\n",
+  );
   assertEquals(result.lock.ref, "v2");
 });
 
@@ -237,5 +293,8 @@ Deno.test("installs from a fetched archive without a local checkout path", async
   });
   assertEquals(result.lock.source, DEFAULT_SOURCE);
   assertEquals(result.lock.ref, "main");
-  assertEquals(await Deno.readTextFile(`${target}/docs/agent/guide.md`), "guide remote\n");
+  assertEquals(
+    await Deno.readTextFile(`${target}/.agent-team/docs/agent/guide.md`),
+    "guide remote\n",
+  );
 });
